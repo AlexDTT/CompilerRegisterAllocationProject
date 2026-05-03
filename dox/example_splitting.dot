@@ -1,0 +1,36 @@
+graph splitting_example {
+    rankdir=LR;
+    node [shape=circle, style=filled, fontname="Helvetica"];
+    edge [color="#333333", penwidth=1.4];
+
+    subgraph cluster_before {
+        label="Before splitting";
+        color="#c9d9d1";
+        fillcolor="#f8fbf9";
+        style=filled;
+
+        a0 [label="web0\na", fillcolor="#edf7f2", color="#2f6b56"];
+        b0 [label="web1\nb", fillcolor="#edf7f2", color="#2f6b56"];
+        c0 [label="web2\nc", fillcolor="#edf7f2", color="#2f6b56"];
+
+        a0 -- b0;
+        b0 -- c0;
+        c0 -- a0;
+    }
+
+    subgraph cluster_after {
+        label="After splitting web0";
+        color="#c9d9d1";
+        fillcolor="#f8fbf9";
+        style=filled;
+
+        a1 [label="web0\na(early)", fillcolor="#d9efe4", color="#2f6b56"];
+        b1 [label="web1\nb", fillcolor="#d9efe4", color="#2f6b56"];
+        c1 [label="web2\nc", fillcolor="#d9efe4", color="#2f6b56"];
+        a2 [label="web3\na(late)", fillcolor="#d9efe4", color="#2f6b56"];
+
+        a1 -- b1;
+        b1 -- c1;
+        c1 -- a2;
+    }
+}

@@ -1,0 +1,25 @@
+digraph compiler_register_allocation_pipeline {
+    rankdir=LR;
+    node [shape=box, style="rounded,filled", color="#2d5a4a", fillcolor="#f4fbf8", fontname="Helvetica"];
+    edge [color="#365f4f", penwidth=1.2];
+
+    ranges [label="Ranges File\nvar: points"];
+    config [label="Config File\nregisters + algorithm"];
+    parser [label="FileParser"];
+    webs [label="Web Builder\nUnion-Find merge"];
+    igraph [label="InterferenceGraph\nGraph<int>"];
+    alloc [label="AllocationLogic"];
+    modes [label="basic | spilling | splitting | free"];
+    writer [label="OutputWriter"];
+    output [label="allocation.txt"];
+
+    ranges -> parser;
+    config -> parser;
+    parser -> webs;
+    webs -> igraph;
+    igraph -> alloc;
+    parser -> alloc [label="Parameters"];
+    alloc -> modes;
+    modes -> writer;
+    writer -> output;
+}

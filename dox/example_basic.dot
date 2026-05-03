@@ -1,0 +1,16 @@
+graph basic_example {
+    layout=neato;
+    overlap=false;
+    node [shape=circle, style=filled, fontname="Helvetica", fillcolor="#edf7f2", color="#2f6b56"];
+    edge [color="#2f6b56", penwidth=1.5];
+
+    web0 [label="web0\ni"];
+    web1 [label="web1\ni"];
+    web2 [label="web2\nsum"];
+
+    web0 -- web1;
+    web1 -- web2;
+
+    label="ranges1: two colors are sufficient";
+    labelloc=t;
+}

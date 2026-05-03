@@ -1,0 +1,7 @@
+# Live ranges for the Figure 6 example from the project spec
+# single basic block: 6 instructions, no loops
+sum: 1+,2,3,4,5-
+i:   2+,3,4,5-
+t0:  3+,4-
+t1:  4+,5-
+res: 5+,6-
