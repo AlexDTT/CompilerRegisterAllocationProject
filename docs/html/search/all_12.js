@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['ranges_0',['ranges',['../index.html#autotoc_md9',1,'Live ranges'],['../struct_web.html#a58b19ff3d326f425392df7334a126b29',1,'Web::ranges']]],
+  ['readfile_1',['readFile',['../register__alloc__tests_8cpp.html#ae5c6e392594c7ee3c3cf6945caea055c',1,'register_alloc_tests.cpp']]],
+  ['readint_2',['readInt',['../class_register_alloc_app.html#aacf4e01cabb95258613e066184aff320',1,'RegisterAllocApp']]],
+  ['readline_3',['readLine',['../class_register_alloc_app.html#a96377595b90d45d115fc0ecb8bbae490',1,'RegisterAllocApp']]],
+  ['readme_2emd_4',['README.md',['../_r_e_a_d_m_e_8md.html',1,'(Global Namespace)'],['../tests_2_r_e_a_d_m_e_8md.html',1,'(Global Namespace)']]],
+  ['register_20allocation_5',['T2.1 - Basic Register Allocation',['../extra_docs.html#ext_t2',1,'']]],
+  ['register_20allocation_20project_6',['Compiler Register Allocation Project',['../index.html',1,'']]],
+  ['register_20allocation_20with_20spilling_7',['T2.2 - Register Allocation with Spilling',['../extra_docs.html#ext_t3',1,'']]],
+  ['register_20allocation_20with_20splitting_8',['T2.3 - Register Allocation with Splitting',['../extra_docs.html#ext_t4',1,'']]],
+  ['register_20config_20file_9',['Register/config file',['../index.html#autotoc_md10',1,'']]],
+  ['register_5falloc_5ftests_2ecpp_10',['register_alloc_tests.cpp',['../register__alloc__tests_8cpp.html',1,'']]],
+  ['registerallocapp_11',['RegisterAllocApp',['../class_register_alloc_app.html',1,'RegisterAllocApp'],['../class_register_alloc_app.html#a08a04834cebb7013e39efb039bb643fa',1,'RegisterAllocApp::RegisterAllocApp()']]],
+  ['registerallocapp_2ecpp_12',['RegisterAllocApp.cpp',['../_register_alloc_app_8cpp.html',1,'']]],
+  ['registerallocapp_2eh_13',['RegisterAllocApp.h',['../_register_alloc_app_8h.html',1,'']]],
+  ['registersused_14',['registersUsed',['../struct_allocation_result.html#ad2745bf126a525f87be4ea94e99d393a',1,'AllocationResult']]],
+  ['removeedge_15',['removeEdge',['../class_vertex.html#ac1f1dd0a8e1019a242f1120d6559c754',1,'Vertex::removeEdge()'],['../class_graph.html#a8949d071d45bf93e171e275462e1007a',1,'Graph::removeEdge()']]],
+  ['removeoutgoingedges_16',['removeOutgoingEdges',['../class_vertex.html#a414ce58fdf35ee5200a82912f3865506',1,'Vertex']]],
+  ['removevertex_17',['removeVertex',['../class_graph.html#af9c903104ad69a7782979fa9caedf163',1,'Graph']]],
+  ['representation_20and_20parsing_18',['Graph Representation and Parsing',['../extra_docs.html#ext_t1',1,'']]],
+  ['reverse_19',['reverse',['../class_edge.html#a6c1e5191f85afbd20cf6198815c9b079',1,'Edge']]],
+  ['rule_20',['Interference rule',['../extra_docs.html#ext_t1_interference',1,'']]],
+  ['run_21',['run',['../class_register_alloc_app.html#a6736dc92400281a33c5db4f04a3dc831',1,'RegisterAllocApp']]],
+  ['runallocation_22',['runAllocation',['../class_allocation_logic.html#a525be380f325c9d2391e392b68539d20',1,'AllocationLogic::runAllocation()'],['../class_register_alloc_app.html#a6df05a723aaa61515521422133223a9e',1,'RegisterAllocApp::runAllocation()']]],
+  ['runbatchmode_23',['runBatchMode',['../class_register_alloc_app.html#a8fec053d69d206ebc0dbd4e22a11d969',1,'RegisterAllocApp']]],
+  ['runinteractivemode_24',['runInteractiveMode',['../class_register_alloc_app.html#ac5569fc7164ba7e0d0ace0f1cf826bba',1,'RegisterAllocApp']]]
+];

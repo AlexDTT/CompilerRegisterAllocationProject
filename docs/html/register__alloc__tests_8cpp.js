@@ -1,0 +1,26 @@
+var register__alloc__tests_8cpp =
+[
+    [ "ScopedStreamRedirect", "class_scoped_stream_redirect.html", "class_scoped_stream_redirect" ],
+    [ "EXPECT_EQ", "register__alloc__tests_8cpp.html#a7c198106d8a380a0b194d16c918943d2", null ],
+    [ "EXPECT_TRUE", "register__alloc__tests_8cpp.html#a160011a1d2f68d002f76eef2263489e6", null ],
+    [ "colorsRespectInterference", "register__alloc__tests_8cpp.html#a81484c302ed69e03423e4e77215a2348", null ],
+    [ "main", "register__alloc__tests_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4", null ],
+    [ "makeLR", "register__alloc__tests_8cpp.html#a51da3e24a1e93ef04a6a96f0a633206c", null ],
+    [ "makeRanges1LikeInput", "register__alloc__tests_8cpp.html#a413524dd5b83c71983b0b8899643a154", null ],
+    [ "readFile", "register__alloc__tests_8cpp.html#ae5c6e392594c7ee3c3cf6945caea055c", null ],
+    [ "tempPath", "register__alloc__tests_8cpp.html#a0d204f57105f0df2e1c640f408decab0", null ],
+    [ "test_allocationLogic_basic_infeasible_forces_all_memory", "register__alloc__tests_8cpp.html#a7b240f49cf03f97614d3ed2558890116", null ],
+    [ "test_allocationLogic_spilling_preserves_partial_memory_assignment", "register__alloc__tests_8cpp.html#a55e73f015fd4ed4b23e1cfc14ebbe23c", null ],
+    [ "test_basicColoring_detects_infeasible_triangle", "register__alloc__tests_8cpp.html#aa823c527fbd6ca700d0c584c7e901eae", null ],
+    [ "test_buildWebs_is_deterministic_and_merges_transitively", "register__alloc__tests_8cpp.html#a5adb66d895f930e592f9c8ba5d3f655b", null ],
+    [ "test_freeColoring_returns_valid_allocation_with_spill", "register__alloc__tests_8cpp.html#acd349a97857c1c451c5eabaab6b81bb4", null ],
+    [ "test_interference_definition_meets_last_use_is_not_edge", "register__alloc__tests_8cpp.html#a4ef07eba704d57d76598e15ae2fe96f1", null ],
+    [ "test_outputWriter_aggregates_ranges_per_web", "register__alloc__tests_8cpp.html#aee3f20e189ef6a8bd8e1e07aab153b3f", null ],
+    [ "test_parseConfig_variants", "register__alloc__tests_8cpp.html#a1a36dd4e0b97fb603aeb3b16d4cd266c", null ],
+    [ "test_parseRanges_requires_plus_and_minus", "register__alloc__tests_8cpp.html#a1b136473a4823c70c74a7947d171d81a", null ],
+    [ "test_parseRanges_supports_intersection_only_lines", "register__alloc__tests_8cpp.html#a92f56b7f94239995cde1ee711fc331ab", null ],
+    [ "test_spillingColoring_succeeds_with_bounded_spill", "register__alloc__tests_8cpp.html#afb7933e82c9935400eb0b62edafb5414", null ],
+    [ "test_splittingColoring_succeeds_after_one_split", "register__alloc__tests_8cpp.html#ae8e54453a73e7cec8208934c19fd8c8c", null ],
+    [ "g_failed", "register__alloc__tests_8cpp.html#a6ec918d5061c61b98939703182734692", null ],
+    [ "g_passed", "register__alloc__tests_8cpp.html#a9c7183f0a48733c090e68da51073f91d", null ]
+];

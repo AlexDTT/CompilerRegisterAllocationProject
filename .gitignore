@@ -15,7 +15,6 @@ allocation.txt
 interference.dot
 
 tests/output/generated
-docs/html
 
 *.o
 *.d

@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['da_20spring_202026_0',['Algorithm Design (DA) - Spring 2026',['../index.html#autotoc_md3',1,'']]],
+  ['data_20model_1',['Data model',['../extra_docs.html#ext_t1_data',1,'']]],
+  ['datasets_2',['Test Datasets',['../dir_59425e443f801f1f2fd8bbe4959a3ccf.html#autotoc_md0',1,'']]],
+  ['deleteedge_3',['deleteEdge',['../class_vertex.html#a622503fe44ef12d5c39bd1043d47865c',1,'Vertex']]],
+  ['deletematrix_4',['deleteMatrix',['../_graph_8h.html#ad56527992afe31a371065e795da57d25',1,'deleteMatrix(int **m, int n):&#160;Graph.h'],['../_graph_8h.html#af077bc8682a1a1d97e30b08eb1131b19',1,'deleteMatrix(double **m, int n):&#160;Graph.h']]],
+  ['design_20da_20spring_202026_5',['Algorithm Design (DA) - Spring 2026',['../index.html#autotoc_md3',1,'']]],
+  ['design_20notes_6',['Extra Documentation and Design Notes',['../extra_docs.html',1,'']]],
+  ['dest_7',['dest',['../class_edge.html#ae4d65678b91bd9d814af4720ad87cd0c',1,'Edge']]],
+  ['dist_8',['dist',['../class_vertex.html#a08a2b813e77f97aa8b6c1d252e5417f7',1,'Vertex']]],
+  ['distmatrix_9',['distMatrix',['../class_graph.html#a4517f4351bc7f0348369b25b7c0b44fe',1,'Graph']]],
+  ['documentation_10',['Additional Documentation',['../index.html#autotoc_md20',1,'']]],
+  ['documentation_20and_20design_20notes_11',['Extra Documentation and Design Notes',['../extra_docs.html',1,'']]],
+  ['doexportgraphdot_12',['doExportGraphDOT',['../class_register_alloc_app.html#a5bee7db7fc65aa322e22d9d6ea7bd316',1,'RegisterAllocApp']]],
+  ['doloadconfigfile_13',['doLoadConfigFile',['../class_register_alloc_app.html#a5672a70f00ae33c73292e06a109abcde',1,'RegisterAllocApp']]],
+  ['doloadinputpairfromfolder_14',['doLoadInputPairFromFolder',['../class_register_alloc_app.html#ae4f8db27803c4ca853cbb5f753b57be5',1,'RegisterAllocApp']]],
+  ['doloadinputpairmanual_15',['doLoadInputPairManual',['../class_register_alloc_app.html#aa7bbae11794ea018fa10928b0b19dd1c',1,'RegisterAllocApp']]],
+  ['doloadrangesfile_16',['doLoadRangesFile',['../class_register_alloc_app.html#a8d6d4568f12b3cf1e76ec431fd39f77c',1,'RegisterAllocApp']]],
+  ['dorunallocation_17',['doRunAllocation',['../class_register_alloc_app.html#a49013b4ff2ebcce58dff3c399d090265',1,'RegisterAllocApp']]],
+  ['doshowallocationresult_18',['doShowAllocationResult',['../class_register_alloc_app.html#a7986fccb33334f63a7782a2856cd4a7b',1,'RegisterAllocApp']]],
+  ['doviewgraphterminal_19',['doViewGraphTerminal',['../class_register_alloc_app.html#abed708a7f7deab1d5428d1f6e6997941',1,'RegisterAllocApp']]],
+  ['doviewparameters_20',['doViewParameters',['../class_register_alloc_app.html#afcac265f24d35dd148f47edc44574cda',1,'RegisterAllocApp']]],
+  ['doviewwebs_21',['doViewWebs',['../class_register_alloc_app.html#aff0424db8d1581c2776168e9a3461962',1,'RegisterAllocApp']]]
+];
