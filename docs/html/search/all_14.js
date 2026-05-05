@@ -6,7 +6,7 @@ var searchData=
   ['t2_204_20custom_20allocation_20strategy_3',['T2.4 - Custom Allocation Strategy',['../extra_docs.html#ext_t5',1,'']]],
   ['t9g2_20members_4',['Group T9G2 Members',['../index.html#autotoc_md5',1,'']]],
   ['temppath_5',['tempPath',['../register__alloc__tests_8cpp.html#a0d204f57105f0df2e1c640f408decab0',1,'register_alloc_tests.cpp']]],
-  ['test_20coverage_6',['Test Coverage',['../index.html#autotoc_md19',1,'']]],
+  ['test_20coverage_6',['Test Coverage',['../index.html#autotoc_md22',1,'']]],
   ['test_20datasets_7',['Test Datasets',['../dir_59425e443f801f1f2fd8bbe4959a3ccf.html#autotoc_md0',1,'']]],
   ['test_20strategy_8',['Test Strategy',['../dir_59425e443f801f1f2fd8bbe4959a3ccf.html#autotoc_md1',1,'']]],
   ['test_5fallocationlogic_5fbasic_5finfeasible_5fforces_5fall_5fmemory_9',['test_allocationLogic_basic_infeasible_forces_all_memory',['../register__alloc__tests_8cpp.html#a7b240f49cf03f97614d3ed2558890116',1,'register_alloc_tests.cpp']]],
@@ -22,5 +22,6 @@ var searchData=
   ['test_5fspillingcoloring_5fsucceeds_5fwith_5fbounded_5fspill_19',['test_spillingColoring_succeeds_with_bounded_spill',['../register__alloc__tests_8cpp.html#afb7933e82c9935400eb0b62edafb5414',1,'register_alloc_tests.cpp']]],
   ['test_5fsplittingcoloring_5fsucceeds_5fafter_5fone_5fsplit_20',['test_splittingColoring_succeeds_after_one_split',['../register__alloc__tests_8cpp.html#ae8e54453a73e7cec8208934c19fd8c8c',1,'register_alloc_tests.cpp']]],
   ['testing_21',['Testing',['../extra_docs.html#ext_t6',1,'Error Handling, CLI, and Testing'],['../extra_docs.html#ext_t6_tests',1,'Testing']]],
-  ['the_20project_22',['About the Project',['../index.html#autotoc_md4',1,'']]]
+  ['the_20project_22',['About the Project',['../index.html#autotoc_md4',1,'']]],
+  ['transitive_20web_20fusion_23',['Transitive web fusion',['../extra_docs.html#ext_t5_fusion',1,'']]]
 ];

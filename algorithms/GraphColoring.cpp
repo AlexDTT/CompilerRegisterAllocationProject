@@ -305,7 +305,7 @@ int GraphColoring::pickSpillCandidate(const Graph<int> &graph,
 }
 
 // ---------------------------------------------------------------------------
-// T2.1  basicColoring  – TODO: implement
+// T2.1  basicColoring
 // ---------------------------------------------------------------------------
 AllocationResult GraphColoring::basicColoring(const Graph<int> &graph,
                                               const std::vector<Web> &webs,
@@ -404,7 +404,7 @@ AllocationResult GraphColoring::basicColoring(const Graph<int> &graph,
 }
 
 // ---------------------------------------------------------------------------
-// T2.2  spillingColoring  – TODO: implement
+// T2.2  spillingColoring
 // ---------------------------------------------------------------------------
 AllocationResult GraphColoring::spillingColoring(const Graph<int> &graph,
                                                  const std::vector<Web> &webs,
@@ -465,7 +465,7 @@ AllocationResult GraphColoring::spillingColoring(const Graph<int> &graph,
 }
 
 // ---------------------------------------------------------------------------
-// T2.3  splittingColoring  – TODO: implement
+// T2.3  splittingColoring
 // ---------------------------------------------------------------------------
 AllocationResult GraphColoring::splittingColoring(Graph<int> &graph,
                                                   std::vector<Web> &webs,
@@ -526,7 +526,7 @@ AllocationResult GraphColoring::splittingColoring(Graph<int> &graph,
 }
 
 // ---------------------------------------------------------------------------
-// T2.4  freeColoring  – TODO: implement
+// T2.4  freeColoring
 // ---------------------------------------------------------------------------
 AllocationResult GraphColoring::freeColoring(const Graph<int> &graph,
                                              const std::vector<Web> &webs,

@@ -52,6 +52,10 @@ var NAVTREE =
         [ "Approach", "extra_docs.html#ext_t5_free_approach", null ],
         [ "Complexity", "extra_docs.html#ext_t5_free_complexity", null ]
       ] ],
+      [ "Additional Graph Examples", "extra_docs.html#ext_t5_examples", [
+        [ "Last-use/definition adjacency", "extra_docs.html#ext_t5_noninterference", null ],
+        [ "Transitive web fusion", "extra_docs.html#ext_t5_fusion", null ]
+      ] ],
       [ "Error Handling, CLI, and Testing", "extra_docs.html#ext_t6", [
         [ "CLI", "extra_docs.html#ext_t6_cli", null ],
         [ "Testing", "extra_docs.html#ext_t6_tests", null ]
@@ -82,7 +86,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_allocation_logic_8cpp.html",
-"register__alloc__tests_8cpp.html#a1b136473a4823c70c74a7947d171d81a"
+"main_8cpp_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

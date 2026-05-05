@@ -1,0 +1,15 @@
+graph noninterference_chain {
+    layout=neato;
+    overlap=false;
+    node [shape=circle, style=filled, fontname="Helvetica", fillcolor="#edf7f2", color="#2f6b56"];
+    edge [color="#2f6b56", penwidth=1.5];
+
+    web0 [label="web0\nt0: 3+..5-"];
+    web1 [label="web1\nsum: 5+..6-"];
+    web2 [label="web2\nt1: 4+..5-"];
+
+    web0 -- web2;
+
+    label="Last-use/definition adjacency: t0 and t1 interfere, sum reuses the register";
+    labelloc=t;
+}

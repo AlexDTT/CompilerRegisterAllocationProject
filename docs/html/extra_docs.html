@@ -162,10 +162,11 @@ Complexity</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Parse config  </td><td class="markdownTableBodyNone"><span class="tt">O(L)</span>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Build webs  </td><td class="markdownTableBodyNone"><span class="tt">O(V * R^2 * P)</span>  </td></tr>
+<td class="markdownTableBodyNone">Build webs  </td><td class="markdownTableBodyNone"><span class="tt">O(V * R^2 * P log P)</span>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Build interference graph  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 * P)</span>  </td></tr>
+<td class="markdownTableBodyNone">Build interference graph  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 * P + E * W)</span>  </td></tr>
 </table>
+<p>The bounds above describe the current implementation. The extra <span class="tt">log P</span> in web construction comes from set-based overlap tests, and the <span class="tt">E * W</span> graph-building term comes from the vector-backed course graph, where endpoint lookup is linear in the number of webs.</p>
 <hr  />
 <h1 class="doxsection"><a class="anchor" id="ext_t2"></a>
 T2.1 - Basic Register Allocation</h1>
@@ -189,8 +190,9 @@ Complexity</h2>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Step  </th><th class="markdownTableHeadNone">Complexity  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Simplification + select  </td><td class="markdownTableBodyNone"><span class="tt">O(W * (W + E))</span>  </td></tr>
+<td class="markdownTableBodyNone">Simplification + select  </td><td class="markdownTableBodyNone"><span class="tt">O(W * (W^2 + E))</span>  </td></tr>
 </table>
+<p>The <span class="tt">W^2</span> component comes from repeated <span class="tt">findVertex</span> calls on the provided vector-backed graph. With an indexed graph representation, this would reduce to the usual simplify/select adjacency-scan cost.</p>
 <hr  />
 <h1 class="doxsection"><a class="anchor" id="ext_t3"></a>
 T2.2 - Register Allocation with Spilling</h1>
@@ -219,7 +221,7 @@ Complexity</h2>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Step  </th><th class="markdownTableHeadNone">Complexity  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Up to <span class="tt">K</span> recoloring attempts  </td><td class="markdownTableBodyNone"><span class="tt">O(K * W * (W + E))</span>  </td></tr>
+<td class="markdownTableBodyNone">Up to <span class="tt">K</span> recoloring attempts  </td><td class="markdownTableBodyNone"><span class="tt">O((K + 1) * W * (W^2 + E))</span>  </td></tr>
 </table>
 <hr  />
 <h1 class="doxsection"><a class="anchor" id="ext_t4"></a>
@@ -252,11 +254,11 @@ Complexity</h2>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Step  </th><th class="markdownTableHeadNone">Complexity  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Split candidate selection  </td><td class="markdownTableBodyNone"><span class="tt">O(W + E)</span>  </td></tr>
+<td class="markdownTableBodyNone">Split candidate selection  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 + E)</span>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><a class="el" href="class_graph.html" title="Represents a general graph using an adjacency list.">Graph</a> rebuild after each split  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 * P)</span>  </td></tr>
+<td class="markdownTableBodyNone"><a class="el" href="class_graph.html" title="Represents a general graph using an adjacency list.">Graph</a> rebuild after each split  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 * P + E * W)</span>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Full allocator with at most <span class="tt">K</span> splits  </td><td class="markdownTableBodyNone"><span class="tt">O(K * (W^2 * P + W * (W + E)))</span>  </td></tr>
+<td class="markdownTableBodyNone">Full allocator with at most <span class="tt">K</span> splits  </td><td class="markdownTableBodyNone"><span class="tt">O((K + 1) * (W^2 * P + E * W + W * (W^2 + E)))</span>  </td></tr>
 </table>
 <hr  />
 <h1 class="doxsection"><a class="anchor" id="ext_t5"></a>
@@ -277,9 +279,22 @@ Complexity</h2>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Step  </th><th class="markdownTableHeadNone">Complexity  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Saturation-based selection and coloring  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 + E)</span>  </td></tr>
+<td class="markdownTableBodyNone">Saturation-based selection and coloring  </td><td class="markdownTableBodyNone"><span class="tt">O(W * (W^2 + E))</span>  </td></tr>
 </table>
-<hr  />
+<p>Each DSATUR-style round scans the remaining vertices and their adjacency lists, and each vertex lookup is linear in <span class="tt">W</span> in the current graph structure.</p>
+<h1 class="doxsection"><a class="anchor" id="ext_t5_examples"></a>
+Additional Graph Examples</h1>
+<h2 class="doxsection"><a class="anchor" id="ext_t5_noninterference"></a>
+Last-use/definition adjacency</h2>
+<p>This example documents the subtle interference exception from the statement: if one web ends at a line because of a last use and another starts at the same line because of a definition, the two webs can reuse the same register.</p>
+<div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_noninterference_chain.svg" width="668" height="404"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="ext_t5_fusion"></a>
+Transitive web fusion</h2>
+<p>The following example mirrors the overlapping <span class="tt">x</span> ranges from the statement. Even if not every range overlaps every other range directly, the overlap graph is connected, so all ranges belong to one web.</p>
+<div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_web_fusion.svg" width="654" height="255"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div><div class="interactive_dotgraph"></div><hr  />
 <h1 class="doxsection"><a class="anchor" id="ext_t6"></a>
 Error Handling, CLI, and Testing</h1>
 <h2 class="doxsection"><a class="anchor" id="ext_t6_cli"></a>
@@ -298,7 +313,7 @@ Testing</h2>
 <li>pin down the interference and web-fusion semantics;</li>
 <li>validate the behaviour of all four allocation modes.</li>
 </ul>
-<p>The integration tests use the six baseline datasets from <span class="tt">~/Downloads/basic</span> plus dedicated spilling/splitting/free scenarios. </p>
+<p>The integration tests use the six baseline datasets plus dedicated spilling, splitting, and free scenarios. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

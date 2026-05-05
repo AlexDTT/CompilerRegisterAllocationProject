@@ -136,27 +136,59 @@ The application pipeline is intentionally close to the problem formulation from 
 
 </div>
 
+### Non-interference adjacency example
+<div class="interactive_dotgraph">
+
+\dotfile dox/example_noninterference_chain.dot "Definition at last-use line allows register reuse"
+
+</div>
+
+### Web fusion example
+<div class="interactive_dotgraph">
+
+\dotfile dox/example_web_fusion.dot "Transitive fusion of overlapping live ranges"
+
+</div>
+
 ## Complexity Summary
 
 | Step | Complexity |
 |---|---|
 | Parse ranges file | `O(L * P)` |
 | Parse config file | `O(L)` |
-| Build webs | `O(V * R^2 * P)` |
-| Build interference graph | `O(W^2 * P)` |
-| Basic coloring | `O(W * (W + E))` |
-| Spilling allocator | `O(K * W * (W + E))` |
-| Splitting allocator | `O(K * (W^2 * P + W * (W + E)))` |
-| Free allocator | `O(W^2 + E)` |
+| Build webs | `O(V * R^2 * P log P)` |
+| Build interference graph | `O(W^2 * P + E * W)` |
+| Basic coloring | `O(W * (W^2 + E))` |
+| Spilling allocator | `O((S + 1) * W * (W^2 + E))` |
+| Splitting allocator | `O((S + 1) * (W^2 * P + E * W + W * (W^2 + E)))` |
+| Free allocator | `O(W * (W^2 + E))` |
 
 Where:
 - `L` is the number of input lines,
-- `P` is the average number of program points per range,
+- `P` is the maximum number of program points considered in a parse, range, or web-pair comparison,
 - `R` is the number of ranges per variable,
 - `V` is the number of variables,
 - `W` is the number of webs,
-- `E` is the number of interference edges,
-- `K` is the maximum number of allowed spill/split recovery actions.
+- `E` is the number of directed adjacency entries in the interference graph,
+- `S` is the maximum number of allowed spill/split recovery actions.
+
+The coloring bounds include the current vector-backed course `Graph<int>` implementation,
+where `findVertex` is `O(W)`. Replacing the vertex store with an indexed map would reduce
+several lookup-driven factors, but the project intentionally keeps the provided graph as
+the primary representation.
+
+## Project Requirements Coverage
+
+| Requirement | Status |
+|---|---|
+| T1.1 command-line menu and batch mode | Implemented through `RegisterAllocApp` and `./register_alloc -b`. |
+| T1.2 input parsing and graph-based data structures | Implemented through `FileParser`, `InterferenceGraph`, and the course `Graph<int>`. |
+| T1.3 Doxygen documentation and complexity analysis | Source-level Doxygen plus this README and `dox/extra_documentation.dox`. |
+| T2.1 basic allocation | Implemented. |
+| T2.2 bounded spilling | Implemented. |
+| T2.3 bounded splitting | Implemented. |
+| T2.4 custom allocation | Implemented with DSATUR-style selection and safe spill fallback. |
+| Testing | Unit and integration tests are available through `make test`. |
 
 ## Test Coverage
 The repository includes:

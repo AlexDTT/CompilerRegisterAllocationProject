@@ -12,5 +12,7 @@ var searchData=
   ['formatweb_9',['formatWeb',['../class_output_writer.html#ae32955443148b7078bf139e6fd8a67e8',1,'OutputWriter']]],
   ['free_10',['Free',['../_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594',1,'Parameters.h']]],
   ['free_20heuristic_20example_11',['Free heuristic example',['../index.html#autotoc_md17',1,'']]],
-  ['freecoloring_12',['freeColoring',['../class_graph_coloring.html#ad97fc256957b5e215426e4f567e38fc1',1,'GraphColoring']]]
+  ['freecoloring_12',['freeColoring',['../class_graph_coloring.html#ad97fc256957b5e215426e4f567e38fc1',1,'GraphColoring']]],
+  ['fusion_13',['Transitive web fusion',['../extra_docs.html#ext_t5_fusion',1,'']]],
+  ['fusion_20example_14',['Web fusion example',['../index.html#autotoc_md19',1,'']]]
 ];

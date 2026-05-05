@@ -11,8 +11,8 @@
 
 ## Output
 
-The `tests/output/expected/basic` folder contains valid solutions produced by this project for
-each input instance.
+The `tests/output/expected` folder contains valid deterministic solutions produced by this
+project for each input instance.
 
 It is important to note that:
 - The naming of webs can differ across implementations.

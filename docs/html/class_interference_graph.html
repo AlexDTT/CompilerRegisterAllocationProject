@@ -171,7 +171,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The interference graph. The caller owns the returned graph. \par Complexity:<br  />
- O(W^2 * P) where W is the number of webs and P the total number of distinct program points, because we check every pair of webs for a shared live point. </dd></dl>
+ O(W^2 * P + E * W) where W is the number of webs, P is the maximum number of points inspected per web pair, and E is the number of interference edges. The E * W term comes from <a class="el" href="class_graph.html">Graph&lt;int&gt;</a>'s linear endpoint lookup while inserting bidirectional edges. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_interference_graph_8cpp_source.html#l00189">189</a> of file <a class="el" href="_interference_graph_8cpp_source.html">InterferenceGraph.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  190</span>{</div>
@@ -233,7 +233,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Ordered list of webs (web IDs are 0-based indices into this vector). \par Complexity:<br  />
- O(V * R^2 * P) where V is the number of variables, R the maximum number of ranges per variable, and P the maximum number of program points per range. </dd></dl>
+ O(V * R^2 * P log P) where V is the number of variables, R the maximum number of ranges per variable, and P the maximum number of program points per range. The log factor comes from the set used by the range-overlap test. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_interference_graph_8cpp_source.html#l00085">85</a> of file <a class="el" href="_interference_graph_8cpp_source.html">InterferenceGraph.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   87</span>{</div>
@@ -421,7 +421,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the webs interfere, false otherwise. \par Complexity:<br  />
- O(P_a * P_b) in the worst case, iterating over all point pairs. </dd></dl>
+ O(P_a + P_b), building marker maps for both webs and probing by shared line number. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_interference_graph_8cpp_source.html#l00145">145</a> of file <a class="el" href="_interference_graph_8cpp_source.html">InterferenceGraph.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  146</span>{</div>

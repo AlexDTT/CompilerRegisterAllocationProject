@@ -1,0 +1,22 @@
+graph web_fusion_example {
+    rankdir=LR;
+    node [shape=box, style=rounded, fontname="Helvetica", color="#2f6b56"];
+    edge [color="#2f6b56", penwidth=1.4];
+
+    r0 [label="x: 1+,2,3,4,7"];
+    r1 [label="x: 7,8"];
+    r2 [label="x: 8,9-"];
+    r3 [label="x: 8,11,12,13-"];
+    web0 [shape=ellipse, style=filled, fillcolor="#d9efe4", label="web0\nx"];
+
+    r0 -- r1 [label="line 7"];
+    r1 -- r2 [label="line 8"];
+    r1 -- r3 [label="line 8"];
+    r0 -- web0 [style=dashed];
+    r1 -- web0 [style=dashed];
+    r2 -- web0 [style=dashed];
+    r3 -- web0 [style=dashed];
+
+    label="Overlapping ranges of the same variable are transitively fused into one web";
+    labelloc=t;
+}

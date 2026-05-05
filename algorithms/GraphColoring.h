@@ -68,8 +68,10 @@ public:
    * @param webs         Ordered list of webs.
    * @param numRegisters Number of available physical registers (K).
    * @return AllocationResult with the register assignment.
-   * @complexity O(K * (V + E)) where V is the number of webs and E the number of
-   *             interference edges; in practice dominated by the simplification loop.
+   * @complexity O(W * (W^2 + E)) where W is the number of webs and E is the
+   *             number of directed adjacency entries in the current Graph<int>.
+   *             The extra W factor comes from repeated simplify passes and the
+   *             course graph's O(W) findVertex lookup.
    *
    */
   static AllocationResult basicColoring(const Graph<int> &graph,
@@ -93,8 +95,8 @@ public:
    * @param numRegisters Number of available physical registers (K).
    * @param maxSpills    Maximum number of webs that may be spilled.
    * @return AllocationResult (spilled webs have webToRegister = -1).
-   * @complexity Depends on the spill-selection strategy; O(maxSpills * K * (V + E))
-   *             with a greedy outer loop.
+   * @complexity O((maxSpills + 1) * W * (W^2 + E)) with the implemented
+   *             high-degree spill heuristic and vector-backed Graph<int>.
    *
    */
   static AllocationResult spillingColoring(const Graph<int> &graph,
@@ -122,8 +124,10 @@ public:
    * @param numRegisters Number of available physical registers (K).
    * @param maxSplits    Maximum number of webs that may be split.
    * @return AllocationResult for the (possibly extended) web list.
-   * @complexity Depends on the splitting strategy; requires rebuilding the
-   *             interference graph after each split.
+   * @complexity O((maxSplits + 1) * (W^2 * P + E * W + W * (W^2 + E))) in the
+   *             worst case, where P is the maximum number of points compared
+   *             per web pair. Each split rebuilds the interference graph and
+   *             reruns coloring.
    *
    */
   static AllocationResult splittingColoring(Graph<int> &graph,
@@ -145,6 +149,9 @@ public:
    * @param webs         Ordered list of webs.
    * @param numRegisters Number of available physical registers (K).
    * @return AllocationResult with the register assignment.
+   * @complexity O(W * (W^2 + E)) with the vector-backed Graph<int>, because each
+   *             DSATUR selection round scans the remaining vertices and their
+   *             adjacency lists.
    *
    */
   static AllocationResult freeColoring(const Graph<int> &graph,
@@ -172,7 +179,8 @@ private:
    * @param graph  The full interference graph.
    * @param active Set of currently active web IDs.
    * @return Web ID of the chosen spill candidate.
-   * @complexity O(|active| * E) scanning degrees.
+   * @complexity O(W^2 + E) for a full active set, because activeDegree performs
+   *             an O(W) vertex lookup and scans each active adjacency list.
    */
   static int pickSpillCandidate(const Graph<int> &graph,
                                 const std::set<int> &active);

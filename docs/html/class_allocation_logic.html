@@ -169,7 +169,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Estimated lower bound on the chromatic number. \par Complexity:<br  />
- O(V^2) greedy clique search. </dd></dl>
+ O(W^3 + W * E) in the worst case with the current vector-backed <a class="el" href="class_graph.html">Graph&lt;int&gt;</a>, where W is the number of webs and E is the number of directed adjacency entries. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_allocation_logic_8cpp_source.html#l00117">117</a> of file <a class="el" href="_allocation_logic_8cpp_source.html">AllocationLogic.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  119</span>{</div>
@@ -274,7 +274,7 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">webs</td><td>The web list. </td></tr>
     <tr><td class="paramname">result</td><td>The allocation result to summarise. \par Complexity:<br  />
- O(W * P) where W is the number of webs and P the total program points. </td></tr>
+ O(P + W log A) where P is the total number of program points printed, W is the number of webs, and A is the number of allocation entries queried. </td></tr>
   </table>
   </dd>
 </dl>

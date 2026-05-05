@@ -18,12 +18,13 @@ var searchData=
   ['getvertexset_15',['getVertexSet',['../class_graph.html#a41624b03fcb6bd29e4df574a1ec58541',1,'Graph']]],
   ['getweight_16',['getWeight',['../class_edge.html#a3df378e283d6c8be5be4170ac8d7f4e8',1,'Edge']]],
   ['graph_17',['Graph',['../class_graph.html',1,'Graph&lt; T &gt;'],['../class_graph.html#a4648f2918bf5095a3fb5e6613a6e562f',1,'Graph::Graph()=default'],['../class_graph.html#aaeeeb9215cab69526f9243aea5ec7eb9',1,'Graph::Graph(const Graph &amp;)=delete'],['../class_graph.html#ae2439726511807fb618cc59aa4bbd424',1,'Graph::Graph(Graph &amp;&amp;other) noexcept']]],
-  ['graph_20representation_20and_20parsing_18',['Graph Representation and Parsing',['../extra_docs.html#ext_t1',1,'']]],
-  ['graph_2eh_19',['Graph.h',['../_graph_8h.html',1,'']]],
-  ['graph_3c_20int_20_3e_20',['Graph&lt; int &gt;',['../class_graph.html',1,'']]],
-  ['graphcoloring_21',['GraphColoring',['../class_graph_coloring.html',1,'']]],
-  ['graphcoloring_2ecpp_22',['GraphColoring.cpp',['../_graph_coloring_8cpp.html',1,'']]],
-  ['graphcoloring_2eh_23',['GraphColoring.h',['../_graph_coloring_8h.html',1,'']]],
-  ['graphs_24',['Example Interference Graphs',['../index.html#autotoc_md13',1,'']]],
-  ['group_20t9g2_20members_25',['Group T9G2 Members',['../index.html#autotoc_md5',1,'']]]
+  ['graph_20examples_18',['Additional Graph Examples',['../extra_docs.html#ext_t5_examples',1,'']]],
+  ['graph_20representation_20and_20parsing_19',['Graph Representation and Parsing',['../extra_docs.html#ext_t1',1,'']]],
+  ['graph_2eh_20',['Graph.h',['../_graph_8h.html',1,'']]],
+  ['graph_3c_20int_20_3e_21',['Graph&lt; int &gt;',['../class_graph.html',1,'']]],
+  ['graphcoloring_22',['GraphColoring',['../class_graph_coloring.html',1,'']]],
+  ['graphcoloring_2ecpp_23',['GraphColoring.cpp',['../_graph_coloring_8cpp.html',1,'']]],
+  ['graphcoloring_2eh_24',['GraphColoring.h',['../_graph_coloring_8h.html',1,'']]],
+  ['graphs_25',['Example Interference Graphs',['../index.html#autotoc_md13',1,'']]],
+  ['group_20t9g2_20members_26',['Group T9G2 Members',['../index.html#autotoc_md5',1,'']]]
 ];

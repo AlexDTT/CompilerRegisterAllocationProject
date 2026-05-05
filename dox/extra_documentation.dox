@@ -66,8 +66,13 @@ examples.
 |------|-----------|
 | Parse ranges | `O(L * P)` |
 | Parse config | `O(L)` |
-| Build webs | `O(V * R^2 * P)` |
-| Build interference graph | `O(W^2 * P)` |
+| Build webs | `O(V * R^2 * P log P)` |
+| Build interference graph | `O(W^2 * P + E * W)` |
+
+The bounds above describe the current implementation. The extra `log P` in web
+construction comes from set-based overlap tests, and the `E * W` graph-building
+term comes from the vector-backed course graph, where endpoint lookup is linear
+in the number of webs.
 
 ---
 
@@ -94,7 +99,11 @@ fallback output:
 
 | Step | Complexity |
 |------|-----------|
-| Simplification + select | `O(W * (W + E))` |
+| Simplification + select | `O(W * (W^2 + E))` |
+
+The `W^2` component comes from repeated `findVertex` calls on the provided
+vector-backed graph. With an indexed graph representation, this would reduce to
+the usual simplify/select adjacency-scan cost.
 
 ---
 
@@ -132,7 +141,7 @@ allocatable after spilling one web:
 
 | Step | Complexity |
 |------|-----------|
-| Up to `K` recoloring attempts | `O(K * W * (W + E))` |
+| Up to `K` recoloring attempts | `O((K + 1) * W * (W^2 + E))` |
 
 ---
 
@@ -175,9 +184,9 @@ webs, the resulting graph becomes 2-colorable:
 
 | Step | Complexity |
 |------|-----------|
-| Split candidate selection | `O(W + E)` |
-| Graph rebuild after each split | `O(W^2 * P)` |
-| Full allocator with at most `K` splits | `O(K * (W^2 * P + W * (W + E)))` |
+| Split candidate selection | `O(W^2 + E)` |
+| Graph rebuild after each split | `O(W^2 * P + E * W)` |
+| Full allocator with at most `K` splits | `O((K + 1) * (W^2 * P + E * W + W * (W^2 + E)))` |
 
 ---
 
@@ -199,7 +208,36 @@ coloring because it colors the most constrained vertices first.
 
 | Step | Complexity |
 |------|-----------|
-| Saturation-based selection and coloring | `O(W^2 + E)` |
+| Saturation-based selection and coloring | `O(W * (W^2 + E))` |
+
+Each DSATUR-style round scans the remaining vertices and their adjacency lists,
+and each vertex lookup is linear in `W` in the current graph structure.
+
+@section ext_t5_examples Additional Graph Examples
+
+@subsection ext_t5_noninterference Last-use/definition adjacency
+
+This example documents the subtle interference exception from the statement:
+if one web ends at a line because of a last use and another starts at the same
+line because of a definition, the two webs can reuse the same register.
+
+<div class="interactive_dotgraph">
+
+\dotfile dox/example_noninterference_chain.dot
+
+</div>
+
+@subsection ext_t5_fusion Transitive web fusion
+
+The following example mirrors the overlapping `x` ranges from the statement.
+Even if not every range overlaps every other range directly, the overlap graph
+is connected, so all ranges belong to one web.
+
+<div class="interactive_dotgraph">
+
+\dotfile dox/example_web_fusion.dot
+
+</div>
 
 ---
 

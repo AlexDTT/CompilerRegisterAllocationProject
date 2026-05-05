@@ -15,9 +15,12 @@ var index =
       [ "Basic coloring example", "index.html#autotoc_md14", null ],
       [ "Spilling example", "index.html#autotoc_md15", null ],
       [ "Splitting example", "index.html#autotoc_md16", null ],
-      [ "Free heuristic example", "index.html#autotoc_md17", null ]
+      [ "Free heuristic example", "index.html#autotoc_md17", null ],
+      [ "Non-interference adjacency example", "index.html#autotoc_md18", null ],
+      [ "Web fusion example", "index.html#autotoc_md19", null ]
     ] ],
-    [ "Complexity Summary", "index.html#autotoc_md18", null ],
-    [ "Test Coverage", "index.html#autotoc_md19", null ],
-    [ "Additional Documentation", "index.html#autotoc_md20", null ]
+    [ "Complexity Summary", "index.html#autotoc_md20", null ],
+    [ "Project Requirements Coverage", "index.html#autotoc_md21", null ],
+    [ "Test Coverage", "index.html#autotoc_md22", null ],
+    [ "Additional Documentation", "index.html#autotoc_md23", null ]
 ];

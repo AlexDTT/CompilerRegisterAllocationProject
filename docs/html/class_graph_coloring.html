@@ -247,7 +247,7 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_allocation_result.html" title="The outcome of a register allocation run.">AllocationResult</a> with the register assignment. \par Complexity:<br  />
- O(K * (V + E)) where V is the number of webs and E the number of interference edges; in practice dominated by the simplification loop. </dd></dl>
+ O(W * (W^2 + E)) where W is the number of webs and E is the number of directed adjacency entries in the current <a class="el" href="class_graph.html">Graph&lt;int&gt;</a>. The extra W factor comes from repeated simplify passes and the course graph's O(W) findVertex lookup. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_graph_coloring_8cpp_source.html#l00310">310</a> of file <a class="el" href="_graph_coloring_8cpp_source.html">GraphColoring.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  313</span>{</div>
@@ -389,7 +389,8 @@ Static Private Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_allocation_result.html" title="The outcome of a register allocation run.">AllocationResult</a> with the register assignment. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_allocation_result.html" title="The outcome of a register allocation run.">AllocationResult</a> with the register assignment. \par Complexity:<br  />
+ O(W * (W^2 + E)) with the vector-backed <a class="el" href="class_graph.html">Graph&lt;int&gt;</a>, because each DSATUR selection round scans the remaining vertices and their adjacency lists. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_graph_coloring_8cpp_source.html#l00531">531</a> of file <a class="el" href="_graph_coloring_8cpp_source.html">GraphColoring.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  534</span>{</div>
@@ -513,7 +514,7 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_web.html" title="A live web is the union of one or more live ranges of the same variable whose program-point sets over...">Web</a> ID of the chosen spill candidate. \par Complexity:<br  />
- O(|active| * E) scanning degrees. </dd></dl>
+ O(W^2 + E) for a full active set, because activeDegree performs an O(W) vertex lookup and scans each active adjacency list. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_graph_coloring_8cpp_source.html#l00290">290</a> of file <a class="el" href="_graph_coloring_8cpp_source.html">GraphColoring.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  292</span>{</div>
@@ -582,7 +583,7 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_allocation_result.html" title="The outcome of a register allocation run.">AllocationResult</a> (spilled webs have webToRegister = -1). \par Complexity:<br  />
- Depends on the spill-selection strategy; O(maxSpills * K * (V + E)) with a greedy outer loop. </dd></dl>
+ O((maxSpills + 1) * W * (W^2 + E)) with the implemented high-degree spill heuristic and vector-backed <a class="el" href="class_graph.html">Graph&lt;int&gt;</a>. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_graph_coloring_8cpp_source.html#l00409">409</a> of file <a class="el" href="_graph_coloring_8cpp_source.html">GraphColoring.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  413</span>{</div>
@@ -691,7 +692,7 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_allocation_result.html" title="The outcome of a register allocation run.">AllocationResult</a> for the (possibly extended) web list. \par Complexity:<br  />
- Depends on the splitting strategy; requires rebuilding the interference graph after each split. </dd></dl>
+ O((maxSplits + 1) * (W^2 * P + E * W + W * (W^2 + E))) in the worst case, where P is the maximum number of points compared per web pair. Each split rebuilds the interference graph and reruns coloring. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_graph_coloring_8cpp_source.html#l00470">470</a> of file <a class="el" href="_graph_coloring_8cpp_source.html">GraphColoring.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  474</span>{</div>

@@ -259,7 +259,7 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success, false if the file could not be created. \par Complexity:<br  />
- O(W * P) where W is the number of webs and P the total program points. </dd></dl>
+ O(W log W + P log P + A) where W is the number of webs, P is the total number of program points across all webs, and A is the number of allocation entries. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_output_writer_8cpp_source.html#l00054">54</a> of file <a class="el" href="_output_writer_8cpp_source.html">OutputWriter.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   57</span>{</div>

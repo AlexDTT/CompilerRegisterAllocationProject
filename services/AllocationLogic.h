@@ -46,7 +46,9 @@ public:
    *
    * @param webs   The web list.
    * @param result The allocation result to summarise.
-   * @complexity O(W * P) where W is the number of webs and P the total program points.
+   * @complexity O(P + W log A) where P is the total number of program points
+   *             printed, W is the number of webs, and A is the number of
+   *             allocation entries queried.
    */
   static void printResult(const std::vector<Web> &webs,
                           const AllocationResult &result);
@@ -60,7 +62,9 @@ public:
    * @param graph The interference graph.
    * @param webs  The web list.
    * @return Estimated lower bound on the chromatic number.
-   * @complexity O(V^2) greedy clique search.
+   * @complexity O(W^3 + W * E) in the worst case with the current vector-backed
+   *             Graph<int>, where W is the number of webs and E is the number of
+   *             directed adjacency entries.
    */
   static int estimateChromatic(const Graph<int> &graph,
                                const std::vector<Web> &webs);

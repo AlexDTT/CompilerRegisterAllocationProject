@@ -23,6 +23,6 @@ var searchData=
   ['spring_202026_20',['Algorithm Design (DA) - Spring 2026',['../index.html#autotoc_md3',1,'']]],
   ['str_21',['str',['../class_scoped_stream_redirect.html#a33bc96e036e7fd6b5999d4250d3f265e',1,'ScopedStreamRedirect']]],
   ['strategy_22',['Strategy',['../extra_docs.html#ext_t5',1,'T2.4 - Custom Allocation Strategy'],['../dir_59425e443f801f1f2fd8bbe4959a3ccf.html#autotoc_md1',1,'Test Strategy']]],
-  ['summary_23',['Complexity Summary',['../index.html#autotoc_md18',1,'']]],
+  ['summary_23',['Complexity Summary',['../index.html#autotoc_md20',1,'']]],
   ['system_20architecture_24',['System Architecture',['../index.html#autotoc_md12',1,'']]]
 ];

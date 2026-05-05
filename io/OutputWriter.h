@@ -43,7 +43,9 @@ public:
    * @param webToRegister Map from web ID to physical register index (0-based).
    *                      A value of -1 indicates the web was spilled to memory.
    * @return true on success, false if the file could not be created.
-   * @complexity O(W * P) where W is the number of webs and P the total program points.
+   * @complexity O(W log W + P log P + A) where W is the number of webs, P is the
+   *             total number of program points across all webs, and A is the
+   *             number of allocation entries.
    */
   static bool write(const std::string &filename,
                     const std::vector<Web> &webs,

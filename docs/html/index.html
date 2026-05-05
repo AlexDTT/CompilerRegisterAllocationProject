@@ -222,7 +222,19 @@ Free heuristic example</h2>
 <iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_free.svg" width="576" height="544"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Custom allocator with selective spill fallback</div>
 </div>
-</div><div class="interactive_dotgraph"></div><h1 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
+</div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
+Non-interference adjacency example</h2>
+<div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_noninterference_chain.svg" width="668" height="404"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+Definition at last-use line allows register reuse</div>
+</div>
+</div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+Web fusion example</h2>
+<div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_web_fusion.svg" width="654" height="255"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+Transitive fusion of overlapping live ranges</div>
+</div>
+</div><div class="interactive_dotgraph"></div><h1 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
 Complexity Summary</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -232,38 +244,61 @@ Complexity Summary</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Parse config file  </td><td class="markdownTableBodyNone"><span class="tt">O(L)</span>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Build webs  </td><td class="markdownTableBodyNone"><span class="tt">O(V * R^2 * P)</span>  </td></tr>
+<td class="markdownTableBodyNone">Build webs  </td><td class="markdownTableBodyNone"><span class="tt">O(V * R^2 * P log P)</span>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Build interference graph  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 * P)</span>  </td></tr>
+<td class="markdownTableBodyNone">Build interference graph  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 * P + E * W)</span>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Basic coloring  </td><td class="markdownTableBodyNone"><span class="tt">O(W * (W + E))</span>  </td></tr>
+<td class="markdownTableBodyNone">Basic coloring  </td><td class="markdownTableBodyNone"><span class="tt">O(W * (W^2 + E))</span>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Spilling allocator  </td><td class="markdownTableBodyNone"><span class="tt">O(K * W * (W + E))</span>  </td></tr>
+<td class="markdownTableBodyNone">Spilling allocator  </td><td class="markdownTableBodyNone"><span class="tt">O((S + 1) * W * (W^2 + E))</span>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Splitting allocator  </td><td class="markdownTableBodyNone"><span class="tt">O(K * (W^2 * P + W * (W + E)))</span>  </td></tr>
+<td class="markdownTableBodyNone">Splitting allocator  </td><td class="markdownTableBodyNone"><span class="tt">O((S + 1) * (W^2 * P + E * W + W * (W^2 + E)))</span>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Free allocator  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 + E)</span>  </td></tr>
+<td class="markdownTableBodyNone">Free allocator  </td><td class="markdownTableBodyNone"><span class="tt">O(W * (W^2 + E))</span>  </td></tr>
 </table>
 <p>Where:</p><ul>
 <li><span class="tt">L</span> is the number of input lines,</li>
-<li><span class="tt">P</span> is the average number of program points per range,</li>
+<li><span class="tt">P</span> is the maximum number of program points considered in a parse, range, or web-pair comparison,</li>
 <li><span class="tt">R</span> is the number of ranges per variable,</li>
 <li><span class="tt">V</span> is the number of variables,</li>
 <li><span class="tt">W</span> is the number of webs,</li>
-<li><span class="tt">E</span> is the number of interference edges,</li>
-<li><span class="tt">K</span> is the maximum number of allowed spill/split recovery actions.</li>
+<li><span class="tt">E</span> is the number of directed adjacency entries in the interference graph,</li>
+<li><span class="tt">S</span> is the maximum number of allowed spill/split recovery actions.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+<p>The coloring bounds include the current vector-backed course <span class="tt"><a class="el" href="class_graph.html" title="Represents a general graph using an adjacency list.">Graph</a>&lt;int&gt;</span> implementation, where <span class="tt">findVertex</span> is <span class="tt">O(W)</span>. Replacing the vertex store with an indexed map would reduce several lookup-driven factors, but the project intentionally keeps the provided graph as the primary representation.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
+Project Requirements Coverage</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Requirement  </th><th class="markdownTableHeadNone">Status  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">T1.1 command-line menu and batch mode  </td><td class="markdownTableBodyNone">Implemented through <span class="tt"><a class="el" href="class_register_alloc_app.html" title="Top-level application controller.">RegisterAllocApp</a></span> and <span class="tt">./register_alloc -b</span>.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">T1.2 input parsing and graph-based data structures  </td><td class="markdownTableBodyNone">Implemented through <span class="tt"><a class="el" href="class_file_parser.html" title="Utility class with static methods to parse the two input files required by the compiler register allo...">FileParser</a></span>, <span class="tt"><a class="el" href="class_interference_graph.html" title="Factory and utilities for constructing webs and their interference graph.">InterferenceGraph</a></span>, and the course <span class="tt"><a class="el" href="class_graph.html" title="Represents a general graph using an adjacency list.">Graph</a>&lt;int&gt;</span>.  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">T1.3 Doxygen documentation and complexity analysis  </td><td class="markdownTableBodyNone">Source-level Doxygen plus this README and <span class="tt"><a class="el" href="extra__documentation_8dox.html">dox/extra_documentation.dox</a></span>.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">T2.1 basic allocation  </td><td class="markdownTableBodyNone">Implemented.  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">T2.2 bounded spilling  </td><td class="markdownTableBodyNone">Implemented.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">T2.3 bounded splitting  </td><td class="markdownTableBodyNone">Implemented.  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">T2.4 custom allocation  </td><td class="markdownTableBodyNone">Implemented with DSATUR-style selection and safe spill fallback.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Testing  </td><td class="markdownTableBodyNone">Unit and integration tests are available through <span class="tt">make test</span>.  </td></tr>
+</table>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
 Test Coverage</h1>
 <p>The repository includes:</p>
 <ul>
-<li>six baseline datasets mirrored from <span class="tt">~/Downloads/basic</span> under <span class="tt">inputs/basic/</span>;</li>
+<li>six baseline datasets mirrored under <span class="tt">inputs/basic/</span>;</li>
 <li>white-box unit tests for parsing, graph construction, spilling, splitting, and output generation;</li>
 <li>deterministic integration tests that compare batch-mode outputs against expected files.</li>
 </ul>
 <p>Run everything with:</p>
 <div class="fragment"><div class="line">make test</div>
-</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
 Additional Documentation</h1>
 <p>For a deeper explanation of the data model, graph decisions, algorithmic rationale, heuristics, and per-task complexity analysis, see <a class="el" href="extra_docs.html">Extra Documentation</a>. </p>
 </div></div><!-- PageDoc -->

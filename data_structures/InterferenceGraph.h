@@ -42,9 +42,10 @@ public:
    *
    * @param rawRanges Map from variable name to its list of LiveRange objects.
    * @return Ordered list of webs (web IDs are 0-based indices into this vector).
-   * @complexity O(V * R^2 * P) where V is the number of variables, R the maximum
-   *             number of ranges per variable, and P the maximum number of program
-   *             points per range.
+   * @complexity O(V * R^2 * P log P) where V is the number of variables, R the
+   *             maximum number of ranges per variable, and P the maximum number of
+   *             program points per range. The log factor comes from the set used
+   *             by the range-overlap test.
    */
   static std::vector<Web> buildWebs(
       const std::map<std::string, std::vector<LiveRange>> &rawRanges);
@@ -57,9 +58,10 @@ public:
    *
    * @param webs The list of webs produced by buildWebs().
    * @return The interference graph.  The caller owns the returned graph.
-   * @complexity O(W^2 * P) where W is the number of webs and P the total number of
-   *             distinct program points, because we check every pair of webs for a
-   *             shared live point.
+   * @complexity O(W^2 * P + E * W) where W is the number of webs, P is the maximum
+   *             number of points inspected per web pair, and E is the number of
+   *             interference edges. The E * W term comes from Graph<int>'s linear
+   *             endpoint lookup while inserting bidirectional edges.
    */
   static Graph<int> buildGraph(const std::vector<Web> &webs);
 
@@ -73,7 +75,8 @@ public:
    * @param a First web.
    * @param b Second web.
    * @return true if the webs interfere, false otherwise.
-   * @complexity O(P_a * P_b) in the worst case, iterating over all point pairs.
+   * @complexity O(P_a + P_b), building marker maps for both webs and probing by
+   *             shared line number.
    */
   static bool interferes(const Web &a, const Web &b);
 

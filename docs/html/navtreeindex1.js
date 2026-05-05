@@ -1,5 +1,11 @@
 var NAVTREEINDEX1 =
 {
+"main_8cpp_source.html":[3,0,8],
+"pages.html":[],
+"register__alloc__tests_8cpp.html":[3,0,6,0],
+"register__alloc__tests_8cpp.html#a0d204f57105f0df2e1c640f408decab0":[3,0,6,0,8],
+"register__alloc__tests_8cpp.html#a160011a1d2f68d002f76eef2263489e6":[3,0,6,0,2],
+"register__alloc__tests_8cpp.html#a1a36dd4e0b97fb603aeb3b16d4cd266c":[3,0,6,0,16],
 "register__alloc__tests_8cpp.html#a1b136473a4823c70c74a7947d171d81a":[3,0,6,0,17],
 "register__alloc__tests_8cpp.html#a413524dd5b83c71983b0b8899643a154":[3,0,6,0,6],
 "register__alloc__tests_8cpp.html#a4ef07eba704d57d76598e15ae2fe96f1":[3,0,6,0,14],
