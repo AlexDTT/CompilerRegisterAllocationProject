@@ -13,6 +13,7 @@ register_alloc_tests.exe
 
 allocation.txt
 interference.dot
+allocation_colored.dot
 
 tests/output/generated
 
