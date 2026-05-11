@@ -32,7 +32,8 @@ public:
    * @param graph        Interference graph produced by InterferenceGraph::buildGraph().
    * @param params       Configuration (registers, algorithm, output file).
    * @return AllocationResult from the chosen algorithm.
-   * @complexity Depends on the selected algorithm variant.
+   * @complexity O(A + O_alg), where O_alg is the selected allocator's documented
+   *             complexity and A is the number of output assignment/metadata records.
    */
   static AllocationResult runAllocation(std::vector<Web> &webs,
                                         Graph<int> &graph,
@@ -52,6 +53,27 @@ public:
    */
   static void printResult(const std::vector<Web> &webs,
                           const AllocationResult &result);
+
+  /**
+   * @brief Exports a colored DOT graph for a completed allocation result.
+   *
+   * Nodes are colored by assigned register. Memory-assigned webs use a neutral
+   * gray fill, and split-derived webs receive a highlighted border. The graph is
+   * written after the selected allocation algorithm has completed, so splitting
+   * mode exports the rebuilt graph with the final derived webs.
+   *
+   * @param graph    Final interference graph.
+   * @param webs     Final web list.
+   * @param result   Allocation result to visualize.
+   * @param filename Destination DOT file path.
+   * @return true on success, false if the file could not be created.
+   * @complexity O(W + E + S), where W is the number of webs, E is the number of
+   *             directed adjacency entries, and S is the number of split records.
+   */
+  static bool exportAllocationDOT(const Graph<int> &graph,
+                                  const std::vector<Web> &webs,
+                                  const AllocationResult &result,
+                                  const std::string &filename);
 
   /**
    * @brief Computes the maximum clique size (lower bound on chromatic number) of the

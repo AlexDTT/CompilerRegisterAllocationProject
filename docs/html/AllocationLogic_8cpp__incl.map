@@ -1,52 +1,60 @@
 <map id="services/AllocationLogic.cpp" name="services/AllocationLogic.cpp">
-<area shape="rect" id="Node000001" title="Implementation of the AllocationLogic orchestration layer." alt="" coords="390,5,577,32"/>
-<area shape="rect" id="Node000002" href="$AllocationLogic_8h.html" title="Orchestration layer: runs the selected algorithm and writes output." alt="" coords="397,80,570,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="486,33,486,64,481,64,481,33"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="5,304,77,331"/>
-<area shape="poly" id="edge26_Node000001_Node000008" title=" " alt="" coords="450,35,401,55,349,82,265,137,185,197,68,295,64,291,182,193,262,133,346,78,399,51,448,30"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="152,304,226,331"/>
-<area shape="poly" id="edge28_Node000001_Node000011" title=" " alt="" coords="461,35,425,56,387,82,306,150,275,184,239,231,203,292,199,289,235,228,271,181,303,146,383,78,422,51,458,30"/>
-<area shape="rect" id="Node000016" title=" " alt="" coords="594,80,672,107"/>
-<area shape="poly" id="edge27_Node000001_Node000016" title=" " alt="" coords="511,30,594,70,592,75,509,35"/>
-<area shape="rect" id="Node000017" href="$OutputWriter_8h.html" title="Writes the register allocation result to a text file." alt="" coords="780,155,899,181"/>
-<area shape="poly" id="edge29_Node000001_Node000017" title=" " alt="" coords="538,30,608,50,685,78,752,111,809,144,806,148,749,115,683,82,607,55,536,35"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="812,229,859,256"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="547,105,620,124,698,152,758,184,808,218,805,222,755,189,696,157,619,129,545,110"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="825,379,878,405"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="571,103,784,132,911,152,934,171,950,191,962,212,969,234,970,257,967,281,947,332,924,359,894,378,891,373,920,355,943,329,962,280,965,257,963,235,957,214,946,194,930,175,909,157,784,137,570,109"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="468,379,526,405"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="431,110,322,142,262,164,206,191,161,221,143,237,131,254,124,272,123,290,129,309,142,329,162,344,194,357,279,374,373,384,453,387,453,393,373,389,278,380,192,362,160,349,138,332,124,311,118,291,119,271,126,252,139,234,157,217,204,186,260,159,320,137,429,105"/>
-<area shape="rect" id="Node000006" href="$GraphColoring_8h.html" title="Graph&#45;coloring&#45;based register allocation algorithms." alt="" coords="477,155,656,181"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="500,105,542,142,539,146,496,109"/>
-<area shape="rect" id="Node000007" href="$Graph_8h.html" title=" " alt="" coords="248,229,410,256"/>
-<area shape="poly" id="edge23_Node000002_Node000007" title=" " alt="" coords="472,109,355,220,351,217,469,105"/>
-<area shape="rect" id="Node000012" href="$Parameters_8h.html" title="Configuration parameters parsed from the registers/config input file." alt="" coords="643,229,788,256"/>
-<area shape="poly" id="edge24_Node000002_Node000012" title=" " alt="" coords="565,105,619,123,645,136,669,153,694,182,709,213,704,216,689,185,666,157,643,141,617,128,564,110"/>
-<area shape="rect" id="Node000013" href="$Web_8h.html" title="Data model for a live web (merged live ranges of a variable)." alt="" coords="514,229,618,256"/>
-<area shape="poly" id="edge25_Node000002_Node000013" title=" " alt="" coords="478,108,464,143,462,162,467,180,488,203,514,220,511,225,484,207,463,183,457,162,459,141,473,106"/>
-<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="621,179,798,226,797,231,620,184"/>
-<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="548,184,524,204,505,231,494,264,490,300,494,363,489,363,485,300,489,263,500,228,520,200,544,180"/>
-<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="526,184,386,227,384,222,524,179"/>
-<area shape="poly" id="edge14_Node000006_Node000012" title=" " alt="" coords="594,179,677,220,674,224,591,184"/>
-<area shape="poly" id="edge16_Node000006_Node000013" title=" " alt="" coords="569,182,569,214,564,214,564,182"/>
-<area shape="poly" id="edge10_Node000007_Node000005" title=" " alt="" coords="318,258,304,273,291,292,286,311,291,329,316,346,358,361,453,382,452,387,357,366,314,351,287,332,280,311,287,290,300,270,314,254"/>
-<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="279,259,92,306,91,301,278,254"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="301,304,357,331"/>
-<area shape="poly" id="edge11_Node000007_Node000009" title=" " alt="" coords="332,257,332,288,326,288,326,257"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="382,304,434,331"/>
-<area shape="poly" id="edge12_Node000007_Node000010" title=" " alt="" coords="345,255,385,291,381,295,341,259"/>
-<area shape="poly" id="edge13_Node000007_Node000011" title=" " alt="" coords="306,259,228,299,226,294,303,254"/>
-<area shape="poly" id="edge15_Node000012_Node000004" title=" " alt="" coords="751,254,788,273,822,302,839,332,849,362,844,364,834,334,818,306,785,278,749,259"/>
-<area shape="poly" id="edge17_Node000013_Node000004" title=" " alt="" coords="619,253,708,276,749,289,777,302,812,332,838,364,834,367,808,335,774,306,747,294,707,281,618,258"/>
-<area shape="poly" id="edge19_Node000013_Node000005" title=" " alt="" coords="563,258,512,366,507,363,558,255"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="560,304,599,331"/>
-<area shape="poly" id="edge18_Node000013_Node000014" title=" " alt="" coords="571,256,577,288,572,289,566,257"/>
-<area shape="rect" id="Node000015" href="$LiveRange_8h.html" title="Data model for a single live range of a variable." alt="" coords="623,304,763,331"/>
-<area shape="poly" id="edge20_Node000013_Node000015" title=" " alt="" coords="590,254,659,294,656,298,587,259"/>
-<area shape="poly" id="edge21_Node000015_Node000004" title=" " alt="" coords="722,329,812,370,809,374,720,334"/>
-<area shape="poly" id="edge22_Node000015_Node000005" title=" " alt="" coords="660,334,542,377,540,372,658,329"/>
-<area shape="poly" id="edge30_Node000017_Node000003" title=" " alt="" coords="842,182,840,214,835,214,836,182"/>
-<area shape="poly" id="edge31_Node000017_Node000004" title=" " alt="" coords="870,180,899,199,913,212,923,228,935,256,938,280,934,304,923,332,908,354,889,371,885,367,904,350,919,329,929,302,933,280,930,257,919,231,909,216,896,203,867,184"/>
-<area shape="poly" id="edge32_Node000017_Node000005" title=" " alt="" coords="852,180,872,215,877,236,873,257,855,287,834,305,777,333,715,357,651,373,542,390,541,385,650,368,713,352,775,328,831,301,850,283,868,255,872,236,867,217,848,183"/>
-<area shape="poly" id="edge33_Node000017_Node000013" title=" " alt="" coords="793,184,630,227,628,222,791,179"/>
+<area shape="rect" id="Node000001" title="Implementation of the AllocationLogic orchestration layer." alt="" coords="490,5,678,32"/>
+<area shape="rect" id="Node000002" href="$AllocationLogic_8h.html" title="Orchestration layer: runs the selected algorithm and writes output." alt="" coords="497,80,671,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="587,33,587,64,581,64,581,33"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="482,379,539,405"/>
+<area shape="poly" id="edge34_Node000001_Node000005" title=" " alt="" coords="490,27,346,40,266,51,188,65,117,84,60,107,39,120,23,134,13,150,9,167,9,244,10,292,17,310,34,329,66,347,113,361,171,371,234,379,364,387,467,388,467,394,363,392,234,384,170,377,112,366,64,352,30,333,13,313,5,293,4,244,4,166,8,148,19,131,36,116,58,102,116,79,186,60,265,46,345,35,490,22"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="548,304,588,331"/>
+<area shape="poly" id="edge32_Node000001_Node000007" title=" " alt="" coords="547,35,514,53,499,66,488,81,477,109,475,137,480,167,490,196,519,249,549,291,545,294,514,252,485,198,475,168,470,138,472,108,483,79,495,62,511,49,544,30"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="44,304,116,331"/>
+<area shape="poly" id="edge28_Node000001_Node000009" title=" " alt="" coords="505,35,427,54,346,82,306,104,267,129,197,188,140,246,100,293,96,290,136,243,193,184,264,125,303,99,344,78,426,49,504,30"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="140,304,214,331"/>
+<area shape="poly" id="edge30_Node000001_Node000012" title=" " alt="" coords="534,35,459,60,368,100,321,126,276,156,235,191,200,231,186,259,181,289,175,288,181,258,195,228,231,187,273,152,318,121,365,95,457,55,533,30"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="745,80,823,107"/>
+<area shape="poly" id="edge29_Node000001_Node000016" title=" " alt="" coords="620,30,736,72,734,77,618,35"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="847,80,913,107"/>
+<area shape="poly" id="edge31_Node000001_Node000017" title=" " alt="" coords="639,30,833,77,832,82,638,35"/>
+<area shape="rect" id="Node000018" title=" " alt="" coords="936,80,1005,107"/>
+<area shape="poly" id="edge33_Node000001_Node000018" title=" " alt="" coords="668,30,784,50,922,77,921,82,783,55,667,35"/>
+<area shape="rect" id="Node000019" href="$OutputWriter_8h.html" title="Writes the register allocation result to a text file." alt="" coords="911,155,1030,181"/>
+<area shape="poly" id="edge35_Node000001_Node000019" title=" " alt="" coords="605,30,673,71,734,104,817,132,897,151,896,156,816,137,732,109,670,76,603,35"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="947,229,994,256"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="638,105,713,125,794,152,871,186,936,219,934,224,869,191,792,157,711,130,637,110"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="941,379,995,405"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="671,101,899,127,996,141,1043,152,1063,172,1076,193,1083,215,1083,237,1079,261,1071,284,1042,332,1023,353,1002,371,999,367,1019,350,1038,329,1066,282,1074,259,1078,237,1077,215,1071,195,1059,175,1040,157,995,146,899,133,671,106"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="576,109,561,130,548,156,531,212,520,269,513,364,508,363,515,269,525,211,543,154,557,127,572,106"/>
+<area shape="rect" id="Node000006" href="$GraphColoring_8h.html" title="Graph&#45;coloring&#45;based register allocation algorithms." alt="" coords="566,155,746,181"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="598,105,635,142,631,145,595,109"/>
+<area shape="rect" id="Node000008" href="$Graph_8h.html" title=" " alt="" coords="210,229,371,256"/>
+<area shape="poly" id="edge25_Node000002_Node000008" title=" " alt="" coords="522,110,457,129,392,157,349,187,314,220,310,216,345,183,389,152,455,124,520,105"/>
+<area shape="rect" id="Node000013" href="$Parameters_8h.html" title="Configuration parameters parsed from the registers/config input file." alt="" coords="778,229,923,256"/>
+<area shape="poly" id="edge26_Node000002_Node000013" title=" " alt="" coords="639,105,698,124,759,152,800,183,832,216,828,219,796,187,756,157,696,129,638,110"/>
+<area shape="rect" id="Node000014" href="$Web_8h.html" title="Data model for a live web (merged live ranges of a variable)." alt="" coords="598,229,703,256"/>
+<area shape="poly" id="edge27_Node000002_Node000014" title=" " alt="" coords="576,108,557,142,553,162,557,180,576,203,602,220,599,224,573,207,552,183,547,162,552,140,571,106"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="727,179,821,199,933,226,932,231,820,204,726,185"/>
+<area shape="poly" id="edge8_Node000006_Node000004" title=" " alt="" coords="670,180,712,216,768,254,806,269,838,275,871,282,907,302,936,332,957,364,953,366,932,335,904,306,869,287,837,280,804,274,765,258,709,220,667,184"/>
+<area shape="poly" id="edge9_Node000006_Node000005" title=" " alt="" coords="633,184,602,204,573,231,551,264,535,299,518,364,512,363,530,298,546,261,569,228,599,200,630,180"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="637,184,611,204,589,231,577,260,572,289,567,288,572,258,584,228,608,200,633,180"/>
+<area shape="poly" id="edge10_Node000006_Node000008" title=" " alt="" coords="592,185,370,228,369,223,591,179"/>
+<area shape="poly" id="edge16_Node000006_Node000013" title=" " alt="" coords="691,179,803,221,801,226,689,184"/>
+<area shape="poly" id="edge18_Node000006_Node000014" title=" " alt="" coords="658,182,655,214,650,213,652,182"/>
+<area shape="poly" id="edge12_Node000008_Node000005" title=" " alt="" coords="286,258,273,293,272,312,279,329,291,339,309,348,358,364,467,383,466,388,357,369,307,353,288,343,275,332,267,313,268,292,281,256"/>
+<area shape="poly" id="edge11_Node000008_Node000009" title=" " alt="" coords="255,259,131,301,130,296,253,254"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="289,304,345,331"/>
+<area shape="poly" id="edge13_Node000008_Node000010" title=" " alt="" coords="298,256,310,289,305,290,293,257"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="370,304,422,331"/>
+<area shape="poly" id="edge14_Node000008_Node000011" title=" " alt="" coords="310,254,367,293,364,297,307,259"/>
+<area shape="poly" id="edge15_Node000008_Node000012" title=" " alt="" coords="272,259,211,298,208,293,269,254"/>
+<area shape="poly" id="edge17_Node000013_Node000004" title=" " alt="" coords="896,254,933,273,950,286,964,303,974,333,975,363,970,364,969,334,959,305,946,290,930,277,894,259"/>
+<area shape="poly" id="edge19_Node000014_Node000004" title=" " alt="" coords="704,253,796,277,868,302,912,332,948,365,944,369,909,336,865,306,794,282,703,258"/>
+<area shape="poly" id="edge21_Node000014_Node000005" title=" " alt="" coords="648,258,630,293,602,332,577,355,550,373,547,368,573,351,598,329,626,290,643,255"/>
+<area shape="poly" id="edge20_Node000014_Node000007" title=" " alt="" coords="638,259,595,296,592,292,634,255"/>
+<area shape="rect" id="Node000015" href="$LiveRange_8h.html" title="Data model for a single live range of a variable." alt="" coords="714,304,854,331"/>
+<area shape="poly" id="edge22_Node000014_Node000015" title=" " alt="" coords="675,254,749,294,746,299,673,259"/>
+<area shape="poly" id="edge23_Node000015_Node000004" title=" " alt="" coords="817,329,928,372,926,377,815,334"/>
+<area shape="poly" id="edge24_Node000015_Node000005" title=" " alt="" coords="737,334,555,382,553,377,736,329"/>
+<area shape="poly" id="edge36_Node000019_Node000003" title=" " alt="" coords="973,182,973,214,968,214,968,182"/>
+<area shape="poly" id="edge37_Node000019_Node000004" title=" " alt="" coords="999,180,1028,199,1041,213,1052,228,1055,242,1052,257,1040,289,1024,319,991,368,986,365,1020,316,1035,286,1047,255,1050,242,1047,230,1037,216,1025,203,996,184"/>
+<area shape="poly" id="edge38_Node000019_Node000005" title=" " alt="" coords="985,180,998,196,1010,216,1015,238,1007,258,983,275,949,285,861,295,770,298,732,301,702,307,618,339,547,374,545,369,615,334,701,301,731,296,770,293,861,289,948,280,981,270,1003,254,1009,237,1005,218,994,199,981,184"/>
+<area shape="poly" id="edge39_Node000019_Node000014" title=" " alt="" coords="915,185,718,229,717,224,914,179"/>
 </map>

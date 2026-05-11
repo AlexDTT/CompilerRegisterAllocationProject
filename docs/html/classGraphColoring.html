@@ -122,7 +122,7 @@ $(function(){initNavTree('classGraphColoring.html','','classGraphColoring-member
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ac577d2fd01bb72b5d14d966893937440" id="r_ac577d2fd01bb72b5d14d966893937440"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structAllocationResult.html">AllocationResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac577d2fd01bb72b5d14d966893937440">basicColoring</a> (const <a class="el" href="classGraph.html">Graph</a>&lt; int &gt; &amp;graph, const std::vector&lt; <a class="el" href="structWeb.html">Web</a> &gt; &amp;webs, int numRegisters)</td></tr>
-<tr class="memdesc:ac577d2fd01bb72b5d14d966893937440"><td class="mdescLeft">&#160;</td><td class="mdescRight">Basic greedy Chaitin-style graph coloring.  <br /></td></tr>
+<tr class="memdesc:ac577d2fd01bb72b5d14d966893937440"><td class="mdescLeft">&#160;</td><td class="mdescRight">Basic simplify/select graph coloring.  <br /></td></tr>
 <tr class="memitem:a3a5e5cff3599a8f31be231fb019f7187" id="r_a3a5e5cff3599a8f31be231fb019f7187"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structAllocationResult.html">AllocationResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3a5e5cff3599a8f31be231fb019f7187">spillingColoring</a> (const <a class="el" href="classGraph.html">Graph</a>&lt; int &gt; &amp;graph, const std::vector&lt; <a class="el" href="structWeb.html">Web</a> &gt; &amp;webs, int numRegisters, int maxSpills)</td></tr>
 <tr class="memdesc:a3a5e5cff3599a8f31be231fb019f7187"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classGraph.html" title="Represents a general graph using an adjacency list.">Graph</a> coloring with selective web spilling.  <br /></td></tr>
 <tr class="memitem:a6934e9c69003431b39f772f1ca391fe1" id="r_a6934e9c69003431b39f772f1ca391fe1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structAllocationResult.html">AllocationResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6934e9c69003431b39f772f1ca391fe1">splittingColoring</a> (<a class="el" href="classGraph.html">Graph</a>&lt; int &gt; &amp;graph, std::vector&lt; <a class="el" href="structWeb.html">Web</a> &gt; &amp;webs, int numRegisters, int maxSplits)</td></tr>
@@ -140,7 +140,7 @@ Static Private Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Static utility class implementing all register-allocation algorithm variants. </p>
 
-<p class="definition">Definition at line <a class="el" href="GraphColoring_8h_source.html#l00050">50</a> of file <a class="el" href="GraphColoring_8h_source.html">GraphColoring.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GraphColoring_8h_source.html#l00070">70</a> of file <a class="el" href="GraphColoring_8h_source.html">GraphColoring.h</a>.</p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="ad2e28a77859e8f542c1bff9397ed3280" name="ad2e28a77859e8f542c1bff9397ed3280"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad2e28a77859e8f542c1bff9397ed3280">&#9670;&#160;</a></span>activeDegree()</h2>
@@ -184,21 +184,21 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of active neighbors. \par Complexity:<br  />
- O(E_v) where E_v is the number of edges incident to <code class="param">id</code>. </dd></dl>
+ O(W + E_v), where W is the number of graph vertices and E_v is the number of edges incident to <code class="param">id</code>. The W term is the linear <a class="el" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75" title="Finds a vertex with a given content.">Graph&lt;int&gt;::findVertex</a> lookup. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GraphColoring_8cpp_source.html#l00272">272</a> of file <a class="el" href="GraphColoring_8cpp_source.html">GraphColoring.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  274</span>{</div>
-<div class="line"><span class="lineno">  275</span>  Vertex&lt;int&gt; *v = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(<span class="keywordtype">id</span>);</div>
-<div class="line"><span class="lineno">  276</span>  <span class="keywordflow">if</span> (!v)</div>
-<div class="line"><span class="lineno">  277</span>    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  278</span>  <span class="keywordtype">int</span> deg = 0;</div>
-<div class="line"><span class="lineno">  279</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *e : v-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>())</div>
-<div class="line"><span class="lineno">  280</span>  {</div>
-<div class="line"><span class="lineno">  281</span>    <span class="keywordflow">if</span> (active.count(e-&gt;getDest()-&gt;getInfo()))</div>
-<div class="line"><span class="lineno">  282</span>      ++deg;</div>
-<div class="line"><span class="lineno">  283</span>  }</div>
-<div class="line"><span class="lineno">  284</span>  <span class="keywordflow">return</span> deg;</div>
-<div class="line"><span class="lineno">  285</span>}</div>
+<p class="definition">Definition at line <a class="el" href="GraphColoring_8cpp_source.html#l00276">276</a> of file <a class="el" href="GraphColoring_8cpp_source.html">GraphColoring.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  278</span>{</div>
+<div class="line"><span class="lineno">  279</span>  Vertex&lt;int&gt; *v = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  280</span>  <span class="keywordflow">if</span> (!v)</div>
+<div class="line"><span class="lineno">  281</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">  282</span>  <span class="keywordtype">int</span> deg = 0;</div>
+<div class="line"><span class="lineno">  283</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *e : v-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>())</div>
+<div class="line"><span class="lineno">  284</span>  {</div>
+<div class="line"><span class="lineno">  285</span>    <span class="keywordflow">if</span> (active.count(e-&gt;getDest()-&gt;getInfo()))</div>
+<div class="line"><span class="lineno">  286</span>      ++deg;</div>
+<div class="line"><span class="lineno">  287</span>  }</div>
+<div class="line"><span class="lineno">  288</span>  <span class="keywordflow">return</span> deg;</div>
+<div class="line"><span class="lineno">  289</span>}</div>
 <div class="ttc" id="aclassGraph_html_a8b7b7465fbfd562e2a469f90a437ab75"><div class="ttname"><a href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">Graph::findVertex</a></div><div class="ttdeci">Vertex&lt; T &gt; * findVertex(const T &amp;in) const</div><div class="ttdoc">Finds a vertex with a given content.</div><div class="ttdef"><b>Definition</b> <a href="Graph_8h_source.html#l00498">Graph.h:498</a></div></div>
 <div class="ttc" id="aclassVertex_html_a0010a7d0b7db1bb81dd2ebb1ffae650a"><div class="ttname"><a href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">Vertex::getAdj</a></div><div class="ttdeci">std::vector&lt; Edge&lt; T &gt; * &gt; getAdj() const</div><div class="ttdef"><b>Definition</b> <a href="Graph_8h_source.html#l00325">Graph.h:325</a></div></div>
 </div><!-- fragment -->
@@ -236,7 +236,7 @@ Static Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Basic greedy Chaitin-style graph coloring. </p>
+<p>Basic simplify/select graph coloring. </p>
 <p>Repeatedly removes vertices with degree &lt; numRegisters from a working copy of the graph, pushing them onto a stack. If all remaining vertices have degree ≥ numRegisters a spill candidate is chosen (web with highest degree) and marked as spilled (webToRegister = -1). The stack is then popped and each vertex is greedily assigned the lowest-numbered color not used by its already-colored neighbors.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -249,101 +249,101 @@ Static Private Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structAllocationResult.html" title="The outcome of a register allocation run.">AllocationResult</a> with the register assignment. \par Complexity:<br  />
  O(W * (W^2 + E)) where W is the number of webs and E is the number of directed adjacency entries in the current <a class="el" href="classGraph.html">Graph&lt;int&gt;</a>. The extra W factor comes from repeated simplify passes and the course graph's O(W) findVertex lookup. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GraphColoring_8cpp_source.html#l00310">310</a> of file <a class="el" href="GraphColoring_8cpp_source.html">GraphColoring.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  313</span>{</div>
-<div class="line"><span class="lineno">  314</span>  std::map&lt;int, int&gt; assignment;</div>
-<div class="line"><span class="lineno">  315</span>  std::set&lt;int&gt; spilled;</div>
-<div class="line"><span class="lineno">  316</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : webs)</div>
-<div class="line"><span class="lineno">  317</span>    assignment[w.id] = -1;</div>
-<div class="line"><span class="lineno">  318</span> </div>
-<div class="line"><span class="lineno">  319</span>  <span class="keywordflow">if</span> (numRegisters &lt;= 0)</div>
-<div class="line"><span class="lineno">  320</span>    <span class="keywordflow">return</span> finalizeResult(webs, assignment, <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  321</span> </div>
-<div class="line"><span class="lineno">  322</span>  std::set&lt;int&gt; active = collectWebIds(webs);</div>
-<div class="line"><span class="lineno">  323</span>  std::vector&lt;int&gt; stack;</div>
-<div class="line"><span class="lineno">  324</span> </div>
-<div class="line"><span class="lineno">  325</span>  <span class="comment">// Phase 1: simplification + spill selection.</span></div>
-<div class="line"><span class="lineno">  326</span>  <span class="keywordflow">while</span> (!active.empty())</div>
-<div class="line"><span class="lineno">  327</span>  {</div>
-<div class="line"><span class="lineno">  328</span>    <span class="keywordtype">bool</span> removedAny = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  329</span>    std::vector&lt;int&gt; removable;</div>
-<div class="line"><span class="lineno">  330</span> </div>
-<div class="line"><span class="lineno">  331</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <span class="keywordtype">id</span> : active)</div>
-<div class="line"><span class="lineno">  332</span>    {</div>
-<div class="line"><span class="lineno">  333</span>      <span class="keywordtype">int</span> deg = <a class="code hl_function" href="#ad2e28a77859e8f542c1bff9397ed3280">activeDegree</a>(graph, <span class="keywordtype">id</span>, active);</div>
-<div class="line"><span class="lineno">  334</span>      <span class="keywordflow">if</span> (deg &lt; numRegisters)</div>
-<div class="line"><span class="lineno">  335</span>        removable.push_back(<span class="keywordtype">id</span>);</div>
-<div class="line"><span class="lineno">  336</span>    }</div>
-<div class="line"><span class="lineno">  337</span> </div>
-<div class="line"><span class="lineno">  338</span>    <span class="keywordflow">if</span> (!removable.empty())</div>
-<div class="line"><span class="lineno">  339</span>    {</div>
-<div class="line"><span class="lineno">  340</span>      removedAny = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  341</span>      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <span class="keywordtype">id</span> : removable)</div>
-<div class="line"><span class="lineno">  342</span>      {</div>
-<div class="line"><span class="lineno">  343</span>        stack.push_back(<span class="keywordtype">id</span>);</div>
-<div class="line"><span class="lineno">  344</span>        active.erase(<span class="keywordtype">id</span>);</div>
-<div class="line"><span class="lineno">  345</span>      }</div>
-<div class="line"><span class="lineno">  346</span>    }</div>
-<div class="line"><span class="lineno">  347</span> </div>
-<div class="line"><span class="lineno">  348</span>    <span class="keywordflow">if</span> (!removedAny)</div>
-<div class="line"><span class="lineno">  349</span>    {</div>
-<div class="line"><span class="lineno">  350</span>      <span class="keywordtype">int</span> spillId = <a class="code hl_function" href="#ad94a8226c9c46e02e6bb7f919aa086be">pickSpillCandidate</a>(graph, active);</div>
-<div class="line"><span class="lineno">  351</span>      spilled.insert(spillId);</div>
-<div class="line"><span class="lineno">  352</span>      assignment[spillId] = -1;</div>
-<div class="line"><span class="lineno">  353</span>      active.erase(spillId);</div>
-<div class="line"><span class="lineno">  354</span>    }</div>
-<div class="line"><span class="lineno">  355</span>  }</div>
-<div class="line"><span class="lineno">  356</span> </div>
-<div class="line"><span class="lineno">  357</span>  <span class="comment">// Phase 2: select colors while rebuilding.</span></div>
-<div class="line"><span class="lineno">  358</span>  <span class="keywordflow">while</span> (!stack.empty())</div>
-<div class="line"><span class="lineno">  359</span>  {</div>
-<div class="line"><span class="lineno">  360</span>    <span class="keywordtype">int</span> <span class="keywordtype">id</span> = stack.back();</div>
-<div class="line"><span class="lineno">  361</span>    stack.pop_back();</div>
-<div class="line"><span class="lineno">  362</span> </div>
-<div class="line"><span class="lineno">  363</span>    <span class="keywordflow">if</span> (spilled.count(<span class="keywordtype">id</span>))</div>
-<div class="line"><span class="lineno">  364</span>    {</div>
-<div class="line"><span class="lineno">  365</span>      assignment[id] = -1;</div>
-<div class="line"><span class="lineno">  366</span>      <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  367</span>    }</div>
-<div class="line"><span class="lineno">  368</span> </div>
-<div class="line"><span class="lineno">  369</span>    std::set&lt;int&gt; used;</div>
-<div class="line"><span class="lineno">  370</span>    Vertex&lt;int&gt; *v = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(<span class="keywordtype">id</span>);</div>
-<div class="line"><span class="lineno">  371</span>    <span class="keywordflow">if</span> (v)</div>
-<div class="line"><span class="lineno">  372</span>    {</div>
-<div class="line"><span class="lineno">  373</span>      <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *e : v-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>())</div>
-<div class="line"><span class="lineno">  374</span>      {</div>
-<div class="line"><span class="lineno">  375</span>        <span class="keywordtype">int</span> nid = e-&gt;getDest()-&gt;getInfo();</div>
-<div class="line"><span class="lineno">  376</span>        <span class="keyword">auto</span> it = assignment.find(nid);</div>
-<div class="line"><span class="lineno">  377</span>        <span class="keywordflow">if</span> (it != assignment.end() &amp;&amp; it-&gt;second &gt;= 0)</div>
-<div class="line"><span class="lineno">  378</span>          used.insert(it-&gt;second);</div>
-<div class="line"><span class="lineno">  379</span>      }</div>
-<div class="line"><span class="lineno">  380</span>    }</div>
-<div class="line"><span class="lineno">  381</span> </div>
-<div class="line"><span class="lineno">  382</span>    <span class="keywordtype">int</span> chosen = -1;</div>
-<div class="line"><span class="lineno">  383</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c = 0; c &lt; numRegisters; ++c)</div>
-<div class="line"><span class="lineno">  384</span>    {</div>
-<div class="line"><span class="lineno">  385</span>      <span class="keywordflow">if</span> (!used.count(c))</div>
-<div class="line"><span class="lineno">  386</span>      {</div>
-<div class="line"><span class="lineno">  387</span>        chosen = c;</div>
-<div class="line"><span class="lineno">  388</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  389</span>      }</div>
-<div class="line"><span class="lineno">  390</span>    }</div>
-<div class="line"><span class="lineno">  391</span> </div>
-<div class="line"><span class="lineno">  392</span>    <span class="keywordflow">if</span> (chosen &lt; 0)</div>
-<div class="line"><span class="lineno">  393</span>    {</div>
-<div class="line"><span class="lineno">  394</span>      spilled.insert(<span class="keywordtype">id</span>);</div>
-<div class="line"><span class="lineno">  395</span>      assignment[id] = -1;</div>
-<div class="line"><span class="lineno">  396</span>    }</div>
-<div class="line"><span class="lineno">  397</span>    <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  398</span>    {</div>
-<div class="line"><span class="lineno">  399</span>      assignment[id] = chosen;</div>
+<p class="definition">Definition at line <a class="el" href="GraphColoring_8cpp_source.html#l00314">314</a> of file <a class="el" href="GraphColoring_8cpp_source.html">GraphColoring.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  317</span>{</div>
+<div class="line"><span class="lineno">  318</span>  std::map&lt;int, int&gt; assignment;</div>
+<div class="line"><span class="lineno">  319</span>  std::set&lt;int&gt; spilled;</div>
+<div class="line"><span class="lineno">  320</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : webs)</div>
+<div class="line"><span class="lineno">  321</span>    assignment[w.id] = -1;</div>
+<div class="line"><span class="lineno">  322</span> </div>
+<div class="line"><span class="lineno">  323</span>  <span class="keywordflow">if</span> (numRegisters &lt;= 0)</div>
+<div class="line"><span class="lineno">  324</span>    <span class="keywordflow">return</span> finalizeResult(webs, assignment, <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  325</span> </div>
+<div class="line"><span class="lineno">  326</span>  std::set&lt;int&gt; active = collectWebIds(webs);</div>
+<div class="line"><span class="lineno">  327</span>  std::vector&lt;int&gt; stack;</div>
+<div class="line"><span class="lineno">  328</span> </div>
+<div class="line"><span class="lineno">  329</span>  <span class="comment">// Phase 1: simplification + spill selection.</span></div>
+<div class="line"><span class="lineno">  330</span>  <span class="keywordflow">while</span> (!active.empty())</div>
+<div class="line"><span class="lineno">  331</span>  {</div>
+<div class="line"><span class="lineno">  332</span>    <span class="keywordtype">bool</span> removedAny = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  333</span>    std::vector&lt;int&gt; removable;</div>
+<div class="line"><span class="lineno">  334</span> </div>
+<div class="line"><span class="lineno">  335</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <span class="keywordtype">id</span> : active)</div>
+<div class="line"><span class="lineno">  336</span>    {</div>
+<div class="line"><span class="lineno">  337</span>      <span class="keywordtype">int</span> deg = <a class="code hl_function" href="#ad2e28a77859e8f542c1bff9397ed3280">activeDegree</a>(graph, <span class="keywordtype">id</span>, active);</div>
+<div class="line"><span class="lineno">  338</span>      <span class="keywordflow">if</span> (deg &lt; numRegisters)</div>
+<div class="line"><span class="lineno">  339</span>        removable.push_back(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  340</span>    }</div>
+<div class="line"><span class="lineno">  341</span> </div>
+<div class="line"><span class="lineno">  342</span>    <span class="keywordflow">if</span> (!removable.empty())</div>
+<div class="line"><span class="lineno">  343</span>    {</div>
+<div class="line"><span class="lineno">  344</span>      removedAny = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  345</span>      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <span class="keywordtype">id</span> : removable)</div>
+<div class="line"><span class="lineno">  346</span>      {</div>
+<div class="line"><span class="lineno">  347</span>        stack.push_back(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  348</span>        active.erase(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  349</span>      }</div>
+<div class="line"><span class="lineno">  350</span>    }</div>
+<div class="line"><span class="lineno">  351</span> </div>
+<div class="line"><span class="lineno">  352</span>    <span class="keywordflow">if</span> (!removedAny)</div>
+<div class="line"><span class="lineno">  353</span>    {</div>
+<div class="line"><span class="lineno">  354</span>      <span class="keywordtype">int</span> spillId = <a class="code hl_function" href="#ad94a8226c9c46e02e6bb7f919aa086be">pickSpillCandidate</a>(graph, active);</div>
+<div class="line"><span class="lineno">  355</span>      spilled.insert(spillId);</div>
+<div class="line"><span class="lineno">  356</span>      assignment[spillId] = -1;</div>
+<div class="line"><span class="lineno">  357</span>      active.erase(spillId);</div>
+<div class="line"><span class="lineno">  358</span>    }</div>
+<div class="line"><span class="lineno">  359</span>  }</div>
+<div class="line"><span class="lineno">  360</span> </div>
+<div class="line"><span class="lineno">  361</span>  <span class="comment">// Phase 2: select colors while rebuilding.</span></div>
+<div class="line"><span class="lineno">  362</span>  <span class="keywordflow">while</span> (!stack.empty())</div>
+<div class="line"><span class="lineno">  363</span>  {</div>
+<div class="line"><span class="lineno">  364</span>    <span class="keywordtype">int</span> <span class="keywordtype">id</span> = stack.back();</div>
+<div class="line"><span class="lineno">  365</span>    stack.pop_back();</div>
+<div class="line"><span class="lineno">  366</span> </div>
+<div class="line"><span class="lineno">  367</span>    <span class="keywordflow">if</span> (spilled.count(<span class="keywordtype">id</span>))</div>
+<div class="line"><span class="lineno">  368</span>    {</div>
+<div class="line"><span class="lineno">  369</span>      assignment[id] = -1;</div>
+<div class="line"><span class="lineno">  370</span>      <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  371</span>    }</div>
+<div class="line"><span class="lineno">  372</span> </div>
+<div class="line"><span class="lineno">  373</span>    std::set&lt;int&gt; used;</div>
+<div class="line"><span class="lineno">  374</span>    Vertex&lt;int&gt; *v = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  375</span>    <span class="keywordflow">if</span> (v)</div>
+<div class="line"><span class="lineno">  376</span>    {</div>
+<div class="line"><span class="lineno">  377</span>      <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *e : v-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>())</div>
+<div class="line"><span class="lineno">  378</span>      {</div>
+<div class="line"><span class="lineno">  379</span>        <span class="keywordtype">int</span> nid = e-&gt;getDest()-&gt;getInfo();</div>
+<div class="line"><span class="lineno">  380</span>        <span class="keyword">auto</span> it = assignment.find(nid);</div>
+<div class="line"><span class="lineno">  381</span>        <span class="keywordflow">if</span> (it != assignment.end() &amp;&amp; it-&gt;second &gt;= 0)</div>
+<div class="line"><span class="lineno">  382</span>          used.insert(it-&gt;second);</div>
+<div class="line"><span class="lineno">  383</span>      }</div>
+<div class="line"><span class="lineno">  384</span>    }</div>
+<div class="line"><span class="lineno">  385</span> </div>
+<div class="line"><span class="lineno">  386</span>    <span class="keywordtype">int</span> chosen = -1;</div>
+<div class="line"><span class="lineno">  387</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c = 0; c &lt; numRegisters; ++c)</div>
+<div class="line"><span class="lineno">  388</span>    {</div>
+<div class="line"><span class="lineno">  389</span>      <span class="keywordflow">if</span> (!used.count(c))</div>
+<div class="line"><span class="lineno">  390</span>      {</div>
+<div class="line"><span class="lineno">  391</span>        chosen = c;</div>
+<div class="line"><span class="lineno">  392</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  393</span>      }</div>
+<div class="line"><span class="lineno">  394</span>    }</div>
+<div class="line"><span class="lineno">  395</span> </div>
+<div class="line"><span class="lineno">  396</span>    <span class="keywordflow">if</span> (chosen &lt; 0)</div>
+<div class="line"><span class="lineno">  397</span>    {</div>
+<div class="line"><span class="lineno">  398</span>      spilled.insert(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  399</span>      assignment[id] = -1;</div>
 <div class="line"><span class="lineno">  400</span>    }</div>
-<div class="line"><span class="lineno">  401</span>  }</div>
-<div class="line"><span class="lineno">  402</span> </div>
-<div class="line"><span class="lineno">  403</span>  <span class="keywordflow">return</span> finalizeResult(webs, assignment, <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  404</span>}</div>
-<div class="ttc" id="aclassGraphColoring_html_ad2e28a77859e8f542c1bff9397ed3280"><div class="ttname"><a href="#ad2e28a77859e8f542c1bff9397ed3280">GraphColoring::activeDegree</a></div><div class="ttdeci">static int activeDegree(const Graph&lt; int &gt; &amp;graph, int id, const std::set&lt; int &gt; &amp;active)</div><div class="ttdoc">Returns the degree of vertex id in the sub-graph defined by active.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8cpp_source.html#l00272">GraphColoring.cpp:272</a></div></div>
-<div class="ttc" id="aclassGraphColoring_html_ad94a8226c9c46e02e6bb7f919aa086be"><div class="ttname"><a href="#ad94a8226c9c46e02e6bb7f919aa086be">GraphColoring::pickSpillCandidate</a></div><div class="ttdeci">static int pickSpillCandidate(const Graph&lt; int &gt; &amp;graph, const std::set&lt; int &gt; &amp;active)</div><div class="ttdoc">Selects the best spill candidate from active based on a heuristic.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8cpp_source.html#l00290">GraphColoring.cpp:290</a></div></div>
+<div class="line"><span class="lineno">  401</span>    <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  402</span>    {</div>
+<div class="line"><span class="lineno">  403</span>      assignment[id] = chosen;</div>
+<div class="line"><span class="lineno">  404</span>    }</div>
+<div class="line"><span class="lineno">  405</span>  }</div>
+<div class="line"><span class="lineno">  406</span> </div>
+<div class="line"><span class="lineno">  407</span>  <span class="keywordflow">return</span> finalizeResult(webs, assignment, <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  408</span>}</div>
+<div class="ttc" id="aclassGraphColoring_html_ad2e28a77859e8f542c1bff9397ed3280"><div class="ttname"><a href="#ad2e28a77859e8f542c1bff9397ed3280">GraphColoring::activeDegree</a></div><div class="ttdeci">static int activeDegree(const Graph&lt; int &gt; &amp;graph, int id, const std::set&lt; int &gt; &amp;active)</div><div class="ttdoc">Returns the degree of vertex id in the sub-graph defined by active.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8cpp_source.html#l00276">GraphColoring.cpp:276</a></div></div>
+<div class="ttc" id="aclassGraphColoring_html_ad94a8226c9c46e02e6bb7f919aa086be"><div class="ttname"><a href="#ad94a8226c9c46e02e6bb7f919aa086be">GraphColoring::pickSpillCandidate</a></div><div class="ttdeci">static int pickSpillCandidate(const Graph&lt; int &gt; &amp;graph, const std::set&lt; int &gt; &amp;active)</div><div class="ttdoc">Selects the best spill candidate from active based on a heuristic.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8cpp_source.html#l00294">GraphColoring.cpp:294</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -380,7 +380,7 @@ Static Private Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Custom register allocation algorithm. </p>
-<p>Free-form implementation: any approach is allowed as long as two interfering webs are never assigned the same register. Describe the rationale in the documentation.</p>
+<p>This allocator repeatedly chooses the uncolored web with the highest number of different neighboring register colors already present. Ties are broken by graph degree. This prioritises webs under the most immediate register pressure before easier webs, and assigns memory only when every register conflicts with a colored neighbor.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">graph</td><td>The interference graph. </td></tr>
@@ -390,90 +390,96 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structAllocationResult.html" title="The outcome of a register allocation run.">AllocationResult</a> with the register assignment. \par Complexity:<br  />
- O(W * (W^2 + E)) with the vector-backed <a class="el" href="classGraph.html">Graph&lt;int&gt;</a>, because each DSATUR selection round scans the remaining vertices and their adjacency lists. </dd></dl>
+ O(W * (W^2 + E)) with the vector-backed <a class="el" href="classGraph.html">Graph&lt;int&gt;</a>, because each selection round scans the remaining vertices, calls findVertex, and inspects adjacency lists. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GraphColoring_8cpp_source.html#l00531">531</a> of file <a class="el" href="GraphColoring_8cpp_source.html">GraphColoring.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  534</span>{</div>
-<div class="line"><span class="lineno">  535</span>  std::map&lt;int, int&gt; assignment;</div>
-<div class="line"><span class="lineno">  536</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : webs)</div>
-<div class="line"><span class="lineno">  537</span>    assignment[w.id] = -1;</div>
-<div class="line"><span class="lineno">  538</span> </div>
-<div class="line"><span class="lineno">  539</span>  <span class="keywordflow">if</span> (numRegisters &lt;= 0)</div>
-<div class="line"><span class="lineno">  540</span>    <span class="keywordflow">return</span> finalizeResult(webs, assignment, <span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno">  541</span> </div>
-<div class="line"><span class="lineno">  542</span>  std::set&lt;int&gt; uncolored = collectWebIds(webs);</div>
-<div class="line"><span class="lineno">  543</span> </div>
-<div class="line"><span class="lineno">  544</span>  <span class="keywordflow">while</span> (!uncolored.empty())</div>
-<div class="line"><span class="lineno">  545</span>  {</div>
-<div class="line"><span class="lineno">  546</span>    <span class="keywordtype">int</span> bestId = -1;</div>
-<div class="line"><span class="lineno">  547</span>    <span class="keywordtype">int</span> bestSat = -1;</div>
-<div class="line"><span class="lineno">  548</span>    <span class="keywordtype">int</span> bestDeg = -1;</div>
-<div class="line"><span class="lineno">  549</span> </div>
-<div class="line"><span class="lineno">  550</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <span class="keywordtype">id</span> : uncolored)</div>
-<div class="line"><span class="lineno">  551</span>    {</div>
-<div class="line"><span class="lineno">  552</span>      std::set&lt;int&gt; satColors;</div>
-<div class="line"><span class="lineno">  553</span>      <span class="keywordtype">int</span> deg = 0;</div>
-<div class="line"><span class="lineno">  554</span> </div>
-<div class="line"><span class="lineno">  555</span>      Vertex&lt;int&gt; *v = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(<span class="keywordtype">id</span>);</div>
-<div class="line"><span class="lineno">  556</span>      <span class="keywordflow">if</span> (v)</div>
-<div class="line"><span class="lineno">  557</span>      {</div>
-<div class="line"><span class="lineno">  558</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *e : v-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>())</div>
-<div class="line"><span class="lineno">  559</span>        {</div>
-<div class="line"><span class="lineno">  560</span>          <span class="keywordtype">int</span> nid = e-&gt;getDest()-&gt;getInfo();</div>
-<div class="line"><span class="lineno">  561</span>          ++deg;</div>
-<div class="line"><span class="lineno">  562</span>          <span class="keyword">auto</span> it = assignment.find(nid);</div>
-<div class="line"><span class="lineno">  563</span>          <span class="keywordflow">if</span> (it != assignment.end() &amp;&amp; it-&gt;second &gt;= 0)</div>
-<div class="line"><span class="lineno">  564</span>            satColors.insert(it-&gt;second);</div>
-<div class="line"><span class="lineno">  565</span>        }</div>
-<div class="line"><span class="lineno">  566</span>      }</div>
-<div class="line"><span class="lineno">  567</span> </div>
-<div class="line"><span class="lineno">  568</span>      <span class="keywordtype">int</span> sat = (int)satColors.size();</div>
-<div class="line"><span class="lineno">  569</span>      <span class="keywordflow">if</span> (bestId &lt; 0 || sat &gt; bestSat || (sat == bestSat &amp;&amp; deg &gt; bestDeg))</div>
-<div class="line"><span class="lineno">  570</span>      {</div>
-<div class="line"><span class="lineno">  571</span>        bestId = id;</div>
-<div class="line"><span class="lineno">  572</span>        bestSat = sat;</div>
-<div class="line"><span class="lineno">  573</span>        bestDeg = deg;</div>
-<div class="line"><span class="lineno">  574</span>      }</div>
-<div class="line"><span class="lineno">  575</span>    }</div>
-<div class="line"><span class="lineno">  576</span> </div>
-<div class="line"><span class="lineno">  577</span>    std::set&lt;int&gt; used;</div>
-<div class="line"><span class="lineno">  578</span>    Vertex&lt;int&gt; *v = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(bestId);</div>
-<div class="line"><span class="lineno">  579</span>    <span class="keywordflow">if</span> (v)</div>
-<div class="line"><span class="lineno">  580</span>    {</div>
-<div class="line"><span class="lineno">  581</span>      <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *e : v-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>())</div>
-<div class="line"><span class="lineno">  582</span>      {</div>
-<div class="line"><span class="lineno">  583</span>        <span class="keywordtype">int</span> nid = e-&gt;getDest()-&gt;getInfo();</div>
-<div class="line"><span class="lineno">  584</span>        <span class="keyword">auto</span> it = assignment.find(nid);</div>
-<div class="line"><span class="lineno">  585</span>        <span class="keywordflow">if</span> (it != assignment.end() &amp;&amp; it-&gt;second &gt;= 0)</div>
-<div class="line"><span class="lineno">  586</span>          used.insert(it-&gt;second);</div>
-<div class="line"><span class="lineno">  587</span>      }</div>
-<div class="line"><span class="lineno">  588</span>    }</div>
-<div class="line"><span class="lineno">  589</span> </div>
-<div class="line"><span class="lineno">  590</span>    <span class="keywordtype">int</span> chosen = -1;</div>
-<div class="line"><span class="lineno">  591</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c = 0; c &lt; numRegisters; ++c)</div>
-<div class="line"><span class="lineno">  592</span>    {</div>
-<div class="line"><span class="lineno">  593</span>      <span class="keywordflow">if</span> (!used.count(c))</div>
-<div class="line"><span class="lineno">  594</span>      {</div>
-<div class="line"><span class="lineno">  595</span>        chosen = c;</div>
-<div class="line"><span class="lineno">  596</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  597</span>      }</div>
-<div class="line"><span class="lineno">  598</span>    }</div>
-<div class="line"><span class="lineno">  599</span> </div>
-<div class="line"><span class="lineno">  600</span>    assignment[bestId] = chosen; <span class="comment">// if chosen == -1 =&gt; spill</span></div>
-<div class="line"><span class="lineno">  601</span>    uncolored.erase(bestId);</div>
-<div class="line"><span class="lineno">  602</span>  }</div>
-<div class="line"><span class="lineno">  603</span> </div>
-<div class="line"><span class="lineno">  604</span>  AllocationResult res = finalizeResult(webs, assignment, <span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno">  605</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="register__alloc__tests_8cpp.html#a81484c302ed69e03423e4e77215a2348">colorsRespectInterference</a>(graph, res.<a class="code hl_variable" href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">webToRegister</a>))</div>
-<div class="line"><span class="lineno">  606</span>  {</div>
-<div class="line"><span class="lineno">  607</span>    std::cerr &lt;&lt; <span class="stringliteral">&quot;Internal warning: freeColoring produced conflicting colors; falling back to basicColoring.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  608</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="#ac577d2fd01bb72b5d14d966893937440">basicColoring</a>(graph, webs, numRegisters);</div>
-<div class="line"><span class="lineno">  609</span>  }</div>
-<div class="line"><span class="lineno">  610</span>  <span class="keywordflow">return</span> res;</div>
-<div class="line"><span class="lineno">  611</span>}</div>
-<div class="ttc" id="aclassGraphColoring_html_ac577d2fd01bb72b5d14d966893937440"><div class="ttname"><a href="#ac577d2fd01bb72b5d14d966893937440">GraphColoring::basicColoring</a></div><div class="ttdeci">static AllocationResult basicColoring(const Graph&lt; int &gt; &amp;graph, const std::vector&lt; Web &gt; &amp;webs, int numRegisters)</div><div class="ttdoc">Basic greedy Chaitin-style graph coloring.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8cpp_source.html#l00310">GraphColoring.cpp:310</a></div></div>
+<p class="definition">Definition at line <a class="el" href="GraphColoring_8cpp_source.html#l00548">548</a> of file <a class="el" href="GraphColoring_8cpp_source.html">GraphColoring.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  551</span>{</div>
+<div class="line"><span class="lineno">  552</span>  std::map&lt;int, int&gt; assignment;</div>
+<div class="line"><span class="lineno">  553</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : webs)</div>
+<div class="line"><span class="lineno">  554</span>    assignment[w.id] = -1;</div>
+<div class="line"><span class="lineno">  555</span> </div>
+<div class="line"><span class="lineno">  556</span>  <span class="keywordflow">if</span> (numRegisters &lt;= 0)</div>
+<div class="line"><span class="lineno">  557</span>    <span class="keywordflow">return</span> finalizeResult(webs, assignment, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  558</span> </div>
+<div class="line"><span class="lineno">  559</span>  std::set&lt;int&gt; uncolored = collectWebIds(webs);</div>
+<div class="line"><span class="lineno">  560</span> </div>
+<div class="line"><span class="lineno">  561</span>  <span class="keywordflow">while</span> (!uncolored.empty())</div>
+<div class="line"><span class="lineno">  562</span>  {</div>
+<div class="line"><span class="lineno">  563</span>    <span class="keywordtype">int</span> bestId = -1;</div>
+<div class="line"><span class="lineno">  564</span>    <span class="keywordtype">int</span> bestSat = -1;</div>
+<div class="line"><span class="lineno">  565</span>    <span class="keywordtype">int</span> bestDeg = -1;</div>
+<div class="line"><span class="lineno">  566</span> </div>
+<div class="line"><span class="lineno">  567</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <span class="keywordtype">id</span> : uncolored)</div>
+<div class="line"><span class="lineno">  568</span>    {</div>
+<div class="line"><span class="lineno">  569</span>      std::set&lt;int&gt; satColors;</div>
+<div class="line"><span class="lineno">  570</span>      <span class="keywordtype">int</span> deg = 0;</div>
+<div class="line"><span class="lineno">  571</span> </div>
+<div class="line"><span class="lineno">  572</span>      Vertex&lt;int&gt; *v = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  573</span>      <span class="keywordflow">if</span> (v)</div>
+<div class="line"><span class="lineno">  574</span>      {</div>
+<div class="line"><span class="lineno">  575</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *e : v-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>())</div>
+<div class="line"><span class="lineno">  576</span>        {</div>
+<div class="line"><span class="lineno">  577</span>          <span class="keywordtype">int</span> nid = e-&gt;getDest()-&gt;getInfo();</div>
+<div class="line"><span class="lineno">  578</span>          ++deg;</div>
+<div class="line"><span class="lineno">  579</span>          <span class="keyword">auto</span> it = assignment.find(nid);</div>
+<div class="line"><span class="lineno">  580</span>          <span class="keywordflow">if</span> (it != assignment.end() &amp;&amp; it-&gt;second &gt;= 0)</div>
+<div class="line"><span class="lineno">  581</span>            satColors.insert(it-&gt;second);</div>
+<div class="line"><span class="lineno">  582</span>        }</div>
+<div class="line"><span class="lineno">  583</span>      }</div>
+<div class="line"><span class="lineno">  584</span> </div>
+<div class="line"><span class="lineno">  585</span>      <span class="keywordtype">int</span> sat = (int)satColors.size();</div>
+<div class="line"><span class="lineno">  586</span>      <span class="keywordflow">if</span> (bestId &lt; 0 || sat &gt; bestSat || (sat == bestSat &amp;&amp; deg &gt; bestDeg))</div>
+<div class="line"><span class="lineno">  587</span>      {</div>
+<div class="line"><span class="lineno">  588</span>        bestId = id;</div>
+<div class="line"><span class="lineno">  589</span>        bestSat = sat;</div>
+<div class="line"><span class="lineno">  590</span>        bestDeg = deg;</div>
+<div class="line"><span class="lineno">  591</span>      }</div>
+<div class="line"><span class="lineno">  592</span>    }</div>
+<div class="line"><span class="lineno">  593</span> </div>
+<div class="line"><span class="lineno">  594</span>    std::set&lt;int&gt; used;</div>
+<div class="line"><span class="lineno">  595</span>    Vertex&lt;int&gt; *v = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(bestId);</div>
+<div class="line"><span class="lineno">  596</span>    <span class="keywordflow">if</span> (v)</div>
+<div class="line"><span class="lineno">  597</span>    {</div>
+<div class="line"><span class="lineno">  598</span>      <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *e : v-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>())</div>
+<div class="line"><span class="lineno">  599</span>      {</div>
+<div class="line"><span class="lineno">  600</span>        <span class="keywordtype">int</span> nid = e-&gt;getDest()-&gt;getInfo();</div>
+<div class="line"><span class="lineno">  601</span>        <span class="keyword">auto</span> it = assignment.find(nid);</div>
+<div class="line"><span class="lineno">  602</span>        <span class="keywordflow">if</span> (it != assignment.end() &amp;&amp; it-&gt;second &gt;= 0)</div>
+<div class="line"><span class="lineno">  603</span>          used.insert(it-&gt;second);</div>
+<div class="line"><span class="lineno">  604</span>      }</div>
+<div class="line"><span class="lineno">  605</span>    }</div>
+<div class="line"><span class="lineno">  606</span> </div>
+<div class="line"><span class="lineno">  607</span>    <span class="keywordtype">int</span> chosen = -1;</div>
+<div class="line"><span class="lineno">  608</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c = 0; c &lt; numRegisters; ++c)</div>
+<div class="line"><span class="lineno">  609</span>    {</div>
+<div class="line"><span class="lineno">  610</span>      <span class="keywordflow">if</span> (!used.count(c))</div>
+<div class="line"><span class="lineno">  611</span>      {</div>
+<div class="line"><span class="lineno">  612</span>        chosen = c;</div>
+<div class="line"><span class="lineno">  613</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  614</span>      }</div>
+<div class="line"><span class="lineno">  615</span>    }</div>
+<div class="line"><span class="lineno">  616</span> </div>
+<div class="line"><span class="lineno">  617</span>    assignment[bestId] = chosen; <span class="comment">// if chosen == -1 =&gt; spill</span></div>
+<div class="line"><span class="lineno">  618</span>    uncolored.erase(bestId);</div>
+<div class="line"><span class="lineno">  619</span>  }</div>
+<div class="line"><span class="lineno">  620</span> </div>
+<div class="line"><span class="lineno">  621</span>  AllocationResult res = finalizeResult(webs, assignment, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  622</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;[<span class="keywordtype">id</span>, reg] : res.<a class="code hl_variable" href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">webToRegister</a>)</div>
+<div class="line"><span class="lineno">  623</span>  {</div>
+<div class="line"><span class="lineno">  624</span>    <span class="keywordflow">if</span> (reg &lt; 0)</div>
+<div class="line"><span class="lineno">  625</span>      res.<a class="code hl_variable" href="structAllocationResult.html#ae169a334412450e66797350b2831059d">selectedSpills</a>.insert(<span class="keywordtype">id</span>);</div>
+<div class="line"><span class="lineno">  626</span>  }</div>
+<div class="line"><span class="lineno">  627</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="register__alloc__tests_8cpp.html#a81484c302ed69e03423e4e77215a2348">colorsRespectInterference</a>(graph, res.<a class="code hl_variable" href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">webToRegister</a>))</div>
+<div class="line"><span class="lineno">  628</span>  {</div>
+<div class="line"><span class="lineno">  629</span>    std::cerr &lt;&lt; <span class="stringliteral">&quot;Internal warning: freeColoring produced conflicting colors; falling back to basicColoring.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  630</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="#ac577d2fd01bb72b5d14d966893937440">basicColoring</a>(graph, webs, numRegisters);</div>
+<div class="line"><span class="lineno">  631</span>  }</div>
+<div class="line"><span class="lineno">  632</span>  <span class="keywordflow">return</span> res;</div>
+<div class="line"><span class="lineno">  633</span>}</div>
+<div class="ttc" id="aclassGraphColoring_html_ac577d2fd01bb72b5d14d966893937440"><div class="ttname"><a href="#ac577d2fd01bb72b5d14d966893937440">GraphColoring::basicColoring</a></div><div class="ttdeci">static AllocationResult basicColoring(const Graph&lt; int &gt; &amp;graph, const std::vector&lt; Web &gt; &amp;webs, int numRegisters)</div><div class="ttdoc">Basic simplify/select graph coloring.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8cpp_source.html#l00314">GraphColoring.cpp:314</a></div></div>
 <div class="ttc" id="aregister__alloc__tests_8cpp_html_a81484c302ed69e03423e4e77215a2348"><div class="ttname"><a href="register__alloc__tests_8cpp.html#a81484c302ed69e03423e4e77215a2348">colorsRespectInterference</a></div><div class="ttdeci">static bool colorsRespectInterference(const Graph&lt; int &gt; &amp;graph, const std::map&lt; int, int &gt; &amp;webToRegister)</div><div class="ttdef"><b>Definition</b> <a href="register__alloc__tests_8cpp_source.html#l00097">register_alloc_tests.cpp:97</a></div></div>
-<div class="ttc" id="astructAllocationResult_html_aeb09a1803c90a5ba1a8d6638f9ff3b3d"><div class="ttname"><a href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">AllocationResult::webToRegister</a></div><div class="ttdeci">std::map&lt; int, int &gt; webToRegister</div><div class="ttdoc">Maps web ID → physical register index (0-based), or -1 if the web was spilled.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8h_source.html#l00032">GraphColoring.h:32</a></div></div>
+<div class="ttc" id="astructAllocationResult_html_ae169a334412450e66797350b2831059d"><div class="ttname"><a href="structAllocationResult.html#ae169a334412450e66797350b2831059d">AllocationResult::selectedSpills</a></div><div class="ttdeci">std::set&lt; int &gt; selectedSpills</div><div class="ttdoc">Web ids deliberately selected for memory by spilling-capable algorithms.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8h_source.html#l00060">GraphColoring.h:60</a></div></div>
+<div class="ttc" id="astructAllocationResult_html_aeb09a1803c90a5ba1a8d6638f9ff3b3d"><div class="ttname"><a href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">AllocationResult::webToRegister</a></div><div class="ttdeci">std::map&lt; int, int &gt; webToRegister</div><div class="ttdoc">Maps web ID → physical register index (0-based), or -1 if the web was spilled.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8h_source.html#l00046">GraphColoring.h:46</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -505,7 +511,7 @@ Static Private Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Selects the best spill candidate from <code class="param">active</code> based on a heuristic. </p>
-<p>Default heuristic: highest active degree (most constrained node). Can be extended to consider spill cost (live-range length, usage frequency).</p>
+<p>Heuristic: choose the highest active degree, then the lowest web id as a deterministic tie-breaker. This removes the web with the most current interference constraints.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">graph</td><td>The full interference graph. </td></tr>
@@ -516,21 +522,21 @@ Static Private Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structWeb.html" title="A live web is the union of one or more live ranges of the same variable whose program-point sets over...">Web</a> ID of the chosen spill candidate. \par Complexity:<br  />
  O(W^2 + E) for a full active set, because activeDegree performs an O(W) vertex lookup and scans each active adjacency list. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GraphColoring_8cpp_source.html#l00290">290</a> of file <a class="el" href="GraphColoring_8cpp_source.html">GraphColoring.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  292</span>{</div>
-<div class="line"><span class="lineno">  293</span>  <span class="keywordtype">int</span> bestId = *active.begin();</div>
-<div class="line"><span class="lineno">  294</span>  <span class="keywordtype">int</span> bestDeg = -1;</div>
-<div class="line"><span class="lineno">  295</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <span class="keywordtype">id</span> : active)</div>
-<div class="line"><span class="lineno">  296</span>  {</div>
-<div class="line"><span class="lineno">  297</span>    <span class="keywordtype">int</span> d = <a class="code hl_function" href="#ad2e28a77859e8f542c1bff9397ed3280">activeDegree</a>(graph, <span class="keywordtype">id</span>, active);</div>
-<div class="line"><span class="lineno">  298</span>    <span class="keywordflow">if</span> (d &gt; bestDeg || (d == bestDeg &amp;&amp; <span class="keywordtype">id</span> &lt; bestId))</div>
-<div class="line"><span class="lineno">  299</span>    {</div>
-<div class="line"><span class="lineno">  300</span>      bestDeg = d;</div>
-<div class="line"><span class="lineno">  301</span>      bestId = id;</div>
-<div class="line"><span class="lineno">  302</span>    }</div>
-<div class="line"><span class="lineno">  303</span>  }</div>
-<div class="line"><span class="lineno">  304</span>  <span class="keywordflow">return</span> bestId;</div>
-<div class="line"><span class="lineno">  305</span>}</div>
+<p class="definition">Definition at line <a class="el" href="GraphColoring_8cpp_source.html#l00294">294</a> of file <a class="el" href="GraphColoring_8cpp_source.html">GraphColoring.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  296</span>{</div>
+<div class="line"><span class="lineno">  297</span>  <span class="keywordtype">int</span> bestId = *active.begin();</div>
+<div class="line"><span class="lineno">  298</span>  <span class="keywordtype">int</span> bestDeg = -1;</div>
+<div class="line"><span class="lineno">  299</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <span class="keywordtype">id</span> : active)</div>
+<div class="line"><span class="lineno">  300</span>  {</div>
+<div class="line"><span class="lineno">  301</span>    <span class="keywordtype">int</span> d = <a class="code hl_function" href="#ad2e28a77859e8f542c1bff9397ed3280">activeDegree</a>(graph, <span class="keywordtype">id</span>, active);</div>
+<div class="line"><span class="lineno">  302</span>    <span class="keywordflow">if</span> (d &gt; bestDeg || (d == bestDeg &amp;&amp; <span class="keywordtype">id</span> &lt; bestId))</div>
+<div class="line"><span class="lineno">  303</span>    {</div>
+<div class="line"><span class="lineno">  304</span>      bestDeg = d;</div>
+<div class="line"><span class="lineno">  305</span>      bestId = id;</div>
+<div class="line"><span class="lineno">  306</span>    }</div>
+<div class="line"><span class="lineno">  307</span>  }</div>
+<div class="line"><span class="lineno">  308</span>  <span class="keywordflow">return</span> bestId;</div>
+<div class="line"><span class="lineno">  309</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -572,7 +578,7 @@ Static Private Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p><a class="el" href="classGraph.html" title="Represents a general graph using an adjacency list.">Graph</a> coloring with selective web spilling. </p>
-<p>When basic coloring fails, iteratively selects up to <code class="param">maxSpills</code> webs to commit to memory (spill) and retries coloring on the reduced graph. The spill-candidate selection heuristic should minimize the total number of spills while maximizing the chance of a successful coloring (e.g., prefer high-degree webs).</p>
+<p>Iteratively tries reduced graphs with zero, one, ..., <code class="param">maxSpills</code> forced memory assignments. Each new spill candidate is the highest-degree active web, because removing a highly constrained web usually removes more interference edges and gives the remaining graph the best chance of becoming colorable.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">graph</td><td>The interference graph. </td></tr>
@@ -585,60 +591,63 @@ Static Private Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structAllocationResult.html" title="The outcome of a register allocation run.">AllocationResult</a> (spilled webs have webToRegister = -1). \par Complexity:<br  />
  O((maxSpills + 1) * W * (W^2 + E)) with the implemented high-degree spill heuristic and vector-backed <a class="el" href="classGraph.html">Graph&lt;int&gt;</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GraphColoring_8cpp_source.html#l00409">409</a> of file <a class="el" href="GraphColoring_8cpp_source.html">GraphColoring.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  413</span>{</div>
-<div class="line"><span class="lineno">  414</span>  maxSpills = std::max(0, maxSpills);</div>
-<div class="line"><span class="lineno">  415</span> </div>
-<div class="line"><span class="lineno">  416</span>  <span class="keywordflow">if</span> (numRegisters &lt;= 0)</div>
-<div class="line"><span class="lineno">  417</span>  {</div>
-<div class="line"><span class="lineno">  418</span>    std::map&lt;int, int&gt; allSpilled;</div>
-<div class="line"><span class="lineno">  419</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : webs)</div>
-<div class="line"><span class="lineno">  420</span>      allSpilled[w.id] = -1;</div>
-<div class="line"><span class="lineno">  421</span>    <span class="keywordflow">return</span> finalizeResult(webs, allSpilled, <span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno">  422</span>  }</div>
-<div class="line"><span class="lineno">  423</span> </div>
-<div class="line"><span class="lineno">  424</span>  std::set&lt;int&gt; forcedSpills;</div>
-<div class="line"><span class="lineno">  425</span> </div>
-<div class="line"><span class="lineno">  426</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> allowedSpills = 0; allowedSpills &lt;= maxSpills; ++allowedSpills)</div>
-<div class="line"><span class="lineno">  427</span>  {</div>
-<div class="line"><span class="lineno">  428</span>    std::set&lt;int&gt; active = collectWebIds(webs);</div>
-<div class="line"><span class="lineno">  429</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> sid : forcedSpills)</div>
-<div class="line"><span class="lineno">  430</span>      active.erase(sid);</div>
-<div class="line"><span class="lineno">  431</span> </div>
-<div class="line"><span class="lineno">  432</span>    std::map&lt;int, int&gt; subAssign;</div>
-<div class="line"><span class="lineno">  433</span>    <span class="keywordflow">if</span> (kColorSubgraph(graph, numRegisters, active, subAssign))</div>
-<div class="line"><span class="lineno">  434</span>    {</div>
-<div class="line"><span class="lineno">  435</span>      std::map&lt;int, int&gt; full;</div>
-<div class="line"><span class="lineno">  436</span>      <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : webs)</div>
-<div class="line"><span class="lineno">  437</span>      {</div>
-<div class="line"><span class="lineno">  438</span>        <span class="keywordflow">if</span> (forcedSpills.count(w.id))</div>
-<div class="line"><span class="lineno">  439</span>          full[w.id] = -1;</div>
-<div class="line"><span class="lineno">  440</span>        <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  441</span>          full[w.id] = subAssign[w.id];</div>
-<div class="line"><span class="lineno">  442</span>      }</div>
-<div class="line"><span class="lineno">  443</span>      AllocationResult res = finalizeResult(webs, full, <span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno">  444</span>      <span class="keywordflow">if</span> (<a class="code hl_function" href="register__alloc__tests_8cpp.html#a81484c302ed69e03423e4e77215a2348">colorsRespectInterference</a>(graph, res.<a class="code hl_variable" href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">webToRegister</a>))</div>
-<div class="line"><span class="lineno">  445</span>        <span class="keywordflow">return</span> res;</div>
-<div class="line"><span class="lineno">  446</span>    }</div>
-<div class="line"><span class="lineno">  447</span> </div>
-<div class="line"><span class="lineno">  448</span>    <span class="keywordflow">if</span> (allowedSpills == maxSpills)</div>
-<div class="line"><span class="lineno">  449</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  450</span> </div>
-<div class="line"><span class="lineno">  451</span>    std::set&lt;int&gt; candidates = collectWebIds(webs);</div>
-<div class="line"><span class="lineno">  452</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> sid : forcedSpills)</div>
-<div class="line"><span class="lineno">  453</span>      candidates.erase(sid);</div>
-<div class="line"><span class="lineno">  454</span>    <span class="keywordflow">if</span> (candidates.empty())</div>
-<div class="line"><span class="lineno">  455</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  456</span> </div>
-<div class="line"><span class="lineno">  457</span>    <span class="keywordtype">int</span> sid = <a class="code hl_function" href="#ad94a8226c9c46e02e6bb7f919aa086be">pickSpillCandidate</a>(graph, candidates);</div>
-<div class="line"><span class="lineno">  458</span>    forcedSpills.insert(sid);</div>
-<div class="line"><span class="lineno">  459</span>  }</div>
-<div class="line"><span class="lineno">  460</span> </div>
-<div class="line"><span class="lineno">  461</span>  std::map&lt;int, int&gt; allSpilled;</div>
-<div class="line"><span class="lineno">  462</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : webs)</div>
-<div class="line"><span class="lineno">  463</span>    allSpilled[w.id] = -1;</div>
-<div class="line"><span class="lineno">  464</span>  <span class="keywordflow">return</span> finalizeResult(webs, allSpilled, <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  465</span>}</div>
+<p class="definition">Definition at line <a class="el" href="GraphColoring_8cpp_source.html#l00413">413</a> of file <a class="el" href="GraphColoring_8cpp_source.html">GraphColoring.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  417</span>{</div>
+<div class="line"><span class="lineno">  418</span>  maxSpills = std::max(0, maxSpills);</div>
+<div class="line"><span class="lineno">  419</span> </div>
+<div class="line"><span class="lineno">  420</span>  <span class="keywordflow">if</span> (numRegisters &lt;= 0)</div>
+<div class="line"><span class="lineno">  421</span>  {</div>
+<div class="line"><span class="lineno">  422</span>    std::map&lt;int, int&gt; allSpilled;</div>
+<div class="line"><span class="lineno">  423</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : webs)</div>
+<div class="line"><span class="lineno">  424</span>      allSpilled[w.id] = -1;</div>
+<div class="line"><span class="lineno">  425</span>    <span class="keywordflow">return</span> finalizeResult(webs, allSpilled, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  426</span>  }</div>
+<div class="line"><span class="lineno">  427</span> </div>
+<div class="line"><span class="lineno">  428</span>  std::set&lt;int&gt; forcedSpills;</div>
+<div class="line"><span class="lineno">  429</span> </div>
+<div class="line"><span class="lineno">  430</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> allowedSpills = 0; allowedSpills &lt;= maxSpills; ++allowedSpills)</div>
+<div class="line"><span class="lineno">  431</span>  {</div>
+<div class="line"><span class="lineno">  432</span>    std::set&lt;int&gt; active = collectWebIds(webs);</div>
+<div class="line"><span class="lineno">  433</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> sid : forcedSpills)</div>
+<div class="line"><span class="lineno">  434</span>      active.erase(sid);</div>
+<div class="line"><span class="lineno">  435</span> </div>
+<div class="line"><span class="lineno">  436</span>    std::map&lt;int, int&gt; subAssign;</div>
+<div class="line"><span class="lineno">  437</span>    <span class="keywordflow">if</span> (kColorSubgraph(graph, numRegisters, active, subAssign))</div>
+<div class="line"><span class="lineno">  438</span>    {</div>
+<div class="line"><span class="lineno">  439</span>      std::map&lt;int, int&gt; full;</div>
+<div class="line"><span class="lineno">  440</span>      <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : webs)</div>
+<div class="line"><span class="lineno">  441</span>      {</div>
+<div class="line"><span class="lineno">  442</span>        <span class="keywordflow">if</span> (forcedSpills.count(w.id))</div>
+<div class="line"><span class="lineno">  443</span>          full[w.id] = -1;</div>
+<div class="line"><span class="lineno">  444</span>        <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  445</span>          full[w.id] = subAssign[w.id];</div>
+<div class="line"><span class="lineno">  446</span>      }</div>
+<div class="line"><span class="lineno">  447</span>      AllocationResult res = finalizeResult(webs, full, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  448</span>      <span class="keywordflow">if</span> (<a class="code hl_function" href="register__alloc__tests_8cpp.html#a81484c302ed69e03423e4e77215a2348">colorsRespectInterference</a>(graph, res.<a class="code hl_variable" href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">webToRegister</a>))</div>
+<div class="line"><span class="lineno">  449</span>      {</div>
+<div class="line"><span class="lineno">  450</span>        res.<a class="code hl_variable" href="structAllocationResult.html#ae169a334412450e66797350b2831059d">selectedSpills</a> = forcedSpills;</div>
+<div class="line"><span class="lineno">  451</span>        <span class="keywordflow">return</span> res;</div>
+<div class="line"><span class="lineno">  452</span>      }</div>
+<div class="line"><span class="lineno">  453</span>    }</div>
+<div class="line"><span class="lineno">  454</span> </div>
+<div class="line"><span class="lineno">  455</span>    <span class="keywordflow">if</span> (allowedSpills == maxSpills)</div>
+<div class="line"><span class="lineno">  456</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  457</span> </div>
+<div class="line"><span class="lineno">  458</span>    std::set&lt;int&gt; candidates = collectWebIds(webs);</div>
+<div class="line"><span class="lineno">  459</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> sid : forcedSpills)</div>
+<div class="line"><span class="lineno">  460</span>      candidates.erase(sid);</div>
+<div class="line"><span class="lineno">  461</span>    <span class="keywordflow">if</span> (candidates.empty())</div>
+<div class="line"><span class="lineno">  462</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  463</span> </div>
+<div class="line"><span class="lineno">  464</span>    <span class="keywordtype">int</span> sid = <a class="code hl_function" href="#ad94a8226c9c46e02e6bb7f919aa086be">pickSpillCandidate</a>(graph, candidates);</div>
+<div class="line"><span class="lineno">  465</span>    forcedSpills.insert(sid);</div>
+<div class="line"><span class="lineno">  466</span>  }</div>
+<div class="line"><span class="lineno">  467</span> </div>
+<div class="line"><span class="lineno">  468</span>  std::map&lt;int, int&gt; allSpilled;</div>
+<div class="line"><span class="lineno">  469</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : webs)</div>
+<div class="line"><span class="lineno">  470</span>    allSpilled[w.id] = -1;</div>
+<div class="line"><span class="lineno">  471</span>  <span class="keywordflow">return</span> finalizeResult(webs, allSpilled, <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  472</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -680,8 +689,8 @@ Static Private Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p><a class="el" href="classGraph.html" title="Represents a general graph using an adjacency list.">Graph</a> coloring with selective web splitting. </p>
-<p>When basic coloring fails, iteratively splits up to <code class="param">maxSplits</code> webs into two derived sub-webs, reducing interference edges and hopefully allowing a coloring with the same number of registers. The split-point selection heuristic has a strong influence on the result.</p>
-<p>After splitting, the web list and interference graph must be rebuilt before reattempting coloring.</p>
+<p>Iteratively splits up to <code class="param">maxSplits</code> webs into two derived sub-webs and rebuilds the interference graph. The selected web is the currently spilled/highest-degree candidate, because it is the web most responsible for blocking a K-coloring.</p>
+<p>After each split, the web list and interference graph are rebuilt before reattempting coloring.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">graph</td><td>The original interference graph. </td></tr>
@@ -694,62 +703,73 @@ Static Private Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structAllocationResult.html" title="The outcome of a register allocation run.">AllocationResult</a> for the (possibly extended) web list. \par Complexity:<br  />
  O((maxSplits + 1) * (W^2 * P + E * W + W * (W^2 + E))) in the worst case, where P is the maximum number of points compared per web pair. Each split rebuilds the interference graph and reruns coloring. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GraphColoring_8cpp_source.html#l00470">470</a> of file <a class="el" href="GraphColoring_8cpp_source.html">GraphColoring.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  474</span>{</div>
-<div class="line"><span class="lineno">  475</span>  maxSplits = std::max(0, maxSplits);</div>
-<div class="line"><span class="lineno">  476</span> </div>
-<div class="line"><span class="lineno">  477</span>  std::map&lt;int, int&gt; completeAssignment;</div>
-<div class="line"><span class="lineno">  478</span>  <span class="keywordflow">if</span> (kColorSubgraph(graph, numRegisters, collectWebIds(webs), completeAssignment))</div>
-<div class="line"><span class="lineno">  479</span>    <span class="keywordflow">return</span> finalizeResult(webs, completeAssignment, <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  480</span> </div>
-<div class="line"><span class="lineno">  481</span>  AllocationResult current = <a class="code hl_function" href="#ac577d2fd01bb72b5d14d966893937440">basicColoring</a>(graph, webs, numRegisters);</div>
-<div class="line"><span class="lineno">  482</span>  <span class="keywordflow">if</span> (current.<a class="code hl_variable" href="structAllocationResult.html#a15e2d2c98221ee91b5b55197423e522a">feasible</a>)</div>
-<div class="line"><span class="lineno">  483</span>    <span class="keywordflow">return</span> current;</div>
-<div class="line"><span class="lineno">  484</span> </div>
-<div class="line"><span class="lineno">  485</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> splitCount = 0; splitCount &lt; maxSplits; ++splitCount)</div>
-<div class="line"><span class="lineno">  486</span>  {</div>
-<div class="line"><span class="lineno">  487</span>    <span class="comment">// Prefer splitting currently spilled webs; tie-break by highest degree.</span></div>
-<div class="line"><span class="lineno">  488</span>    <span class="keywordtype">int</span> bestId = -1;</div>
-<div class="line"><span class="lineno">  489</span>    <span class="keywordtype">int</span> bestDeg = -1;</div>
-<div class="line"><span class="lineno">  490</span> </div>
-<div class="line"><span class="lineno">  491</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : webs)</div>
-<div class="line"><span class="lineno">  492</span>    {</div>
-<div class="line"><span class="lineno">  493</span>      <span class="keywordtype">bool</span> spilledNow = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  494</span>      <span class="keyword">auto</span> it = current.<a class="code hl_variable" href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">webToRegister</a>.find(w.id);</div>
-<div class="line"><span class="lineno">  495</span>      <span class="keywordflow">if</span> (it != current.<a class="code hl_variable" href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">webToRegister</a>.end() &amp;&amp; it-&gt;second &lt; 0)</div>
-<div class="line"><span class="lineno">  496</span>        spilledNow = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  497</span> </div>
-<div class="line"><span class="lineno">  498</span>      <span class="keywordflow">if</span> (!spilledNow &amp;&amp; bestId &gt;= 0)</div>
-<div class="line"><span class="lineno">  499</span>        <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  500</span> </div>
-<div class="line"><span class="lineno">  501</span>      Vertex&lt;int&gt; *v = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(w.id);</div>
-<div class="line"><span class="lineno">  502</span>      <span class="keywordtype">int</span> deg = v ? (int)v-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>().size() : 0;</div>
-<div class="line"><span class="lineno">  503</span> </div>
-<div class="line"><span class="lineno">  504</span>      <span class="keywordflow">if</span> (bestId &lt; 0 || deg &gt; bestDeg)</div>
-<div class="line"><span class="lineno">  505</span>      {</div>
-<div class="line"><span class="lineno">  506</span>        bestId = w.id;</div>
-<div class="line"><span class="lineno">  507</span>        bestDeg = deg;</div>
-<div class="line"><span class="lineno">  508</span>      }</div>
-<div class="line"><span class="lineno">  509</span>    }</div>
-<div class="line"><span class="lineno">  510</span> </div>
-<div class="line"><span class="lineno">  511</span>    <span class="keywordflow">if</span> (bestId &lt; 0)</div>
-<div class="line"><span class="lineno">  512</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  513</span> </div>
-<div class="line"><span class="lineno">  514</span>    <span class="keywordflow">if</span> (!splitWebById(webs, bestId))</div>
-<div class="line"><span class="lineno">  515</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  516</span> </div>
-<div class="line"><span class="lineno">  517</span>    graph = <a class="code hl_function" href="classInterferenceGraph.html#a14b2ba542b41580f8c4e3a6dbad03cf1">InterferenceGraph::buildGraph</a>(webs);</div>
-<div class="line"><span class="lineno">  518</span>    std::map&lt;int, int&gt; splitAssignment;</div>
-<div class="line"><span class="lineno">  519</span>    <span class="keywordflow">if</span> (kColorSubgraph(graph, numRegisters, collectWebIds(webs), splitAssignment))</div>
-<div class="line"><span class="lineno">  520</span>      <span class="keywordflow">return</span> finalizeResult(webs, splitAssignment, <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  521</span> </div>
-<div class="line"><span class="lineno">  522</span>    current = <a class="code hl_function" href="#ac577d2fd01bb72b5d14d966893937440">basicColoring</a>(graph, webs, numRegisters);</div>
-<div class="line"><span class="lineno">  523</span>  }</div>
-<div class="line"><span class="lineno">  524</span> </div>
-<div class="line"><span class="lineno">  525</span>  <span class="keywordflow">return</span> current;</div>
-<div class="line"><span class="lineno">  526</span>}</div>
+<p class="definition">Definition at line <a class="el" href="GraphColoring_8cpp_source.html#l00477">477</a> of file <a class="el" href="GraphColoring_8cpp_source.html">GraphColoring.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  481</span>{</div>
+<div class="line"><span class="lineno">  482</span>  maxSplits = std::max(0, maxSplits);</div>
+<div class="line"><span class="lineno">  483</span> </div>
+<div class="line"><span class="lineno">  484</span>  std::map&lt;int, int&gt; completeAssignment;</div>
+<div class="line"><span class="lineno">  485</span>  <span class="keywordflow">if</span> (kColorSubgraph(graph, numRegisters, collectWebIds(webs), completeAssignment))</div>
+<div class="line"><span class="lineno">  486</span>    <span class="keywordflow">return</span> finalizeResult(webs, completeAssignment, <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  487</span> </div>
+<div class="line"><span class="lineno">  488</span>  AllocationResult current = <a class="code hl_function" href="#ac577d2fd01bb72b5d14d966893937440">basicColoring</a>(graph, webs, numRegisters);</div>
+<div class="line"><span class="lineno">  489</span>  <span class="keywordflow">if</span> (current.<a class="code hl_variable" href="structAllocationResult.html#a15e2d2c98221ee91b5b55197423e522a">feasible</a>)</div>
+<div class="line"><span class="lineno">  490</span>    <span class="keywordflow">return</span> current;</div>
+<div class="line"><span class="lineno">  491</span> </div>
+<div class="line"><span class="lineno">  492</span>  std::vector&lt;SplitRecord&gt; splitRecords;</div>
+<div class="line"><span class="lineno">  493</span> </div>
+<div class="line"><span class="lineno">  494</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> splitCount = 0; splitCount &lt; maxSplits; ++splitCount)</div>
+<div class="line"><span class="lineno">  495</span>  {</div>
+<div class="line"><span class="lineno">  496</span>    <span class="comment">// Prefer splitting currently spilled webs; tie-break by highest degree.</span></div>
+<div class="line"><span class="lineno">  497</span>    <span class="keywordtype">int</span> bestId = -1;</div>
+<div class="line"><span class="lineno">  498</span>    <span class="keywordtype">int</span> bestDeg = -1;</div>
+<div class="line"><span class="lineno">  499</span> </div>
+<div class="line"><span class="lineno">  500</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : webs)</div>
+<div class="line"><span class="lineno">  501</span>    {</div>
+<div class="line"><span class="lineno">  502</span>      <span class="keywordtype">bool</span> spilledNow = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  503</span>      <span class="keyword">auto</span> it = current.<a class="code hl_variable" href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">webToRegister</a>.find(w.id);</div>
+<div class="line"><span class="lineno">  504</span>      <span class="keywordflow">if</span> (it != current.<a class="code hl_variable" href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">webToRegister</a>.end() &amp;&amp; it-&gt;second &lt; 0)</div>
+<div class="line"><span class="lineno">  505</span>        spilledNow = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  506</span> </div>
+<div class="line"><span class="lineno">  507</span>      <span class="keywordflow">if</span> (!spilledNow &amp;&amp; bestId &gt;= 0)</div>
+<div class="line"><span class="lineno">  508</span>        <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  509</span> </div>
+<div class="line"><span class="lineno">  510</span>      Vertex&lt;int&gt; *v = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(w.id);</div>
+<div class="line"><span class="lineno">  511</span>      <span class="keywordtype">int</span> deg = v ? (int)v-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>().size() : 0;</div>
+<div class="line"><span class="lineno">  512</span> </div>
+<div class="line"><span class="lineno">  513</span>      <span class="keywordflow">if</span> (bestId &lt; 0 || deg &gt; bestDeg)</div>
+<div class="line"><span class="lineno">  514</span>      {</div>
+<div class="line"><span class="lineno">  515</span>        bestId = w.id;</div>
+<div class="line"><span class="lineno">  516</span>        bestDeg = deg;</div>
+<div class="line"><span class="lineno">  517</span>      }</div>
+<div class="line"><span class="lineno">  518</span>    }</div>
+<div class="line"><span class="lineno">  519</span> </div>
+<div class="line"><span class="lineno">  520</span>    <span class="keywordflow">if</span> (bestId &lt; 0)</div>
+<div class="line"><span class="lineno">  521</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  522</span> </div>
+<div class="line"><span class="lineno">  523</span>    SplitRecord record;</div>
+<div class="line"><span class="lineno">  524</span>    <span class="keywordflow">if</span> (!splitWebById(webs, bestId, record))</div>
+<div class="line"><span class="lineno">  525</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  526</span>    splitRecords.push_back(record);</div>
+<div class="line"><span class="lineno">  527</span> </div>
+<div class="line"><span class="lineno">  528</span>    graph = <a class="code hl_function" href="classInterferenceGraph.html#a14b2ba542b41580f8c4e3a6dbad03cf1">InterferenceGraph::buildGraph</a>(webs);</div>
+<div class="line"><span class="lineno">  529</span>    std::map&lt;int, int&gt; splitAssignment;</div>
+<div class="line"><span class="lineno">  530</span>    <span class="keywordflow">if</span> (kColorSubgraph(graph, numRegisters, collectWebIds(webs), splitAssignment))</div>
+<div class="line"><span class="lineno">  531</span>    {</div>
+<div class="line"><span class="lineno">  532</span>      AllocationResult res = finalizeResult(webs, splitAssignment, <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  533</span>      res.<a class="code hl_variable" href="structAllocationResult.html#a0a01856caf7e0298e5852bf8b87c80e6">splitRecords</a> = splitRecords;</div>
+<div class="line"><span class="lineno">  534</span>      <span class="keywordflow">return</span> res;</div>
+<div class="line"><span class="lineno">  535</span>    }</div>
+<div class="line"><span class="lineno">  536</span> </div>
+<div class="line"><span class="lineno">  537</span>    current = <a class="code hl_function" href="#ac577d2fd01bb72b5d14d966893937440">basicColoring</a>(graph, webs, numRegisters);</div>
+<div class="line"><span class="lineno">  538</span>    current.<a class="code hl_variable" href="structAllocationResult.html#a0a01856caf7e0298e5852bf8b87c80e6">splitRecords</a> = splitRecords;</div>
+<div class="line"><span class="lineno">  539</span>  }</div>
+<div class="line"><span class="lineno">  540</span> </div>
+<div class="line"><span class="lineno">  541</span>  current.<a class="code hl_variable" href="structAllocationResult.html#a0a01856caf7e0298e5852bf8b87c80e6">splitRecords</a> = splitRecords;</div>
+<div class="line"><span class="lineno">  542</span>  <span class="keywordflow">return</span> current;</div>
+<div class="line"><span class="lineno">  543</span>}</div>
 <div class="ttc" id="aclassInterferenceGraph_html_a14b2ba542b41580f8c4e3a6dbad03cf1"><div class="ttname"><a href="classInterferenceGraph.html#a14b2ba542b41580f8c4e3a6dbad03cf1">InterferenceGraph::buildGraph</a></div><div class="ttdeci">static Graph&lt; int &gt; buildGraph(const std::vector&lt; Web &gt; &amp;webs)</div><div class="ttdoc">Builds the interference graph from the web list.</div><div class="ttdef"><b>Definition</b> <a href="InterferenceGraph_8cpp_source.html#l00189">InterferenceGraph.cpp:189</a></div></div>
-<div class="ttc" id="astructAllocationResult_html_a15e2d2c98221ee91b5b55197423e522a"><div class="ttname"><a href="structAllocationResult.html#a15e2d2c98221ee91b5b55197423e522a">AllocationResult::feasible</a></div><div class="ttdeci">bool feasible</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8h_source.html#l00037">GraphColoring.h:37</a></div></div>
+<div class="ttc" id="astructAllocationResult_html_a0a01856caf7e0298e5852bf8b87c80e6"><div class="ttname"><a href="structAllocationResult.html#a0a01856caf7e0298e5852bf8b87c80e6">AllocationResult::splitRecords</a></div><div class="ttdeci">std::vector&lt; SplitRecord &gt; splitRecords</div><div class="ttdoc">Records of web splits performed by splitting-capable algorithms.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8h_source.html#l00063">GraphColoring.h:63</a></div></div>
+<div class="ttc" id="astructAllocationResult_html_a15e2d2c98221ee91b5b55197423e522a"><div class="ttname"><a href="structAllocationResult.html#a15e2d2c98221ee91b5b55197423e522a">AllocationResult::feasible</a></div><div class="ttdeci">bool feasible</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8h_source.html#l00051">GraphColoring.h:51</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

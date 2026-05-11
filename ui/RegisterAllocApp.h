@@ -112,6 +112,7 @@ private:
   // ------------------------------------------------------------------
   void doViewGraphTerminal() const;
   void doExportGraphDOT() const;
+  void doExportAllocationDOT() const;
   void doShowAllocationResult() const;
 };
 

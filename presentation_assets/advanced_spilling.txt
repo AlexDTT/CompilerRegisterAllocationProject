@@ -1,0 +1,41 @@
+# Total number of webs followed by the listing of the program points of each one
+# program points in each web are sorted in ascending order
+webs: 16
+web0: 1+,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17-
+web1: 8+,9,10,11,12,13,14-
+web2: 12+,13,18-
+web3: 10+,11,12,13-
+web4: 13+,14,15,16-
+web5: 3+,4,5,6,9,10,11,12,13-
+web6: 2+,3,4,5,6,7,8,9,10,11,12,13,14-
+web7: 14+,15,16,17,18-
+web8: 14+,15,16,17-
+web9: 15+,16,17,18-
+web10: 1+,2,3,4,5,6,7,8,9-
+web11: 18+,19,20-
+web12: 17+,18,19,20-
+web13: 4+,5,6,7,8-
+web14: 5+,6,7,8,9,10-
+web15: 6+,7,8,9,10,11-
+# Total number of registers used, followed by assignment to webs
+registers: 5
+r0: web5
+r0: web9
+r0: web11
+r1: web2
+r1: web8
+r1: web15
+r2: web1
+r2: web7
+r2: web13
+r3: web3
+r3: web4
+r3: web12
+r3: web14
+r4: web10
+M: web0
+M: web6
+# Alternative algorithm metadata, one processing-friendly record per line
+spills: 2
+spill: web0
+spill: web6

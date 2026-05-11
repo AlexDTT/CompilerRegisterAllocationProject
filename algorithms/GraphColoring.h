@@ -3,24 +3,38 @@
  * @brief Graph-coloring-based register allocation algorithms.
  *
  * Four algorithm variants are provided:
- *  - **Basic**: Chaitin-style greedy graph coloring.  When no spilling or splitting is
- *    allowed and the graph cannot be colored with the given number of registers, the
+ *  - **Basic**: simplify/select greedy graph coloring. When the graph cannot be
+ *    colored with the configured number of registers without recovery actions, the
  *    allocation is reported as infeasible.
  *  - **Spilling**: Greedy coloring with selective web spilling (committing webs to memory)
  *    to reduce the graph's chromatic number.
  *  - **Splitting**: Greedy coloring with selective web splitting (breaking webs into
  *    sub-webs with fewer interferences) to enable coloring.
- *  - **Free**: A custom allocation strategy (student-defined).
+ *  - **Free**: custom pressure-aware coloring that prioritises highly constrained
+ *    webs and safely spills webs that cannot receive a compatible register.
  */
 
 #ifndef GRAPH_COLORING_H
 #define GRAPH_COLORING_H
 
 #include <map>
+#include <set>
+#include <string>
 #include <vector>
 #include "data_structures/Graph.h"
 #include "models/Parameters.h"
 #include "models/Web.h"
+
+/**
+ * @struct SplitRecord
+ * @brief Processing-friendly description of one performed web split.
+ */
+struct SplitRecord
+{
+  int sourceWebId = -1; ///< Web selected for splitting before the operation.
+  int leftWebId = -1;   ///< First derived web id. The implementation reuses sourceWebId.
+  int rightWebId = -1;  ///< Second derived web id created by the split.
+};
 
 /**
  * @struct AllocationResult
@@ -41,6 +55,12 @@ struct AllocationResult
 
   /// Number of webs assigned to memory.
   int spilledWebs = 0;
+
+  /// Web ids deliberately selected for memory by spilling-capable algorithms.
+  std::set<int> selectedSpills;
+
+  /// Records of web splits performed by splitting-capable algorithms.
+  std::vector<SplitRecord> splitRecords;
 };
 
 /**
@@ -55,7 +75,7 @@ public:
   // ------------------------------------------------------------------
 
   /**
-   * @brief Basic greedy Chaitin-style graph coloring.
+   * @brief Basic simplify/select graph coloring.
    *
    * Repeatedly removes vertices with degree < numRegisters from a working copy of the
    * graph, pushing them onto a stack.  If all remaining vertices have degree ≥
@@ -85,10 +105,10 @@ public:
   /**
    * @brief Graph coloring with selective web spilling.
    *
-   * When basic coloring fails, iteratively selects up to @p maxSpills webs to commit
-   * to memory (spill) and retries coloring on the reduced graph.  The spill-candidate
-   * selection heuristic should minimize the total number of spills while maximizing
-   * the chance of a successful coloring (e.g., prefer high-degree webs).
+   * Iteratively tries reduced graphs with zero, one, ..., @p maxSpills forced
+   * memory assignments. Each new spill candidate is the highest-degree active web,
+   * because removing a highly constrained web usually removes more interference
+   * edges and gives the remaining graph the best chance of becoming colorable.
    *
    * @param graph        The interference graph.
    * @param webs         Ordered list of webs.
@@ -111,12 +131,11 @@ public:
   /**
    * @brief Graph coloring with selective web splitting.
    *
-   * When basic coloring fails, iteratively splits up to @p maxSplits webs into two
-   * derived sub-webs, reducing interference edges and hopefully allowing a coloring
-   * with the same number of registers.  The split-point selection heuristic has a
-   * strong influence on the result.
+   * Iteratively splits up to @p maxSplits webs into two derived sub-webs and rebuilds
+   * the interference graph. The selected web is the currently spilled/highest-degree
+   * candidate, because it is the web most responsible for blocking a K-coloring.
    *
-   * After splitting, the web list and interference graph must be rebuilt before
+   * After each split, the web list and interference graph are rebuilt before
    * reattempting coloring.
    *
    * @param graph        The original interference graph.
@@ -142,16 +161,19 @@ public:
   /**
    * @brief Custom register allocation algorithm.
    *
-   * Free-form implementation: any approach is allowed as long as two interfering webs
-   * are never assigned the same register.  Describe the rationale in the documentation.
+   * This allocator repeatedly chooses the uncolored web with the highest number of
+   * different neighboring register colors already present. Ties are broken by graph
+   * degree. This prioritises webs under the most immediate register pressure before
+   * easier webs, and assigns memory only when every register conflicts with a
+   * colored neighbor.
    *
    * @param graph        The interference graph.
    * @param webs         Ordered list of webs.
    * @param numRegisters Number of available physical registers (K).
    * @return AllocationResult with the register assignment.
    * @complexity O(W * (W^2 + E)) with the vector-backed Graph<int>, because each
-   *             DSATUR selection round scans the remaining vertices and their
-   *             adjacency lists.
+   *             selection round scans the remaining vertices, calls findVertex,
+   *             and inspects adjacency lists.
    *
    */
   static AllocationResult freeColoring(const Graph<int> &graph,
@@ -165,7 +187,9 @@ private:
    * @param id     Web ID of the vertex.
    * @param active Set of currently active (non-removed) web IDs.
    * @return Number of active neighbors.
-   * @complexity O(E_v) where E_v is the number of edges incident to @p id.
+   * @complexity O(W + E_v), where W is the number of graph vertices and E_v is
+   *             the number of edges incident to @p id. The W term is the linear
+   *             Graph<int>::findVertex lookup.
    */
   static int activeDegree(const Graph<int> &graph, int id,
                           const std::set<int> &active);
@@ -173,8 +197,9 @@ private:
   /**
    * @brief Selects the best spill candidate from @p active based on a heuristic.
    *
-   * Default heuristic: highest active degree (most constrained node).  Can be extended
-   * to consider spill cost (live-range length, usage frequency).
+   * Heuristic: choose the highest active degree, then the lowest web id as a
+   * deterministic tie-breaker. This removes the web with the most current
+   * interference constraints.
    *
    * @param graph  The full interference graph.
    * @param active Set of currently active web IDs.

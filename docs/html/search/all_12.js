@@ -21,9 +21,10 @@ var searchData=
   ['representation_20and_20parsing_18',['Graph Representation and Parsing',['../extra_docs.html#ext_t1',1,'']]],
   ['requirements_20coverage_19',['Project Requirements Coverage',['../index.html#autotoc_md21',1,'']]],
   ['reverse_20',['reverse',['../classEdge.html#a6c1e5191f85afbd20cf6198815c9b079',1,'Edge']]],
-  ['rule_21',['Interference rule',['../extra_docs.html#ext_t1_interference',1,'']]],
-  ['run_22',['run',['../classRegisterAllocApp.html#a6736dc92400281a33c5db4f04a3dc831',1,'RegisterAllocApp']]],
-  ['runallocation_23',['runAllocation',['../classAllocationLogic.html#a525be380f325c9d2391e392b68539d20',1,'AllocationLogic::runAllocation()'],['../classRegisterAllocApp.html#a6df05a723aaa61515521422133223a9e',1,'RegisterAllocApp::runAllocation()']]],
-  ['runbatchmode_24',['runBatchMode',['../classRegisterAllocApp.html#a8fec053d69d206ebc0dbd4e22a11d969',1,'RegisterAllocApp']]],
-  ['runinteractivemode_25',['runInteractiveMode',['../classRegisterAllocApp.html#ac5569fc7164ba7e0d0ace0f1cf826bba',1,'RegisterAllocApp']]]
+  ['rightwebid_21',['rightWebId',['../structSplitRecord.html#a1d232329fd4a41ddce721e406a2bd061',1,'SplitRecord']]],
+  ['rule_22',['Interference rule',['../extra_docs.html#ext_t1_interference',1,'']]],
+  ['run_23',['run',['../classRegisterAllocApp.html#a6736dc92400281a33c5db4f04a3dc831',1,'RegisterAllocApp']]],
+  ['runallocation_24',['runAllocation',['../classAllocationLogic.html#a525be380f325c9d2391e392b68539d20',1,'AllocationLogic::runAllocation()'],['../classRegisterAllocApp.html#a6df05a723aaa61515521422133223a9e',1,'RegisterAllocApp::runAllocation()']]],
+  ['runbatchmode_25',['runBatchMode',['../classRegisterAllocApp.html#a8fec053d69d206ebc0dbd4e22a11d969',1,'RegisterAllocApp']]],
+  ['runinteractivemode_26',['runInteractiveMode',['../classRegisterAllocApp.html#ac5569fc7164ba7e0d0ace0f1cf826bba',1,'RegisterAllocApp']]]
 ];

@@ -122,7 +122,7 @@ About the Project</h1>
 <li>merges compatible live ranges into <b>webs</b>;</li>
 <li>builds the corresponding <b>interference graph</b>;</li>
 <li>allocates webs to a bounded number of physical registers;</li>
-<li>falls back to <b>spilling</b> or <b>splitting</b> when required by the selected algorithm.</li>
+<li>applies <b>spilling</b> or <b>splitting</b> when selected by the configuration file.</li>
 </ul>
 <p>The tool includes four allocation modes:</p>
 <table class="markdownTable">
@@ -135,7 +135,7 @@ About the Project</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">splitting, K</span>  </td><td class="markdownTableBodyNone">Coloring with bounded splitting  </td><td class="markdownTableBodyNone">Splits up to <span class="tt">K</span> webs into derived webs, rebuilds the graph, and retries coloring.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">free</span>  </td><td class="markdownTableBodyNone">Custom heuristic  </td><td class="markdownTableBodyNone">Uses a DSATUR-style ordering with selective spill fallback.  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">free</span>  </td><td class="markdownTableBodyNone">Custom heuristic  </td><td class="markdownTableBodyNone">Colors the most constrained webs first and spills only when no compatible register remains.  </td></tr>
 </table>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
 Group T9G2 Members</h1>
@@ -173,7 +173,7 @@ Live ranges</h2>
 <div class="line">i: 1+,2,3,4,7</div>
 <div class="line">i: 7,8</div>
 <div class="line">i: 8,9-</div>
-</div><!-- fragment --><p>Markers have the same meaning as in the project statement:</p><ul>
+</div><!-- fragment --><p>Markers use the live-range notation defined for the project:</p><ul>
 <li><span class="tt">+</span> marks the definition that starts a live range.</li>
 <li><span class="tt">-</span> marks the last use that ends a live range.</li>
 <li>unmarked points represent internal live points or merge/intersection points.</li>
@@ -188,10 +188,12 @@ Allocation output</h2>
 <li>one line per web with its aggregated program points sorted in ascending order;</li>
 <li>the number of registers actually used;</li>
 <li>the mapping <span class="tt">rX: webY</span> or <span class="tt">M: webY</span>.</li>
+<li>for alternative algorithms, a processing-friendly metadata section such as <span class="tt">spills: 1</span> / <span class="tt">spill: web0</span> or <span class="tt">splits: 1</span> / <span class="tt">split: web0 -&gt; web0,web3</span>.</li>
 </ul>
+<p>Batch mode also writes a colored DOT visualization next to the allocation file by replacing the output extension with <span class="tt">.dot</span>. For example, <span class="tt">allocation.txt</span> produces <span class="tt">allocation.dot</span>. Nodes are colored by register, memory-assigned webs are gray boxes, and split-derived webs receive highlighted borders.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
 System Architecture</h1>
-<p>The application pipeline is intentionally close to the problem formulation from the statement:</p>
+<p>The application pipeline follows the live-range to web to interference-graph workflow:</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
 <iframe scrolling="no" loading="lazy" frameborder="0" src="dot_annotated_architecture.svg" width="1704" height="151"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Compiler Register Allocation Project Pipeline</div>
@@ -213,7 +215,7 @@ Spilling one web in a 3-clique</div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
 Splitting example</h2>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_splitting.svg" width="599" height="386"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_splitting.svg" width="599" height="383"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Splitting a web to reduce the chromatic requirement</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
@@ -263,7 +265,7 @@ Complexity Summary</h1>
 <li><span class="tt">V</span> is the number of variables,</li>
 <li><span class="tt">W</span> is the number of webs,</li>
 <li><span class="tt">E</span> is the number of directed adjacency entries in the interference graph,</li>
-<li><span class="tt">S</span> is the maximum number of allowed spill/split recovery actions.</li>
+<li><span class="tt">S</span> is the configured maximum number of spill/split recovery actions.</li>
 </ul>
 <p>The coloring bounds include the current vector-backed course <span class="tt"><a class="el" href="classGraph.html" title="Represents a general graph using an adjacency list.">Graph</a>&lt;int&gt;</span> implementation, where <span class="tt">findVertex</span> is <span class="tt">O(W)</span>. Replacing the vertex store with an indexed map would reduce several lookup-driven factors, but the project intentionally keeps the provided graph as the primary representation.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
@@ -284,8 +286,10 @@ Project Requirements Coverage</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">T2.3 bounded splitting  </td><td class="markdownTableBodyNone">Implemented.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">T2.4 custom allocation  </td><td class="markdownTableBodyNone">Implemented with DSATUR-style selection and safe spill fallback.  </td></tr>
+<td class="markdownTableBodyNone">T2.4 custom allocation  </td><td class="markdownTableBodyNone">Implemented with pressure-aware web selection and safe spill fallback.  </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">T3.1 demo support  </td><td class="markdownTableBodyNone">Interactive menu plus <span class="tt">Presentation.pdf</span>, graph assets, and editable <span class="tt">Presentation.typ</span> source.  </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Testing  </td><td class="markdownTableBodyNone">Unit and integration tests are available through <span class="tt">make test</span>.  </td></tr>
 </table>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
@@ -293,6 +297,7 @@ Test Coverage</h1>
 <p>The repository includes:</p>
 <ul>
 <li>six baseline datasets mirrored under <span class="tt">inputs/basic/</span>;</li>
+<li>advanced demo inputs under <span class="tt">inputs/advanced/</span>, including a dense custom/free case, a bounded-spilling case, and a focused splitting showcase;</li>
 <li>white-box unit tests for parsing, graph construction, spilling, splitting, and output generation;</li>
 <li>deterministic integration tests that compare batch-mode outputs against expected files.</li>
 </ul>

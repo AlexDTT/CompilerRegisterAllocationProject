@@ -137,7 +137,7 @@ Web construction</h2>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="ext_t1_interference"></a>
 Interference rule</h2>
-<p>Two webs interfere if they are simultaneously live at some program point. However, the project statement introduces an important exception:</p>
+<p>Two webs interfere if they are simultaneously live at some program point. The implementation handles the register-reuse exception for adjacent live ranges:</p>
 <ul>
 <li>if one web ends on line <span class="tt">L</span> due to a last use (<span class="tt">-</span>) and another web starts on the same line <span class="tt">L</span> due to a definition (<span class="tt">+</span>), they do <b>not</b> interfere.</li>
 </ul>
@@ -151,7 +151,14 @@ Aggregated web output</h2>
 <li>collapse duplicate line numbers;</li>
 <li>if the same line contains both <span class="tt">+</span> and <span class="tt">-</span>, treat it as an internal merge point and print it without a marker.</li>
 </ul>
-<p>That matches the examples from the project statement, especially the fused-web examples.</p>
+<p>This preserves the intended fused-web representation: each final web has one stable id and one sorted program-point list.</p>
+<p>For the alternative algorithms, the writer appends a small processing-friendly metadata section after the assignment section. The base format remains unchanged, and tools can parse the extra records line-by-line:</p>
+<ul>
+<li>spilling/free records: <span class="tt">spills: N</span>, followed by <span class="tt">spill: webX</span>;</li>
+<li>splitting records: <span class="tt">splits: N</span>, followed by <span class="tt">split: webX -&gt; webY,webZ</span>.</li>
+</ul>
+<p>The split record names the source web selected by the heuristic and the two derived web ids present in the final web list. The implementation reuses the source id for the left derived web and allocates a new id to the right derived web, making the mapping deterministic and easy to inspect.</p>
+<p>In addition to the text output, the application can export a colored DOT graph for the final allocation. Register-assigned webs are filled with register colors, memory-assigned webs are gray boxes, and split-derived webs have a highlighted border. Batch mode writes this graph automatically next to the allocation file using the same base name and a <span class="tt">.dot</span> extension.</p>
 <h2 class="doxsection"><a class="anchor" id="ext_t1_complexity"></a>
 Complexity</h2>
 <table class="markdownTable">
@@ -172,7 +179,7 @@ Complexity</h2>
 T2.1 - Basic Register Allocation</h1>
 <h2 class="doxsection"><a class="anchor" id="ext_t2_basic_approach"></a>
 Approach</h2>
-<p>The basic allocator follows the simplify/select structure from the statement:</p>
+<p>The basic allocator uses a simplify/select structure:</p>
 <ul>
 <li>Maintain the set of active vertices.</li>
 <li>Repeatedly remove every active vertex with degree <span class="tt">&lt; K</span> and push it onto a stack.</li>
@@ -204,12 +211,13 @@ Approach</h2>
 <li>if that fails, forces one spill and retries;</li>
 <li>continues until either a valid coloring is found or the configured bound <span class="tt">K</span> is exhausted.</li>
 </ul>
-<p>The spill heuristic is intentionally conservative:</p>
+<p>The spill heuristic is deterministic and pressure-oriented:</p>
 <ul>
 <li>prefer the currently highest-degree web;</li>
 <li>break ties by lower web id to keep results deterministic.</li>
 </ul>
 <p>When a valid coloring is found, only the selected spilled webs are mapped to memory. Unlike the basic mode, the result remains feasible.</p>
+<p>The output metadata records the exact web ids selected by this heuristic, for example <span class="tt">spills: 1</span> followed by <span class="tt">spill: web0</span>.</p>
 <h2 class="doxsection"><a class="anchor" id="ext_t3_spill_example"></a>
 Example</h2>
 <p>The triangle below needs 3 colors, but with <span class="tt">K = 2</span> registers it becomes allocatable after spilling one web:</p>
@@ -242,12 +250,13 @@ Approach</h2>
 <li>if the original web already contains multiple ranges, split those ranges into two ordered groups;</li>
 <li>if it contains only one range, split the sequence of program points into two contiguous derived ranges and normalize their endpoints with <span class="tt">+</span> and <span class="tt">-</span>.</li>
 </ul>
-<p>This heuristic is not globally optimal, but it is simple, deterministic, and captures the intended idea of reducing interference by slicing a long-lived web.</p>
+<p>This approach is deterministic and directly targets the source of excessive interference by slicing a long-lived web into shorter derived webs.</p>
+<p>The output metadata records every performed split as <span class="tt">split: webSource -&gt; webLeft,webRight</span>, which identifies the selected source web and the derived webs that define the save/restore boundaries.</p>
 <h2 class="doxsection"><a class="anchor" id="ext_t4_split_example"></a>
 Example</h2>
 <p>The following case starts as a 3-clique. After splitting <span class="tt">web0</span> into two derived webs, the resulting graph becomes 2-colorable:</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_splitting.svg" width="599" height="386"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_splitting.svg" width="599" height="383"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="ext_t4_split_complexity"></a>
 Complexity</h2>
 <table class="markdownTable">
@@ -265,33 +274,34 @@ Complexity</h2>
 T2.4 - Custom Allocation Strategy</h1>
 <h2 class="doxsection"><a class="anchor" id="ext_t5_free_approach"></a>
 Approach</h2>
-<p>The custom mode uses a DSATUR-style greedy heuristic:</p>
+<p>The custom mode uses pressure-aware greedy coloring:</p>
 <ul>
-<li>repeatedly select the uncolored web with the highest saturation degree;</li>
-<li>break ties using the highest graph degree;</li>
-<li>assign the first compatible register;</li>
-<li>if none exists, spill that web.</li>
+<li>for each uncolored web, count how many distinct register colors already appear in its colored neighbors;</li>
+<li>select the web with the highest such count, because it has the fewest safe choices left;</li>
+<li>break ties using the highest graph degree, because that web has more total interference constraints;</li>
+<li>assign the lowest-numbered compatible register;</li>
+<li>if every register is blocked by a colored neighbor, assign the web to memory.</li>
 </ul>
-<p>This strategy tends to make better local choices than a plain fixed-order greedy coloring because it colors the most constrained vertices first.</p>
+<p>The rationale is to spend registers first on the webs under the strongest current pressure. Less constrained webs are delayed because they still have more available choices. This keeps the invariant that no two interfering colored webs share a register, while still producing a feasible partial allocation by using memory only for webs that cannot be colored safely.</p>
 <h2 class="doxsection"><a class="anchor" id="ext_t5_free_complexity"></a>
 Complexity</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Step  </th><th class="markdownTableHeadNone">Complexity  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Saturation-based selection and coloring  </td><td class="markdownTableBodyNone"><span class="tt">O(W * (W^2 + E))</span>  </td></tr>
+<td class="markdownTableBodyNone">Pressure-aware selection and coloring  </td><td class="markdownTableBodyNone"><span class="tt">O(W * (W^2 + E))</span>  </td></tr>
 </table>
-<p>Each DSATUR-style round scans the remaining vertices and their adjacency lists, and each vertex lookup is linear in <span class="tt">W</span> in the current graph structure.</p>
+<p>Each selection round scans the remaining vertices and their adjacency lists, and each vertex lookup is linear in <span class="tt">W</span> in the current graph structure.</p>
 <h1 class="doxsection"><a class="anchor" id="ext_t5_examples"></a>
 Additional Graph Examples</h1>
 <h2 class="doxsection"><a class="anchor" id="ext_t5_noninterference"></a>
 Last-use/definition adjacency</h2>
-<p>This example documents the subtle interference exception from the statement: if one web ends at a line because of a last use and another starts at the same line because of a definition, the two webs can reuse the same register.</p>
+<p>This example documents the subtle interference exception: if one web ends at a line because of a last use and another starts at the same line because of a definition, the two webs can reuse the same register.</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
 <iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_noninterference_chain.svg" width="668" height="404"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="ext_t5_fusion"></a>
 Transitive web fusion</h2>
-<p>The following example mirrors the overlapping <span class="tt">x</span> ranges from the statement. Even if not every range overlaps every other range directly, the overlap graph is connected, so all ranges belong to one web.</p>
+<p>The following example mirrors the overlapping <span class="tt">x</span> ranges used in the web-fusion tests. Even if not every range overlaps every other range directly, the overlap graph is connected, so all ranges belong to one web.</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
 <iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_web_fusion.svg" width="654" height="255"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div><div class="interactive_dotgraph"></div><hr  />
@@ -302,7 +312,7 @@ CLI</h2>
 <p>The application supports:</p>
 <ul>
 <li>an interactive menu (<span class="tt">./register_alloc</span>);</li>
-<li>a batch interface required by the statement: <span class="tt">./register_alloc -b ranges.txt config.txt allocation.txt</span></li>
+<li>the batch interface: <span class="tt">./register_alloc -b ranges.txt config.txt allocation.txt</span></li>
 </ul>
 <p>Batch mode now returns a non-zero exit code when one of the input files cannot be parsed, which makes the test script dependable.</p>
 <h2 class="doxsection"><a class="anchor" id="ext_t6_tests"></a>

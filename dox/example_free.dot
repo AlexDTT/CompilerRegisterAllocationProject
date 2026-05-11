@@ -12,6 +12,6 @@ graph free_example {
     web1 -- web2;
     web2 -- web0;
 
-    label="Free mode: DSATUR-style choice with selective spill fallback";
+    label="Free mode: pressure-aware choice with selective spill fallback";
     labelloc=t;
 }

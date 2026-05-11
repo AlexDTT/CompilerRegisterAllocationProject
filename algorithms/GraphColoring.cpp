@@ -172,7 +172,7 @@ namespace
   }
 
   // Split the selected web into two derived webs. Returns false if split is impossible.
-  bool splitWebById(std::vector<Web> &webs, int webId)
+  bool splitWebById(std::vector<Web> &webs, int webId, SplitRecord &record)
   {
     int idx = -1;
     for (size_t i = 0; i < webs.size(); ++i)
@@ -258,6 +258,10 @@ namespace
 
     if (left.ranges.empty() || right.ranges.empty())
       return false;
+
+    record.sourceWebId = original.id;
+    record.leftWebId = left.id;
+    record.rightWebId = right.id;
 
     webs[idx] = std::move(left);
     webs.push_back(std::move(right));
@@ -442,7 +446,10 @@ AllocationResult GraphColoring::spillingColoring(const Graph<int> &graph,
       }
       AllocationResult res = finalizeResult(webs, full, true);
       if (colorsRespectInterference(graph, res.webToRegister))
+      {
+        res.selectedSpills = forcedSpills;
         return res;
+      }
     }
 
     if (allowedSpills == maxSpills)
@@ -482,6 +489,8 @@ AllocationResult GraphColoring::splittingColoring(Graph<int> &graph,
   if (current.feasible)
     return current;
 
+  std::vector<SplitRecord> splitRecords;
+
   for (int splitCount = 0; splitCount < maxSplits; ++splitCount)
   {
     // Prefer splitting currently spilled webs; tie-break by highest degree.
@@ -511,17 +520,25 @@ AllocationResult GraphColoring::splittingColoring(Graph<int> &graph,
     if (bestId < 0)
       break;
 
-    if (!splitWebById(webs, bestId))
+    SplitRecord record;
+    if (!splitWebById(webs, bestId, record))
       break;
+    splitRecords.push_back(record);
 
     graph = InterferenceGraph::buildGraph(webs);
     std::map<int, int> splitAssignment;
     if (kColorSubgraph(graph, numRegisters, collectWebIds(webs), splitAssignment))
-      return finalizeResult(webs, splitAssignment, false);
+    {
+      AllocationResult res = finalizeResult(webs, splitAssignment, false);
+      res.splitRecords = splitRecords;
+      return res;
+    }
 
     current = basicColoring(graph, webs, numRegisters);
+    current.splitRecords = splitRecords;
   }
 
+  current.splitRecords = splitRecords;
   return current;
 }
 
@@ -602,6 +619,11 @@ AllocationResult GraphColoring::freeColoring(const Graph<int> &graph,
   }
 
   AllocationResult res = finalizeResult(webs, assignment, true);
+  for (const auto &[id, reg] : res.webToRegister)
+  {
+    if (reg < 0)
+      res.selectedSpills.insert(id);
+  }
   if (!colorsRespectInterference(graph, res.webToRegister))
   {
     std::cerr << "Internal warning: freeColoring produced conflicting colors; falling back to basicColoring.\n";

@@ -9,3 +9,6 @@ registers: 2
 r0: web2
 r1: web1
 M: web0
+# Alternative algorithm metadata, one processing-friendly record per line
+spills: 1
+spill: web0

@@ -1,0 +1,36 @@
+# Complex live-range example for demoing web fusion, interference, spilling,
+# splitting, and the custom pressure-aware allocator.
+#
+# Shape summary:
+# - acc, i, limit, flag, tmpA, tmpB, tmpC overlap through a loop-like region.
+# - i and flag each have overlapping ranges that fuse into one web.
+# - late value ranges add pressure after the loop exit.
+# - bridge/reload ranges create short webs that can reuse registers around
+#   last-use/definition boundaries.
+
+acc: 1+,2,3,4,5,6,7,8,9,10,11,12-
+acc: 12+,13,14,15,16,17-
+
+i: 2+,3,4,5,6,7-
+i: 7+,8,9,10,11-
+i: 11+,12,13,14-
+
+limit: 1+,2,3,4,5,6,7,8,9-
+flag: 3+,4,5,6,9
+flag: 9,10,11,12,13-
+
+tmpA: 4+,5,6,7,8-
+tmpB: 5+,6,7,8,9,10-
+tmpC: 6+,7,8,9,10,11-
+
+arrVal: 8+,9,10,11,12,13,14-
+callArg: 10+,11,12,13-
+callRet: 13+,14,15,16-
+
+lateA: 14+,15,16,17,18-
+lateB: 14+,15,16,17-
+lateC: 15+,16,17,18-
+
+bridge: 12+,13,18-
+reload: 18+,19,20-
+result: 17+,18,19,20-

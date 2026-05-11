@@ -9,7 +9,8 @@ var searchData=
   ['examples_6',['Additional Graph Examples',['../extra_docs.html#ext_t5_examples',1,'']]],
   ['expect_5feq_7',['EXPECT_EQ',['../register__alloc__tests_8cpp.html#a7c198106d8a380a0b194d16c918943d2',1,'register_alloc_tests.cpp']]],
   ['expect_5ftrue_8',['EXPECT_TRUE',['../register__alloc__tests_8cpp.html#a160011a1d2f68d002f76eef2263489e6',1,'register_alloc_tests.cpp']]],
-  ['exportdot_9',['exportDOT',['../classInterferenceGraph.html#a6c2be86bbb30e5bd71c27f4719c4731f',1,'InterferenceGraph']]],
-  ['extra_20documentation_20and_20design_20notes_10',['Extra Documentation and Design Notes',['../extra_docs.html',1,'']]],
-  ['extra_5fdocumentation_2edox_11',['extra_documentation.dox',['../extra__documentation_8dox.html',1,'']]]
+  ['exportallocationdot_9',['exportAllocationDOT',['../classAllocationLogic.html#a1e852e13b68f84b708ef033fb430e820',1,'AllocationLogic']]],
+  ['exportdot_10',['exportDOT',['../classInterferenceGraph.html#a6c2be86bbb30e5bd71c27f4719c4731f',1,'InterferenceGraph']]],
+  ['extra_20documentation_20and_20design_20notes_11',['Extra Documentation and Design Notes',['../extra_docs.html',1,'']]],
+  ['extra_5fdocumentation_2edox_12',['extra_documentation.dox',['../extra__documentation_8dox.html',1,'']]]
 ];

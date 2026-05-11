@@ -1,0 +1,6 @@
+# Focused web-splitting showcase.
+# This starts as a 3-clique with only 2 registers available. Splitting web a
+# into early and late pieces makes the final graph 2-colorable.
+a: 1+,2,3,4-
+b: 1+,2,3-
+c: 2+,3,4-

@@ -30,6 +30,11 @@
  *   r1: web2
  *   # or, for spilled webs:
  *   M: web3
+ *   # optional metadata for alternative algorithms:
+ *   spills: 1
+ *   spill: web3
+ *   splits: 1
+ *   split: web0 -> web0,web4
  * @endcode
  */
 class OutputWriter
@@ -42,14 +47,18 @@ public:
    * @param webs          The ordered list of webs.
    * @param webToRegister Map from web ID to physical register index (0-based).
    *                      A value of -1 indicates the web was spilled to memory.
+   * @param metadataLines Optional processing-friendly metadata records for
+   *                      alternative algorithms, such as selected spills/splits.
    * @return true on success, false if the file could not be created.
-   * @complexity O(W log W + P log P + A) where W is the number of webs, P is the
-   *             total number of program points across all webs, and A is the
-   *             number of allocation entries.
+   * @complexity O(W log W + P log P + A + M) where W is the number of webs,
+   *             P is the total number of program points across all webs, A is
+   *             the number of allocation entries, and M is the number of
+   *             metadata lines.
    */
   static bool write(const std::string &filename,
                     const std::vector<Web> &webs,
-                    const std::map<int, int> &webToRegister);
+                    const std::map<int, int> &webToRegister,
+                    const std::vector<std::string> &metadataLines = {});
 
 private:
   /**

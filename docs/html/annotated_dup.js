@@ -13,6 +13,7 @@ var annotated_dup =
     [ "ProgramPoint", "structProgramPoint.html", "structProgramPoint" ],
     [ "RegisterAllocApp", "classRegisterAllocApp.html", "classRegisterAllocApp" ],
     [ "ScopedStreamRedirect", "classScopedStreamRedirect.html", "classScopedStreamRedirect" ],
+    [ "SplitRecord", "structSplitRecord.html", "structSplitRecord" ],
     [ "Vertex", "classVertex.html", "classVertex" ],
     [ "Web", "structWeb.html", "structWeb" ]
 ];

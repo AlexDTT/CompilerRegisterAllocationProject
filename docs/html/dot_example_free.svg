@@ -9,7 +9,7 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 404.46)">
 <title>free_example</title>
 <polygon fill="white" stroke="none" points="-4,4 -4,-404.46 428.28,-404.46 428.28,4 -4,4"/>
-<text text-anchor="middle" x="212.14" y="-383.16" font-family="Times,serif" font-size="14.00">Free mode: DSATUR&#45;style choice with selective spill fallback</text>
+<text text-anchor="middle" x="212.14" y="-383.16" font-family="Times,serif" font-size="14.00">Free mode: pressure&#45;aware choice with selective spill fallback</text>
 <!-- web0 -->
 <g id="node1" class="node">
 <title>web0</title>

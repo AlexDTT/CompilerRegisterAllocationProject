@@ -241,11 +241,13 @@ static void test_outputWriter_aggregates_ranges_per_web()
 
   std::map<int, int> assignment = {{0, 1}};
   const fs::path outFile = tempPath("ra_output_writer.txt");
-  EXPECT_TRUE(OutputWriter::write(outFile.string(), {web}, assignment));
+  EXPECT_TRUE(OutputWriter::write(outFile.string(), {web}, assignment,
+                                  {"spills: 1", "spill: web3"}));
 
   const std::string content = readFile(outFile);
   EXPECT_TRUE(content.find("web0: 9+,10,11,12,13,14-,20+") != std::string::npos);
   EXPECT_TRUE(content.find("r1: web0") != std::string::npos);
+  EXPECT_TRUE(content.find("spills: 1\nspill: web3") != std::string::npos);
   std::remove(outFile.c_str());
 }
 
@@ -352,6 +354,24 @@ static void test_allocationLogic_spilling_preserves_partial_memory_assignment()
   EXPECT_TRUE(colorsRespectInterference(graph, result.webToRegister));
 }
 
+static void test_allocationLogic_exports_colored_dot()
+{
+  Web a{0, "a", {makeLR("a", {{1, '+'}, {2, '\0'}, {3, '-'}})}};
+  Web b{1, "b", {makeLR("b", {{1, '+'}, {2, '\0'}, {3, '-'}})}};
+  std::vector<Web> webs = {a, b};
+  Graph<int> graph = InterferenceGraph::buildGraph(webs);
+
+  AllocationResult result = GraphColoring::freeColoring(graph, webs, 1);
+  const fs::path outFile = tempPath("ra_colored_allocation.dot");
+  EXPECT_TRUE(AllocationLogic::exportAllocationDOT(graph, webs, result, outFile.string()));
+
+  const std::string content = readFile(outFile);
+  EXPECT_TRUE(content.find("graph allocation") != std::string::npos);
+  EXPECT_TRUE(content.find("fillcolor=") != std::string::npos);
+  EXPECT_TRUE(content.find("M = memory") != std::string::npos);
+  std::remove(outFile.c_str());
+}
+
 int main()
 {
   test_parseConfig_variants();
@@ -366,6 +386,7 @@ int main()
   test_freeColoring_returns_valid_allocation_with_spill();
   test_allocationLogic_basic_infeasible_forces_all_memory();
   test_allocationLogic_spilling_preserves_partial_memory_assignment();
+  test_allocationLogic_exports_colored_dot();
 
   std::cout << "\nTest results: " << g_passed << " passed, " << g_failed << " failed.\n";
   return g_failed == 0 ? 0 : 1;

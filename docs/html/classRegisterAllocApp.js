@@ -2,6 +2,7 @@ var classRegisterAllocApp =
 [
     [ "RegisterAllocApp", "classRegisterAllocApp.html#a08a04834cebb7013e39efb039bb643fa", null ],
     [ "buildGraphFromData", "classRegisterAllocApp.html#a621b4a55682ca28ff36921f90f783e5d", null ],
+    [ "doExportAllocationDOT", "classRegisterAllocApp.html#a2221581f1ee0ec83151edfd17a6b0297", null ],
     [ "doExportGraphDOT", "classRegisterAllocApp.html#a5bee7db7fc65aa322e22d9d6ea7bd316", null ],
     [ "doLoadConfigFile", "classRegisterAllocApp.html#a5672a70f00ae33c73292e06a109abcde", null ],
     [ "doLoadInputPairFromFolder", "classRegisterAllocApp.html#ae4f8db27803c4ca853cbb5f753b57be5", null ],

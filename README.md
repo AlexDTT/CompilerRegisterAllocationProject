@@ -13,7 +13,7 @@ Given the live ranges of program variables, the application:
 - merges compatible live ranges into **webs**;
 - builds the corresponding **interference graph**;
 - allocates webs to a bounded number of physical registers;
-- falls back to **spilling** or **splitting** when required by the selected algorithm.
+- applies **spilling** or **splitting** when selected by the configuration file.
 
 The tool includes four allocation modes:
 
@@ -22,7 +22,7 @@ The tool includes four allocation modes:
 | `basic` | Pure graph coloring | Simplify-and-select coloring without user-authorized recovery actions. |
 | `spilling, K` | Coloring with bounded spilling | Removes up to `K` webs from the graph and assigns them to memory. |
 | `splitting, K` | Coloring with bounded splitting | Splits up to `K` webs into derived webs, rebuilds the graph, and retries coloring. |
-| `free` | Custom heuristic | Uses a DSATUR-style ordering with selective spill fallback. |
+| `free` | Custom heuristic | Colors the most constrained webs first and spills only when no compatible register remains. |
 
 ## Group T9G2 Members
 This project was developed by Group T9G2:
@@ -79,7 +79,7 @@ i: 7,8
 i: 8,9-
 ```
 
-Markers have the same meaning as in the project statement:
+Markers use the live-range notation defined for the project:
 - `+` marks the definition that starts a live range.
 - `-` marks the last use that ends a live range.
 - unmarked points represent internal live points or merge/intersection points.
@@ -96,9 +96,16 @@ The output contains:
 - one line per web with its aggregated program points sorted in ascending order;
 - the number of registers actually used;
 - the mapping `rX: webY` or `M: webY`.
+- for alternative algorithms, a processing-friendly metadata section such as
+  `spills: 1` / `spill: web0` or `splits: 1` / `split: web0 -> web0,web3`.
+
+Batch mode also writes a colored DOT visualization next to the allocation file
+by replacing the output extension with `.dot`. For example, `allocation.txt`
+produces `allocation.dot`. Nodes are colored by register, memory-assigned webs
+are gray boxes, and split-derived webs receive highlighted borders.
 
 ## System Architecture
-The application pipeline is intentionally close to the problem formulation from the statement:
+The application pipeline follows the live-range to web to interference-graph workflow:
 
 <div class="interactive_dotgraph">
 
@@ -170,7 +177,7 @@ Where:
 - `V` is the number of variables,
 - `W` is the number of webs,
 - `E` is the number of directed adjacency entries in the interference graph,
-- `S` is the maximum number of allowed spill/split recovery actions.
+- `S` is the configured maximum number of spill/split recovery actions.
 
 The coloring bounds include the current vector-backed course `Graph<int>` implementation,
 where `findVertex` is `O(W)`. Replacing the vertex store with an indexed map would reduce
@@ -187,13 +194,16 @@ the primary representation.
 | T2.1 basic allocation | Implemented. |
 | T2.2 bounded spilling | Implemented. |
 | T2.3 bounded splitting | Implemented. |
-| T2.4 custom allocation | Implemented with DSATUR-style selection and safe spill fallback. |
+| T2.4 custom allocation | Implemented with pressure-aware web selection and safe spill fallback. |
+| T3.1 demo support | Interactive menu plus `Presentation.pdf`, graph assets, and editable `Presentation.typ` source. |
 | Testing | Unit and integration tests are available through `make test`. |
 
 ## Test Coverage
 The repository includes:
 
 - six baseline datasets mirrored under `inputs/basic/`;
+- advanced demo inputs under `inputs/advanced/`, including a dense custom/free
+  case, a bounded-spilling case, and a focused splitting showcase;
 - white-box unit tests for parsing, graph construction, spilling, splitting, and output generation;
 - deterministic integration tests that compare batch-mode outputs against expected files.
 

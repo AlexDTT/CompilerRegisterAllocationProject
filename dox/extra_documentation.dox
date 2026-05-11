@@ -38,7 +38,8 @@ Two implementation details matter for correctness and testing:
 @subsection ext_t1_interference Interference rule
 
 Two webs interfere if they are simultaneously live at some program point.
-However, the project statement introduces an important exception:
+The implementation handles the register-reuse exception for adjacent live
+ranges:
 
 - if one web ends on line `L` due to a last use (`-`) and another web starts on
   the same line `L` due to a definition (`+`), they do **not** interfere.
@@ -57,8 +58,26 @@ range. Internally, this means:
 - if the same line contains both `+` and `-`, treat it as an internal merge
   point and print it without a marker.
 
-That matches the examples from the project statement, especially the fused-web
-examples.
+This preserves the intended fused-web representation: each final web has one
+stable id and one sorted program-point list.
+
+For the alternative algorithms, the writer appends a small processing-friendly
+metadata section after the assignment section. The base format remains
+unchanged, and tools can parse the extra records line-by-line:
+
+- spilling/free records: `spills: N`, followed by `spill: webX`;
+- splitting records: `splits: N`, followed by `split: webX -> webY,webZ`.
+
+The split record names the source web selected by the heuristic and the two
+derived web ids present in the final web list. The implementation reuses the
+source id for the left derived web and allocates a new id to the right derived
+web, making the mapping deterministic and easy to inspect.
+
+In addition to the text output, the application can export a colored DOT graph
+for the final allocation. Register-assigned webs are filled with register
+colors, memory-assigned webs are gray boxes, and split-derived webs have a
+highlighted border. Batch mode writes this graph automatically next to the
+allocation file using the same base name and a `.dot` extension.
 
 @subsection ext_t1_complexity Complexity
 
@@ -80,7 +99,7 @@ in the number of webs.
 
 @subsection ext_t2_basic_approach Approach
 
-The basic allocator follows the simplify/select structure from the statement:
+The basic allocator uses a simplify/select structure:
 
 - Maintain the set of active vertices.
 - Repeatedly remove every active vertex with degree `< K` and push it onto a
@@ -118,13 +137,16 @@ For the spilling mode, spilling is no longer treated as a failure. The algorithm
 - continues until either a valid coloring is found or the configured bound `K`
   is exhausted.
 
-The spill heuristic is intentionally conservative:
+The spill heuristic is deterministic and pressure-oriented:
 
 - prefer the currently highest-degree web;
 - break ties by lower web id to keep results deterministic.
 
 When a valid coloring is found, only the selected spilled webs are mapped to
 memory. Unlike the basic mode, the result remains feasible.
+
+The output metadata records the exact web ids selected by this heuristic, for
+example `spills: 1` followed by `spill: web0`.
 
 @subsection ext_t3_spill_example Example
 
@@ -166,8 +188,12 @@ Two split strategies are used:
 - if it contains only one range, split the sequence of program points into two
   contiguous derived ranges and normalize their endpoints with `+` and `-`.
 
-This heuristic is not globally optimal, but it is simple, deterministic, and
-captures the intended idea of reducing interference by slicing a long-lived web.
+This approach is deterministic and directly targets the source of excessive
+interference by slicing a long-lived web into shorter derived webs.
+
+The output metadata records every performed split as
+`split: webSource -> webLeft,webRight`, which identifies the selected source
+web and the derived webs that define the save/restore boundaries.
 
 @subsection ext_t4_split_example Example
 
@@ -194,30 +220,37 @@ webs, the resulting graph becomes 2-colorable:
 
 @subsection ext_t5_free_approach Approach
 
-The custom mode uses a DSATUR-style greedy heuristic:
+The custom mode uses pressure-aware greedy coloring:
 
-- repeatedly select the uncolored web with the highest saturation degree;
-- break ties using the highest graph degree;
-- assign the first compatible register;
-- if none exists, spill that web.
+- for each uncolored web, count how many distinct register colors already appear
+  in its colored neighbors;
+- select the web with the highest such count, because it has the fewest safe
+  choices left;
+- break ties using the highest graph degree, because that web has more total
+  interference constraints;
+- assign the lowest-numbered compatible register;
+- if every register is blocked by a colored neighbor, assign the web to memory.
 
-This strategy tends to make better local choices than a plain fixed-order greedy
-coloring because it colors the most constrained vertices first.
+The rationale is to spend registers first on the webs under the strongest
+current pressure. Less constrained webs are delayed because they still have more
+available choices. This keeps the invariant that no two interfering colored webs
+share a register, while still producing a feasible partial allocation by using
+memory only for webs that cannot be colored safely.
 
 @subsection ext_t5_free_complexity Complexity
 
 | Step | Complexity |
 |------|-----------|
-| Saturation-based selection and coloring | `O(W * (W^2 + E))` |
+| Pressure-aware selection and coloring | `O(W * (W^2 + E))` |
 
-Each DSATUR-style round scans the remaining vertices and their adjacency lists,
-and each vertex lookup is linear in `W` in the current graph structure.
+Each selection round scans the remaining vertices and their adjacency lists, and
+each vertex lookup is linear in `W` in the current graph structure.
 
 @section ext_t5_examples Additional Graph Examples
 
 @subsection ext_t5_noninterference Last-use/definition adjacency
 
-This example documents the subtle interference exception from the statement:
+This example documents the subtle interference exception:
 if one web ends at a line because of a last use and another starts at the same
 line because of a definition, the two webs can reuse the same register.
 
@@ -229,7 +262,7 @@ line because of a definition, the two webs can reuse the same register.
 
 @subsection ext_t5_fusion Transitive web fusion
 
-The following example mirrors the overlapping `x` ranges from the statement.
+The following example mirrors the overlapping `x` ranges used in the web-fusion tests.
 Even if not every range overlaps every other range directly, the overlap graph
 is connected, so all ranges belong to one web.
 
@@ -248,7 +281,7 @@ is connected, so all ranges belong to one web.
 The application supports:
 
 - an interactive menu (`./register_alloc`);
-- a batch interface required by the statement:
+- the batch interface:
   `./register_alloc -b ranges.txt config.txt allocation.txt`
 
 Batch mode now returns a non-zero exit code when one of the input files cannot be

@@ -11,6 +11,7 @@
 #include <limits>
 #include <stdexcept>
 #include <cctype>
+#include <string>
 #include "io/FileParser.h"
 
 namespace fs = std::filesystem;
@@ -191,6 +192,11 @@ void RegisterAllocApp::runAllocation()
     return;
   }
   mLastResult = AllocationLogic::runAllocation(mWebs, mGraph, mParams);
+  if (!mParams.outputFile.empty())
+  {
+    fs::path dotPath = fs::path(mParams.outputFile).replace_extension(".dot");
+    AllocationLogic::exportAllocationDOT(mGraph, mWebs, mLastResult, dotPath.string());
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -222,6 +228,11 @@ int RegisterAllocApp::runBatchMode(const std::string &rangesFile,
             << mGraph.getNumVertex() << " node(s) in interference graph.\n";
 
   mLastResult = AllocationLogic::runAllocation(mWebs, mGraph, mParams);
+  if (!mParams.outputFile.empty())
+  {
+    fs::path dotPath = fs::path(mParams.outputFile).replace_extension(".dot");
+    AllocationLogic::exportAllocationDOT(mGraph, mWebs, mLastResult, dotPath.string());
+  }
   AllocationLogic::printResult(mWebs, mLastResult);
   return 0;
 }
@@ -490,6 +501,7 @@ void RegisterAllocApp::menuVisualization()
     printSep('-', 57);
     std::cout << "   [1] Print interference graph (terminal)\n"
               << "   [2] Export interference graph (DOT)\n"
+              << "   [3] Export colored allocation graph (DOT)\n"
               << "   [0] Back\n";
     printSep('=', 57);
     int choice = readInt("Option: ");
@@ -501,6 +513,10 @@ void RegisterAllocApp::menuVisualization()
       break;
     case 2:
       doExportGraphDOT();
+      waitEnter();
+      break;
+    case 3:
+      doExportAllocationDOT();
       waitEnter();
       break;
     case 0:
@@ -724,6 +740,25 @@ void RegisterAllocApp::doExportGraphDOT() const
   if (path.empty())
     path = "interference.dot";
   InterferenceGraph::exportDOT(mGraph, mWebs, path);
+}
+
+void RegisterAllocApp::doExportAllocationDOT() const
+{
+  if (!mGraphBuilt)
+  {
+    std::cout << "   Graph not built.\n";
+    return;
+  }
+  if (mLastResult.webToRegister.empty())
+  {
+    std::cout << "   No allocation result available. Run register allocation first.\n";
+    return;
+  }
+
+  std::string path = readLine("Output colored DOT file path [allocation_colored.dot]: ");
+  if (path.empty())
+    path = "allocation_colored.dot";
+  AllocationLogic::exportAllocationDOT(mGraph, mWebs, mLastResult, path);
 }
 
 void RegisterAllocApp::doShowAllocationResult() const

@@ -162,83 +162,91 @@ $(function(){initNavTree('OutputWriter_8cpp_source.html','',''); });
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="comment">// OutputWriter::write</span></div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="comment">// ---------------------------------------------------------------------------</span></div>
 <div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classOutputWriter.html#a5641c80b5980fa597e65f94524ad4185">   54</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classOutputWriter.html#a5641c80b5980fa597e65f94524ad4185">OutputWriter::write</a>(<span class="keyword">const</span> std::string &amp;filename,</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classOutputWriter.html#a1bf21c55051e9e3276abae9b8c8498f7">   54</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classOutputWriter.html#a1bf21c55051e9e3276abae9b8c8498f7">OutputWriter::write</a>(<span class="keyword">const</span> std::string &amp;filename,</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                         <span class="keyword">const</span> std::vector&lt;Web&gt; &amp;webs,</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                         <span class="keyword">const</span> std::map&lt;int, int&gt; &amp;webToRegister)</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>{</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  std::ofstream out(filename);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="keywordflow">if</span> (!out.is_open())</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  {</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: cannot write to &#39;&quot;</span> &lt;&lt; filename &lt;&lt; <span class="stringliteral">&quot;&#39;.\n&quot;</span>;</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  }</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  <span class="comment">// ---- Web section -------------------------------------------------------</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  out &lt;&lt; <span class="stringliteral">&quot;# Total number of webs followed by the listing of the program points of each one\n&quot;</span>;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  out &lt;&lt; <span class="stringliteral">&quot;# program points in each web are sorted in ascending order\n&quot;</span>;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  out &lt;&lt; <span class="stringliteral">&quot;webs: &quot;</span> &lt;&lt; webs.size() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  std::vector&lt;Web&gt; orderedWebs = webs;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  std::sort(orderedWebs.begin(), orderedWebs.end(),</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            [](<span class="keyword">const</span> <a class="code hl_struct" href="structWeb.html">Web</a> &amp;lhs, <span class="keyword">const</span> <a class="code hl_struct" href="structWeb.html">Web</a> &amp;rhs)</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            {</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>              return lhs.id &lt; rhs.id;</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            });</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;web : orderedWebs)</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  {</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    out &lt;&lt; <span class="stringliteral">&quot;web&quot;</span> &lt;&lt; web.id &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; <a class="code hl_function" href="classOutputWriter.html#ae32955443148b7078bf139e6fd8a67e8">formatWeb</a>(web) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  }</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  <span class="comment">// ---- Register section --------------------------------------------------</span></div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  <span class="comment">// Count how many distinct registers are actually assigned (excluding spills)</span></div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  std::set&lt;int&gt; usedRegs;</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;[webId, reg] : webToRegister)</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  {</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="keywordflow">if</span> (reg &gt;= 0)</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>      usedRegs.insert(reg);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  }</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  <span class="keywordtype">bool</span> allSpilled = usedRegs.empty();</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  <span class="keywordflow">if</span> (allSpilled)</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  {</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    std::cerr &lt;&lt; <span class="stringliteral">&quot;Warning: register allocation was not feasible – all webs spilled to memory.\n&quot;</span>;</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  }</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  out &lt;&lt; <span class="stringliteral">&quot;# Total number of registers used, followed by assignment to webs\n&quot;</span>;</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  out &lt;&lt; <span class="stringliteral">&quot;registers: &quot;</span> &lt;&lt; (allSpilled ? 0 : (int)usedRegs.size()) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>  <span class="comment">// Group webs by register for output</span></div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  <span class="comment">// First output register assignments, then memory spills</span></div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  std::map&lt;int, std::vector&lt;int&gt;&gt; regToWebs;</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  std::vector&lt;int&gt; spilledWebs;</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;web : orderedWebs)</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  {</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keyword">auto</span> it = webToRegister.find(web.id);</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="keywordtype">int</span> reg = (it != webToRegister.end()) ? it-&gt;second : -1;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keywordflow">if</span> (reg &gt;= 0)</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>      regToWebs[reg].push_back(web.id);</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>      spilledWebs.push_back(web.id);</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  }</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;[reg, wids] : regToWebs)</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  {</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> wid : wids)</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    {</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>      out &lt;&lt; <span class="stringliteral">&quot;r&quot;</span> &lt;&lt; reg &lt;&lt; <span class="stringliteral">&quot;: web&quot;</span> &lt;&lt; wid &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    }</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>  }</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> wid : spilledWebs)</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  {</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    out &lt;&lt; <span class="stringliteral">&quot;M: web&quot;</span> &lt;&lt; wid &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  }</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>}</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                         <span class="keyword">const</span> std::map&lt;int, int&gt; &amp;webToRegister,</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                         <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;metadataLines)</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>{</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  std::ofstream out(filename);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  <span class="keywordflow">if</span> (!out.is_open())</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: cannot write to &#39;&quot;</span> &lt;&lt; filename &lt;&lt; <span class="stringliteral">&quot;&#39;.\n&quot;</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  }</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  <span class="comment">// ---- Web section -------------------------------------------------------</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  out &lt;&lt; <span class="stringliteral">&quot;# Total number of webs followed by the listing of the program points of each one\n&quot;</span>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  out &lt;&lt; <span class="stringliteral">&quot;# program points in each web are sorted in ascending order\n&quot;</span>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  out &lt;&lt; <span class="stringliteral">&quot;webs: &quot;</span> &lt;&lt; webs.size() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  std::vector&lt;Web&gt; orderedWebs = webs;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  std::sort(orderedWebs.begin(), orderedWebs.end(),</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            [](<span class="keyword">const</span> <a class="code hl_struct" href="structWeb.html">Web</a> &amp;lhs, <span class="keyword">const</span> <a class="code hl_struct" href="structWeb.html">Web</a> &amp;rhs)</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>              return lhs.id &lt; rhs.id;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            });</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;web : orderedWebs)</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    out &lt;&lt; <span class="stringliteral">&quot;web&quot;</span> &lt;&lt; web.id &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; <a class="code hl_function" href="classOutputWriter.html#ae32955443148b7078bf139e6fd8a67e8">formatWeb</a>(web) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  }</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  <span class="comment">// ---- Register section --------------------------------------------------</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  <span class="comment">// Count how many distinct registers are actually assigned (excluding spills)</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  std::set&lt;int&gt; usedRegs;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;[webId, reg] : webToRegister)</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  {</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordflow">if</span> (reg &gt;= 0)</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>      usedRegs.insert(reg);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  }</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  <span class="keywordtype">bool</span> allSpilled = usedRegs.empty();</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  <span class="keywordflow">if</span> (allSpilled)</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>  {</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    std::cerr &lt;&lt; <span class="stringliteral">&quot;Warning: register allocation was not feasible – all webs spilled to memory.\n&quot;</span>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  }</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  out &lt;&lt; <span class="stringliteral">&quot;# Total number of registers used, followed by assignment to webs\n&quot;</span>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  out &lt;&lt; <span class="stringliteral">&quot;registers: &quot;</span> &lt;&lt; (allSpilled ? 0 : (int)usedRegs.size()) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  <span class="comment">// Group webs by register for output</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  <span class="comment">// First output register assignments, then memory spills</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  std::map&lt;int, std::vector&lt;int&gt;&gt; regToWebs;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  std::vector&lt;int&gt; spilledWebs;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;web : orderedWebs)</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  {</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="keyword">auto</span> it = webToRegister.find(web.id);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keywordtype">int</span> reg = (it != webToRegister.end()) ? it-&gt;second : -1;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="keywordflow">if</span> (reg &gt;= 0)</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>      regToWebs[reg].push_back(web.id);</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>      spilledWebs.push_back(web.id);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  }</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;[reg, wids] : regToWebs)</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>  {</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> wid : wids)</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    {</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>      out &lt;&lt; <span class="stringliteral">&quot;r&quot;</span> &lt;&lt; reg &lt;&lt; <span class="stringliteral">&quot;: web&quot;</span> &lt;&lt; wid &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    }</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  }</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> wid : spilledWebs)</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>  {</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    out &lt;&lt; <span class="stringliteral">&quot;M: web&quot;</span> &lt;&lt; wid &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  }</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>  <span class="keywordflow">if</span> (!metadataLines.empty())</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>  {</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    out &lt;&lt; <span class="stringliteral">&quot;# Alternative algorithm metadata, one processing-friendly record per line\n&quot;</span>;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;line : metadataLines)</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>      out &lt;&lt; line &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>  }</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>}</div>
 </div>
 <div class="ttc" id="aOutputWriter_8h_html"><div class="ttname"><a href="OutputWriter_8h.html">OutputWriter.h</a></div><div class="ttdoc">Writes the register allocation result to a text file.</div></div>
-<div class="ttc" id="aclassOutputWriter_html_a5641c80b5980fa597e65f94524ad4185"><div class="ttname"><a href="classOutputWriter.html#a5641c80b5980fa597e65f94524ad4185">OutputWriter::write</a></div><div class="ttdeci">static bool write(const std::string &amp;filename, const std::vector&lt; Web &gt; &amp;webs, const std::map&lt; int, int &gt; &amp;webToRegister)</div><div class="ttdoc">Writes the full allocation result to filename.</div><div class="ttdef"><b>Definition</b> <a href="#l00054">OutputWriter.cpp:54</a></div></div>
+<div class="ttc" id="aclassOutputWriter_html_a1bf21c55051e9e3276abae9b8c8498f7"><div class="ttname"><a href="classOutputWriter.html#a1bf21c55051e9e3276abae9b8c8498f7">OutputWriter::write</a></div><div class="ttdeci">static bool write(const std::string &amp;filename, const std::vector&lt; Web &gt; &amp;webs, const std::map&lt; int, int &gt; &amp;webToRegister, const std::vector&lt; std::string &gt; &amp;metadataLines={})</div><div class="ttdoc">Writes the full allocation result to filename.</div><div class="ttdef"><b>Definition</b> <a href="#l00054">OutputWriter.cpp:54</a></div></div>
 <div class="ttc" id="aclassOutputWriter_html_ae32955443148b7078bf139e6fd8a67e8"><div class="ttname"><a href="classOutputWriter.html#ae32955443148b7078bf139e6fd8a67e8">OutputWriter::formatWeb</a></div><div class="ttdeci">static std::string formatWeb(const Web &amp;web)</div><div class="ttdoc">Formats a whole web as a single sorted program-point list.</div><div class="ttdef"><b>Definition</b> <a href="#l00017">OutputWriter.cpp:17</a></div></div>
 <div class="ttc" id="astructWeb_html"><div class="ttname"><a href="structWeb.html">Web</a></div><div class="ttdoc">A live web is the union of one or more live ranges of the same variable whose program-point sets over...</div><div class="ttdef"><b>Definition</b> <a href="Web_8h_source.html#l00024">Web.h:25</a></div></div>
 <div class="ttc" id="astructWeb_html_a58b19ff3d326f425392df7334a126b29"><div class="ttname"><a href="structWeb.html#a58b19ff3d326f425392df7334a126b29">Web::ranges</a></div><div class="ttdeci">std::vector&lt; LiveRange &gt; ranges</div><div class="ttdoc">Constituent live ranges merged into this web.</div><div class="ttdef"><b>Definition</b> <a href="Web_8h_source.html#l00028">Web.h:28</a></div></div>

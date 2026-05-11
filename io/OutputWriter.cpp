@@ -53,7 +53,8 @@ std::string OutputWriter::formatWeb(const Web &web)
 // ---------------------------------------------------------------------------
 bool OutputWriter::write(const std::string &filename,
                          const std::vector<Web> &webs,
-                         const std::map<int, int> &webToRegister)
+                         const std::map<int, int> &webToRegister,
+                         const std::vector<std::string> &metadataLines)
 {
   std::ofstream out(filename);
   if (!out.is_open())
@@ -121,6 +122,13 @@ bool OutputWriter::write(const std::string &filename,
   for (int wid : spilledWebs)
   {
     out << "M: web" << wid << "\n";
+  }
+
+  if (!metadataLines.empty())
+  {
+    out << "# Alternative algorithm metadata, one processing-friendly record per line\n";
+    for (const auto &line : metadataLines)
+      out << line << "\n";
   }
 
   return true;
