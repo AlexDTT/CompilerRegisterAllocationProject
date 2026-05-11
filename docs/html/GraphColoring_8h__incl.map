@@ -1,0 +1,32 @@
+<map id="algorithms/GraphColoring.h" name="algorithms/GraphColoring.h">
+<area shape="rect" id="Node000001" title="Graph&#45;coloring&#45;based register allocation algorithms." alt="" coords="239,5,418,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,52,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="271,35,70,83,67,83,66,78,69,77,270,30"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="488,229,545,256"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="285,35,217,59,149,93,123,113,107,134,104,156,116,180,140,197,177,211,223,221,275,229,383,237,472,239,472,244,383,242,274,234,222,226,175,216,137,202,112,183,99,157,102,132,119,109,146,88,215,54,283,30"/>
+<area shape="rect" id="Node000004" href="$Graph_8h.html" title=" " alt="" coords="248,80,409,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="331,33,331,64,326,64,326,33"/>
+<area shape="rect" id="Node000009" href="$Parameters_8h.html" title="Configuration parameters parsed from the registers/config input file." alt="" coords="762,80,908,107"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="418,30,747,77,747,82,417,35"/>
+<area shape="rect" id="Node000011" href="$Web_8h.html" title="Data model for a live web (merged live ranges of a variable)." alt="" coords="598,80,702,107"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="385,30,583,74,582,80,384,35"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="377,105,423,124,468,153,492,182,509,214,504,216,488,185,464,157,421,128,375,110"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="126,155,198,181"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="301,110,206,151,204,146,298,105"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="222,155,278,181"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="317,109,276,146,273,142,313,105"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="302,155,355,181"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="331,107,331,139,326,139,326,107"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="379,155,454,181"/>
+<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="346,105,391,143,388,147,342,109"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="731,229,784,256"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="844,106,855,142,855,162,850,183,828,209,800,227,797,223,824,205,845,180,850,162,849,142,839,108"/>
+<area shape="poly" id="edge14_Node000011_Node000003" title=" " alt="" coords="629,110,599,130,569,156,547,186,530,217,526,214,543,184,565,153,596,126,626,105"/>
+<area shape="poly" id="edge12_Node000011_Node000010" title=" " alt="" coords="677,105,707,125,735,153,749,183,757,214,752,215,744,185,730,156,704,129,674,110"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="796,155,835,181"/>
+<area shape="poly" id="edge13_Node000011_Node000012" title=" " alt="" coords="680,105,782,149,780,154,678,110"/>
+<area shape="rect" id="Node000013" href="$LiveRange_8h.html" title="Data model for a single live range of a variable." alt="" coords="580,155,720,181"/>
+<area shape="poly" id="edge15_Node000011_Node000013" title=" " alt="" coords="652,107,652,139,647,139,647,107"/>
+<area shape="poly" id="edge17_Node000013_Node000003" title=" " alt="" coords="628,184,554,224,552,219,625,180"/>
+<area shape="poly" id="edge16_Node000013_Node000010" title=" " alt="" coords="670,180,728,218,725,222,667,184"/>
+</map>

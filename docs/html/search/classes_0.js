@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['allocationlogic_0',['AllocationLogic',['../class_allocation_logic.html',1,'']]],
-  ['allocationresult_1',['AllocationResult',['../struct_allocation_result.html',1,'']]]
+  ['allocationlogic_0',['AllocationLogic',['../classAllocationLogic.html',1,'']]],
+  ['allocationresult_1',['AllocationResult',['../structAllocationResult.html',1,'']]]
 ];

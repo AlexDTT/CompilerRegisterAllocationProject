@@ -14,14 +14,14 @@
 <g id="node1" class="node">
 <title>web0</title>
 <ellipse fill="#d9efe4" stroke="#2f6b56" cx="34.12" cy="-339.51" rx="34.12" ry="34.12"/>
-<text text-anchor="middle" x="34.12" y="-341.21" font-family="Helvetica,sans-Serif" font-size="14.00">web0</text>
+<text text-anchor="middle" x="34.12" y="-341.96" font-family="Helvetica,sans-Serif" font-size="14.00">web0</text>
 <text text-anchor="middle" x="34.12" y="-326.21" font-family="Helvetica,sans-Serif" font-size="14.00">r0</text>
 </g>
 <!-- web1 -->
 <g id="node2" class="node">
 <title>web1</title>
 <ellipse fill="#d9efe4" stroke="#2f6b56" cx="390.16" cy="-341.84" rx="34.12" ry="34.12"/>
-<text text-anchor="middle" x="390.16" y="-343.54" font-family="Helvetica,sans-Serif" font-size="14.00">web1</text>
+<text text-anchor="middle" x="390.16" y="-344.29" font-family="Helvetica,sans-Serif" font-size="14.00">web1</text>
 <text text-anchor="middle" x="390.16" y="-328.54" font-family="Helvetica,sans-Serif" font-size="14.00">r1</text>
 </g>
 <!-- web0&#45;&#45;web1 -->
@@ -33,7 +33,7 @@
 <g id="node3" class="node">
 <title>web2</title>
 <ellipse fill="#f7ead6" stroke="#9a6a1d" cx="214.55" cy="-34.12" rx="34.12" ry="34.12"/>
-<text text-anchor="middle" x="214.55" y="-35.82" font-family="Helvetica,sans-Serif" font-size="14.00">web2</text>
+<text text-anchor="middle" x="214.55" y="-36.57" font-family="Helvetica,sans-Serif" font-size="14.00">web2</text>
 <text text-anchor="middle" x="214.55" y="-20.82" font-family="Helvetica,sans-Serif" font-size="14.00">M</text>
 </g>
 <!-- web1&#45;&#45;web2 -->

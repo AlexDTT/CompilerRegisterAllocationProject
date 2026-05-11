@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['outputwriter_0',['OutputWriter',['../class_output_writer.html',1,'']]]
+  ['outputwriter_0',['OutputWriter',['../classOutputWriter.html',1,'']]]
 ];

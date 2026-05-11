@@ -109,7 +109,7 @@ $(function(){initNavTree('index.html','',''); });
   <div class="headertitle"><div class="title">Compiler Register Allocation Project </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md__r_e_a_d_m_e"></a></p>
+<div class="textblock"><p><a class="anchor" id="md_README"></a></p>
 <p><img src="logo.png" alt="Compiler Register Allocation Project Logo" width="100" class="inline"/></p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
 Algorithm Design (DA) - Spring 2026</h1>
@@ -193,7 +193,7 @@ Allocation output</h2>
 System Architecture</h1>
 <p>The application pipeline is intentionally close to the problem formulation from the statement:</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_annotated_architecture.svg" width="1704" height="146"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_annotated_architecture.svg" width="1704" height="151"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Compiler Register Allocation Project Pipeline</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
@@ -265,16 +265,16 @@ Complexity Summary</h1>
 <li><span class="tt">E</span> is the number of directed adjacency entries in the interference graph,</li>
 <li><span class="tt">S</span> is the maximum number of allowed spill/split recovery actions.</li>
 </ul>
-<p>The coloring bounds include the current vector-backed course <span class="tt"><a class="el" href="class_graph.html" title="Represents a general graph using an adjacency list.">Graph</a>&lt;int&gt;</span> implementation, where <span class="tt">findVertex</span> is <span class="tt">O(W)</span>. Replacing the vertex store with an indexed map would reduce several lookup-driven factors, but the project intentionally keeps the provided graph as the primary representation.</p>
+<p>The coloring bounds include the current vector-backed course <span class="tt"><a class="el" href="classGraph.html" title="Represents a general graph using an adjacency list.">Graph</a>&lt;int&gt;</span> implementation, where <span class="tt">findVertex</span> is <span class="tt">O(W)</span>. Replacing the vertex store with an indexed map would reduce several lookup-driven factors, but the project intentionally keeps the provided graph as the primary representation.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
 Project Requirements Coverage</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Requirement  </th><th class="markdownTableHeadNone">Status  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">T1.1 command-line menu and batch mode  </td><td class="markdownTableBodyNone">Implemented through <span class="tt"><a class="el" href="class_register_alloc_app.html" title="Top-level application controller.">RegisterAllocApp</a></span> and <span class="tt">./register_alloc -b</span>.  </td></tr>
+<td class="markdownTableBodyNone">T1.1 command-line menu and batch mode  </td><td class="markdownTableBodyNone">Implemented through <span class="tt"><a class="el" href="classRegisterAllocApp.html" title="Top-level application controller.">RegisterAllocApp</a></span> and <span class="tt">./register_alloc -b</span>.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">T1.2 input parsing and graph-based data structures  </td><td class="markdownTableBodyNone">Implemented through <span class="tt"><a class="el" href="class_file_parser.html" title="Utility class with static methods to parse the two input files required by the compiler register allo...">FileParser</a></span>, <span class="tt"><a class="el" href="class_interference_graph.html" title="Factory and utilities for constructing webs and their interference graph.">InterferenceGraph</a></span>, and the course <span class="tt"><a class="el" href="class_graph.html" title="Represents a general graph using an adjacency list.">Graph</a>&lt;int&gt;</span>.  </td></tr>
+<td class="markdownTableBodyNone">T1.2 input parsing and graph-based data structures  </td><td class="markdownTableBodyNone">Implemented through <span class="tt"><a class="el" href="classFileParser.html" title="Utility class with static methods to parse the two input files required by the compiler register allo...">FileParser</a></span>, <span class="tt"><a class="el" href="classInterferenceGraph.html" title="Factory and utilities for constructing webs and their interference graph.">InterferenceGraph</a></span>, and the course <span class="tt"><a class="el" href="classGraph.html" title="Represents a general graph using an adjacency list.">Graph</a>&lt;int&gt;</span>.  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">T1.3 Doxygen documentation and complexity analysis  </td><td class="markdownTableBodyNone">Source-level Doxygen plus this README and <span class="tt"><a class="el" href="extra__documentation_8dox.html">dox/extra_documentation.dox</a></span>.  </td></tr>
 <tr class="markdownTableRowEven">

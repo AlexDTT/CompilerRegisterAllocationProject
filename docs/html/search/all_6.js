@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['cleanline_0',['cleanLine',['../class_file_parser.html#a731b9837afdf524593e67cde997c1f68',1,'FileParser']]],
+  ['cleanline_0',['cleanLine',['../classFileParser.html#a731b9837afdf524593e67cde997c1f68',1,'FileParser']]],
   ['cli_1',['CLI',['../extra_docs.html#ext_t6_cli',1,'']]],
   ['cli_20and_20testing_2',['Error Handling, CLI, and Testing',['../extra_docs.html#ext_t6',1,'']]],
   ['coloring_20example_3',['Basic coloring example',['../index.html#autotoc_md14',1,'']]],

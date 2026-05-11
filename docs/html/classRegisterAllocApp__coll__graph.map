@@ -1,0 +1,9 @@
+<map id="RegisterAllocApp" name="RegisterAllocApp">
+<area shape="rect" id="Node000001" title="Top&#45;level application controller." alt="" coords="107,104,230,131"/>
+<area shape="rect" id="Node000002" href="$classGraph.html" title=" " alt="" coords="5,5,100,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="74,42,111,78,146,101,143,106,107,82,71,46"/>
+<area shape="rect" id="Node000003" href="$structParameters.html" title="Holds the configuration read from the registers/config input file." alt="" coords="124,5,213,32"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,48,171,104,166,104,166,48"/>
+<area shape="rect" id="Node000004" href="$structAllocationResult.html" title="The outcome of a register allocation run." alt="" coords="237,5,353,32"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="277,46,239,82,199,106,196,101,236,78,273,42"/>
+</map>

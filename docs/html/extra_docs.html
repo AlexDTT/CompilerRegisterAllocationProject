@@ -115,10 +115,10 @@ Graph Representation and Parsing</h1>
 Data model</h2>
 <p>The implementation separates the problem into four layers:</p>
 <ul>
-<li><a class="el" href="struct_program_point.html">ProgramPoint</a>: one program line plus an optional <span class="tt">+</span> / <span class="tt">-</span> marker.</li>
-<li><a class="el" href="struct_live_range.html">LiveRange</a>: one input line from the ranges file.</li>
-<li><a class="el" href="struct_web.html">Web</a>: a merged set of live ranges for the same variable.</li>
-<li><span class="tt"><a class="el" href="class_graph.html" title="Represents a general graph using an adjacency list.">Graph</a>&lt;int&gt;</span>: the interference graph, where each vertex stores a web id.</li>
+<li><a class="el" href="structProgramPoint.html">ProgramPoint</a>: one program line plus an optional <span class="tt">+</span> / <span class="tt">-</span> marker.</li>
+<li><a class="el" href="structLiveRange.html">LiveRange</a>: one input line from the ranges file.</li>
+<li><a class="el" href="structWeb.html">Web</a>: a merged set of live ranges for the same variable.</li>
+<li><span class="tt"><a class="el" href="classGraph.html" title="Represents a general graph using an adjacency list.">Graph</a>&lt;int&gt;</span>: the interference graph, where each vertex stores a web id.</li>
 </ul>
 <p>The provided graph structure from the course was preserved as the primary graph representation. The only conceptual adaptation is that vertex labels are <span class="tt">int</span> web identifiers instead of domain objects. This keeps the graph reusable and lets the allocation algorithms work with a compact vertex set.</p>
 <h2 class="doxsection"><a class="anchor" id="ext_t1_webs"></a>
@@ -141,7 +141,7 @@ Interference rule</h2>
 <ul>
 <li>if one web ends on line <span class="tt">L</span> due to a last use (<span class="tt">-</span>) and another web starts on the same line <span class="tt">L</span> due to a definition (<span class="tt">+</span>), they do <b>not</b> interfere.</li>
 </ul>
-<p>This rule is implemented explicitly in <a class="el" href="class_interference_graph.html#ac294a58e31074b769d415fbb8b7912b9">InterferenceGraph::interferes</a>.</p>
+<p>This rule is implemented explicitly in <a class="el" href="classInterferenceGraph.html#ac294a58e31074b769d415fbb8b7912b9">InterferenceGraph::interferes</a>.</p>
 <h2 class="doxsection"><a class="anchor" id="ext_t1_output"></a>
 Aggregated web output</h2>
 <p>The output format uses <b>one line per web</b>, not one line per constituent live range. Internally, this means:</p>
@@ -228,7 +228,7 @@ Complexity</h2>
 T2.3 - Register Allocation with Splitting</h1>
 <h2 class="doxsection"><a class="anchor" id="ext_t4_split_approach"></a>
 Approach</h2>
-<p><a class="el" href="struct_web.html" title="A live web is the union of one or more live ranges of the same variable whose program-point sets over...">Web</a> splitting is used when the user explicitly selects <span class="tt">splitting, K</span>. The implementation keeps the problem local and deterministic:</p>
+<p><a class="el" href="structWeb.html" title="A live web is the union of one or more live ranges of the same variable whose program-point sets over...">Web</a> splitting is used when the user explicitly selects <span class="tt">splitting, K</span>. The implementation keeps the problem local and deterministic:</p>
 <ul>
 <li>first, try to color the current graph with no splitting;</li>
 <li>if that fails, pick one of the currently uncolorable/high-degree webs;</li>
@@ -256,7 +256,7 @@ Complexity</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Split candidate selection  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 + E)</span>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><a class="el" href="class_graph.html" title="Represents a general graph using an adjacency list.">Graph</a> rebuild after each split  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 * P + E * W)</span>  </td></tr>
+<td class="markdownTableBodyNone"><a class="el" href="classGraph.html" title="Represents a general graph using an adjacency list.">Graph</a> rebuild after each split  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 * P + E * W)</span>  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Full allocator with at most <span class="tt">K</span> splits  </td><td class="markdownTableBodyNone"><span class="tt">O((K + 1) * (W^2 * P + E * W + W * (W^2 + E)))</span>  </td></tr>
 </table>
