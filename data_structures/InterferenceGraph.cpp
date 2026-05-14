@@ -10,6 +10,7 @@
 #include <limits>
 #include <map>
 #include <set>
+#include <sstream>
 #include <unordered_map>
 
 // ---------------------------------------------------------------------------
@@ -75,6 +76,49 @@ namespace
     for (const auto &range : web.ranges)
       best = std::min(best, firstLineOfRange(range));
     return best;
+  }
+
+  std::string dotEscape(const std::string &text)
+  {
+    std::string escaped;
+    escaped.reserve(text.size());
+    for (char c : text)
+    {
+      if (c == '"' || c == '\\')
+        escaped.push_back('\\');
+      escaped.push_back(c);
+    }
+    return escaped;
+  }
+
+  std::string formatWebPointsForLabel(const Web &web)
+  {
+    std::map<int, std::set<char>> markersByLine;
+    for (const auto &range : web.ranges)
+      for (const auto &point : range.points)
+        markersByLine[point.line].insert(point.marker);
+
+    std::ostringstream oss;
+    bool first = true;
+    for (const auto &[line, markers] : markersByLine)
+    {
+      if (!first)
+        oss << ",";
+
+      char marker = '\0';
+      const bool hasPlus = markers.count('+') > 0;
+      const bool hasMinus = markers.count('-') > 0;
+      if (hasPlus && !hasMinus)
+        marker = '+';
+      else if (hasMinus && !hasPlus)
+        marker = '-';
+
+      oss << line;
+      if (marker != '\0')
+        oss << marker;
+      first = false;
+    }
+    return oss.str();
   }
 
 } // anonymous namespace
@@ -248,13 +292,24 @@ void InterferenceGraph::exportDOT(const Graph<int> &graph,
   }
 
   out << "graph interference {\n";
-  out << "    node [shape=ellipse];\n";
+  out << "    graph [bgcolor=\"transparent\", color=\"#38393b\", rankdir=LR, "
+         "fontname=\"DejaVu Sans\", fontcolor=\"#d2dbde\", labelloc=t, "
+         "label=\"Interference Graph\"];\n";
+  out << "    node [shape=ellipse, style=\"filled,bold\", fontname=\"DejaVu Sans\", "
+         "fontcolor=\"#f8f9fa\", fillcolor=\"#252628\", color=\"#859399\", penwidth=1.8];\n";
+  out << "    edge [color=\"#859399\", penwidth=1.4];\n\n";
 
   // Vertices with labels
   for (const auto &web : webs)
   {
+    Vertex<int> *vertex = graph.findVertex(web.id);
+    const int degree = vertex ? static_cast<int>(vertex->getAdj().size()) : 0;
+    const std::string label = "web" + std::to_string(web.id) + "\\n" +
+                              dotEscape(web.variable) + "\\n" +
+                              "deg=" + std::to_string(degree) + "\\n" +
+                              dotEscape(formatWebPointsForLabel(web));
     out << "    web" << web.id
-        << " [label=\"web" << web.id << "\\n(" << web.variable << ")\"];\n";
+        << " [label=\"" << label << "\"];\n";
   }
 
   // Edges (undirected – print each pair once)
@@ -274,6 +329,17 @@ void InterferenceGraph::exportDOT(const Graph<int> &graph,
         out << "    web" << u << " -- web" << w << ";\n";
     }
   }
+
+  out << "\n";
+  out << "    subgraph cluster_legend {\n";
+  out << "        label=\"Legend\";\n";
+  out << "        fontcolor=\"#d2dbde\";\n";
+  out << "        color=\"#38393b\";\n";
+  out << "        style=\"rounded,filled\";\n";
+  out << "        fillcolor=\"#252628\";\n";
+  out << "        key_node [label=\"web\\nvariable\\ndegree\\npoints\", fillcolor=\"#252628\"];\n";
+  out << "        key_edge [label=\"edge = cannot share a register\", shape=note, fillcolor=\"#38393b\"];\n";
+  out << "    }\n";
 
   out << "}\n";
   std::cout << "DOT graph exported to '" << filename << "'.\n";

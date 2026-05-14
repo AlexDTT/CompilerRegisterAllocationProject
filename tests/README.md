@@ -9,7 +9,7 @@
 | `inputs/basic/ranges/ranges5.txt` + `inputs/basic/registers/registers1.txt` | Another single-register chain with three independent variables. |
 | `inputs/basic/ranges/ranges6.txt` + `inputs/basic/registers/registers3.txt` | Wider interference pattern that genuinely requires three registers. |
 | `tests/input/spilling_triangle_*` | Clique of size 3 colored with 2 registers by spilling one web. |
-| `tests/input/splitting_bridge_*` | Clique reduced to a 2-colorable graph after one split. |
+| `tests/input/splitting_bridge_*` | Clique reduced to a 2-colorable path after one marker-preserving split. |
 | `tests/input/free_triangle_*` | Custom allocator using selective spilling on a 3-clique. |
 
 ## Test Strategy
@@ -17,6 +17,6 @@
 The project uses two complementary layers:
 
 - `tests/register_alloc_tests.cpp`: white-box unit tests for parsing, web construction,
-  interference detection, output serialization, and all allocation variants.
+  interference detection, marker-preserving splitting, output serialization, and all allocation variants.
 - `tests/run_integration_tests.sh`: batch-mode end-to-end tests that compare generated
   allocations with deterministic expected outputs in `tests/output/expected`.

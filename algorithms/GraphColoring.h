@@ -8,10 +8,10 @@
  *    allocation is reported as infeasible.
  *  - **Spilling**: Greedy coloring with selective web spilling (committing webs to memory)
  *    to reduce the graph's chromatic number.
- *  - **Splitting**: Greedy coloring with selective web splitting (breaking webs into
- *    sub-webs with fewer interferences) to enable coloring.
- *  - **Free**: custom pressure-aware coloring that prioritises highly constrained
- *    webs and safely spills webs that cannot receive a compatible register.
+ *  - **Splitting**: selective web splitting that preserves the original live-range
+ *    markers and tries the split points that most reduce interference.
+ *  - **Free**: custom hybrid coloring with graph-class fast paths, DSatur ordering,
+ *    and a bounded exact branch-and-bound pass for small/medium graphs.
  */
 
 #ifndef GRAPH_COLORING_H
@@ -132,21 +132,25 @@ public:
    * @brief Graph coloring with selective web splitting.
    *
    * Iteratively splits up to @p maxSplits webs into two derived sub-webs and rebuilds
-   * the interference graph. The selected web is the currently spilled/highest-degree
-   * candidate, because it is the web most responsible for blocking a K-coloring.
+   * the interference graph.  Each iteration evaluates all legal split positions and
+   * chooses the split that first makes the graph K-colorable; if none does, it chooses
+   * the split that leaves the fewest interference edges and then the lowest maximum
+   * degree.
    *
-   * After each split, the web list and interference graph are rebuilt before
-   * reattempting coloring.
+   * Split boundaries preserve the original markers exactly.  For example, splitting
+   * `1+,2,3,4-` into `1+,2` and `3,4-` does not invent a synthetic `3+` marker.
+   * Candidate splits whose two derived webs still interfere with each other are
+   * discarded.
    *
    * @param graph        The original interference graph.
    * @param webs         Ordered list of webs (may be extended with derived webs).
    * @param numRegisters Number of available physical registers (K).
    * @param maxSplits    Maximum number of webs that may be split.
    * @return AllocationResult for the (possibly extended) web list.
-   * @complexity O((maxSplits + 1) * (W^2 * P + E * W + W * (W^2 + E))) in the
-   *             worst case, where P is the maximum number of points compared
-   *             per web pair. Each split rebuilds the interference graph and
-   *             reruns coloring.
+   * @complexity O(maxSplits * Q * (W^2 * P + E * W + W * (W^2 + E))) in the
+   *             worst case, where Q is the number of candidate split positions
+   *             considered in one iteration.  Each candidate rebuilds an
+   *             interference graph and runs the K-colorability test.
    *
    */
   static AllocationResult splittingColoring(Graph<int> &graph,
@@ -161,19 +165,27 @@ public:
   /**
    * @brief Custom register allocation algorithm.
    *
-   * This allocator repeatedly chooses the uncolored web with the highest number of
-   * different neighboring register colors already present. Ties are broken by graph
-   * degree. This prioritises webs under the most immediate register pressure before
-   * easier webs, and assigns memory only when every register conflicts with a
-   * colored neighbor.
+   * This allocator first recognizes simple graph classes that can be colored
+   * optimally by direct algorithms:
+   *  - edgeless graphs use one register;
+   *  - complete graphs color up to K webs and spill the unavoidable remainder;
+   *  - bipartite graphs are 2-colored by BFS when K >= 2.
+   *
+   * For the remaining graphs it runs DSatur-style greedy coloring (highest
+   * saturation degree, then highest degree).  For graphs up to the implementation's
+   * small/medium threshold it then runs branch-and-bound over the same DSatur order
+   * to minimize the number of spilled webs.  Larger graphs keep the polynomial
+   * DSatur result to avoid exponential runtimes in the demo tool.
    *
    * @param graph        The interference graph.
    * @param webs         Ordered list of webs.
    * @param numRegisters Number of available physical registers (K).
    * @return AllocationResult with the register assignment.
-   * @complexity O(W * (W^2 + E)) with the vector-backed Graph<int>, because each
-   *             selection round scans the remaining vertices, calls findVertex,
-   *             and inspects adjacency lists.
+   * @complexity Fast paths are O(W + E) after adjacency extraction.  The DSatur
+   *             fallback is O(W^2 + E log W) after extraction.  The exact
+   *             small/medium pass has exponential worst-case complexity
+   *             O((K + 1)^W * (W + E)), but it is guarded by a fixed vertex
+   *             threshold.
    *
    */
   static AllocationResult freeColoring(const Graph<int> &graph,

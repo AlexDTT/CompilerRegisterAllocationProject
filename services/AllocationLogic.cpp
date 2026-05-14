@@ -222,10 +222,14 @@ bool AllocationLogic::exportAllocationDOT(const Graph<int> &graph,
     splitDerived.insert(record.rightWebId);
   }
 
+  const std::string graphLabel = "Colored Register Allocation\\n" +
+                                 std::to_string(result.registersUsed) + " register(s), " +
+                                 std::to_string(result.spilledWebs) + " memory web(s)";
+
   out << "graph allocation {\n";
   out << "    graph [bgcolor=\"transparent\", color=\"#38393b\", rankdir=LR, "
          "fontname=\"DejaVu Sans\", fontcolor=\"#d2dbde\", labelloc=t, "
-         "label=\"Colored Register Allocation\"];\n";
+      << "label=\"" << graphLabel << "\"];\n";
   out << "    node [shape=ellipse, style=\"filled,bold\", fontname=\"DejaVu Sans\", "
          "fontcolor=\"#f8f9fa\", color=\"#859399\", penwidth=1.8];\n";
   out << "    edge [color=\"#859399\", fontcolor=\"#d2dbde\", penwidth=1.3];\n\n";
@@ -275,9 +279,9 @@ bool AllocationLogic::exportAllocationDOT(const Graph<int> &graph,
   out << "        color=\"#38393b\";\n";
   out << "        style=\"rounded,filled\";\n";
   out << "        fillcolor=\"#252628\";\n";
-  out << "        key_reg [label=\"register color\", fillcolor=\"#1982d2\", shape=ellipse];\n";
+  out << "        key_reg [label=\"same fill = same register\", fillcolor=\"#1982d2\", shape=ellipse];\n";
   out << "        key_mem [label=\"M = memory\", fillcolor=\"#38393b\", shape=box, color=\"#859399\"];\n";
-  out << "        key_split [label=\"split-derived web\", fillcolor=\"#252628\", color=\"#ff8800\", penwidth=3.0];\n";
+  out << "        key_split [label=\"orange border = split-derived\", fillcolor=\"#252628\", color=\"#ff8800\", penwidth=3.0];\n";
   out << "    }\n";
 
   if (!result.selectedSpills.empty() || !result.splitRecords.empty())

@@ -1,22 +1,20 @@
 graph web_fusion_example {
-    rankdir=LR;
-    node [shape=box, style=rounded, fontname="Helvetica", color="#2f6b56"];
-    edge [color="#2f6b56", penwidth=1.4];
+    bgcolor="transparent";
+    node [shape=box, style="filled,rounded", fontname="DejaVu Sans", fontcolor="#f8f9fa", color="#859399", fillcolor="#252628", penwidth=1.4];
+    edge [color="#859399", penwidth=1.3, fontname="DejaVu Sans", fontcolor="#859399", fontsize=9];
 
-    r0 [label="x: 1+,2,3,4,7"];
-    r1 [label="x: 7,8"];
-    r2 [label="x: 8,9-"];
-    r3 [label="x: 8,11,12,13-"];
-    web0 [shape=ellipse, style=filled, fillcolor="#d9efe4", label="web0\nx"];
+    r0 [label="x: 1+,2,3,4,7", fillcolor="#252628", color="#1982d2"];
+    r1 [label="x: 7,8", fillcolor="#252628", color="#1982d2"];
+    r2 [label="x: 8,9-", fillcolor="#252628", color="#1982d2"];
+    r3 [label="x: 8,11,12,13-", fillcolor="#252628", color="#1982d2"];
+    web0 [shape=circle, fillcolor="#44b86f", label="web0\n(x)"];
 
-    r0 -- r1 [label="line 7"];
-    r1 -- r2 [label="line 8"];
-    r1 -- r3 [label="line 8"];
-    r0 -- web0 [style=dashed];
-    r1 -- web0 [style=dashed];
-    r2 -- web0 [style=dashed];
-    r3 -- web0 [style=dashed];
+    r0 -- r1 [label="  7  "];
+    r1 -- r2 [label="  8  "];
+    r1 -- r3 [label="  8  "];
 
-    label="Overlapping ranges of the same variable are transitively fused into one web";
-    labelloc=t;
+    r0 -- web0 [style=dashed, color="#44b86f"];
+    r1 -- web0 [style=dashed, color="#44b86f"];
+    r2 -- web0 [style=dashed, color="#44b86f"];
+    r3 -- web0 [style=dashed, color="#44b86f"];
 }

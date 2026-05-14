@@ -1,17 +1,15 @@
 graph spilling_example {
     layout=neato;
     overlap=false;
-    node [shape=circle, style=filled, fontname="Helvetica"];
-    edge [color="#333333", penwidth=1.5];
+    bgcolor="transparent";
+    node [shape=circle, style=filled, fontname="DejaVu Sans", fontcolor="#f8f9fa", color="#859399", penwidth=1.6];
+    edge [color="#859399", penwidth=1.4];
 
-    web0 [label="web0\nspill -> M", fillcolor="#f7d6d6", color="#9b2c2c"];
-    web1 [label="web1\nr1", fillcolor="#d9efe4", color="#2f6b56"];
-    web2 [label="web2\nr0", fillcolor="#d9efe4", color="#2f6b56"];
+    web0 [label="web0\nspilled (M)", fillcolor="#38393b", color="#ff8800", shape=box, penwidth=2.0];
+    web1 [label="web1\nr0", fillcolor="#1982d2"];
+    web2 [label="web2\nr1", fillcolor="#44b86f"];
 
     web0 -- web1;
     web1 -- web2;
     web2 -- web0;
-
-    label="Triangle graph: one web must be spilled for K = 2";
-    labelloc=t;
 }

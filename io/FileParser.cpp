@@ -11,6 +11,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <cctype>
+#include <set>
 
 // ---------------------------------------------------------------------------
 // Helpers (anonymous namespace)
@@ -59,10 +60,14 @@ std::string FileParser::cleanLine(const std::string &s)
 bool FileParser::parsePoints(const std::string &token, std::vector<ProgramPoint> &points)
 {
   auto parts = splitByComma(token);
+  std::set<int> seenLines;
   for (const auto &part : parts)
   {
     if (part.empty())
-      continue;
+    {
+      std::cerr << "Error: empty program-point entry in '" << token << "'.\n";
+      return false;
+    }
     char marker = '\0';
     std::string numStr = part;
 
@@ -78,10 +83,22 @@ bool FileParser::parsePoints(const std::string &token, std::vector<ProgramPoint>
     }
     try
     {
-      int line = std::stoi(numStr);
+      size_t parsedChars = 0;
+      int line = std::stoi(numStr, &parsedChars);
+      if (parsedChars != numStr.size())
+      {
+        std::cerr << "Error: invalid trailing characters in line number '" << numStr << "'.\n";
+        return false;
+      }
       if (line <= 0)
       {
         std::cerr << "Error: line number must be positive, got " << line << ".\n";
+        return false;
+      }
+      if (!seenLines.insert(line).second)
+      {
+        std::cerr << "Error: duplicate program point " << line
+                  << " in one live range.\n";
         return false;
       }
       points.emplace_back(line, marker);

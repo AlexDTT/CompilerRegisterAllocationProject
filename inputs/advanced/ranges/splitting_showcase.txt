@@ -1,6 +1,7 @@
 # Focused web-splitting showcase.
-# This starts as a 3-clique with only 2 registers available. Splitting web a
-# into early and late pieces makes the final graph 2-colorable.
-a: 1+,2,3,4-
-b: 1+,2,3-
-c: 2+,3,4-
+# This starts as a 3-clique with only 2 registers available. Web a is live in
+# two separated regions; splitting it into early and late pieces makes the final
+# graph a 2-colorable path without inventing '+' or '-' split-boundary markers.
+a: 1+,2,5,6-
+b: 1+,2,3,4-
+c: 3+,4,5,6-

@@ -1,17 +1,15 @@
 graph free_example {
     layout=neato;
     overlap=false;
-    node [shape=circle, style=filled, fontname="Helvetica"];
-    edge [color="#333333", penwidth=1.5];
+    bgcolor="transparent";
+    node [shape=circle, style=filled, fontname="DejaVu Sans", fontcolor="#f8f9fa", color="#859399", penwidth=1.6];
+    edge [color="#859399", penwidth=1.4];
 
-    web0 [label="web0\nr0", fillcolor="#d9efe4", color="#2f6b56"];
-    web1 [label="web1\nr1", fillcolor="#d9efe4", color="#2f6b56"];
-    web2 [label="web2\nM", fillcolor="#f7ead6", color="#9a6a1d"];
+    web0 [label="web0\nr0", fillcolor="#1982d2"];
+    web1 [label="web1\nr1", fillcolor="#44b86f"];
+    web2 [label="web2\nM  (unavoidable spill)", fillcolor="#38393b", shape=box, color="#ff8800", penwidth=2.0];
 
     web0 -- web1;
     web1 -- web2;
     web2 -- web0;
-
-    label="Free mode: pressure-aware choice with selective spill fallback";
-    labelloc=t;
 }

@@ -9,12 +9,16 @@
 #include <set>
 #include <iostream>
 #include <algorithm>
+#include <functional>
 #include <limits>
+#include <queue>
 
 #include "data_structures/InterferenceGraph.h"
 
 namespace
 {
+  constexpr size_t EXACT_FREE_SEARCH_LIMIT = 26;
+
   std::set<int> collectWebIds(const std::vector<Web> &webs)
   {
     std::set<int> ids;
@@ -28,6 +32,307 @@ namespace
     int best = -1;
     for (const auto &w : webs)
       best = std::max(best, w.id);
+    return best;
+  }
+
+  std::vector<int> sortedWebIds(const std::vector<Web> &webs)
+  {
+    std::vector<int> ids;
+    ids.reserve(webs.size());
+    for (const auto &w : webs)
+      ids.push_back(w.id);
+    std::sort(ids.begin(), ids.end());
+    return ids;
+  }
+
+  std::map<int, std::set<int>> buildAdjacency(const Graph<int> &graph,
+                                              const std::vector<Web> &webs)
+  {
+    std::map<int, std::set<int>> adj;
+    for (const auto &web : webs)
+      adj[web.id];
+
+    for (const auto &web : webs)
+    {
+      Vertex<int> *vertex = graph.findVertex(web.id);
+      if (!vertex)
+        continue;
+
+      for (const auto *edge : vertex->getAdj())
+      {
+        int neighbor = edge->getDest()->getInfo();
+        if (adj.count(neighbor))
+          adj[web.id].insert(neighbor);
+      }
+    }
+    return adj;
+  }
+
+  int edgeCount(const std::map<int, std::set<int>> &adj)
+  {
+    int directed = 0;
+    for (const auto &[id, neighbors] : adj)
+    {
+      (void)id;
+      directed += static_cast<int>(neighbors.size());
+    }
+    return directed / 2;
+  }
+
+  int maxDegree(const std::map<int, std::set<int>> &adj)
+  {
+    int best = 0;
+    for (const auto &[id, neighbors] : adj)
+    {
+      (void)id;
+      best = std::max(best, static_cast<int>(neighbors.size()));
+    }
+    return best;
+  }
+
+  bool isEdgeless(const std::map<int, std::set<int>> &adj)
+  {
+    return edgeCount(adj) == 0;
+  }
+
+  bool isCompleteGraph(const std::map<int, std::set<int>> &adj)
+  {
+    const int n = static_cast<int>(adj.size());
+    if (n <= 1)
+      return true;
+    for (const auto &[id, neighbors] : adj)
+    {
+      (void)id;
+      if (static_cast<int>(neighbors.size()) != n - 1)
+        return false;
+    }
+    return true;
+  }
+
+  bool tryBipartiteColoring(const std::map<int, std::set<int>> &adj,
+                            int numRegisters,
+                            std::map<int, int> &assignment)
+  {
+    if (numRegisters < 2)
+      return false;
+
+    assignment.clear();
+    for (const auto &[id, neighbors] : adj)
+    {
+      (void)neighbors;
+      assignment[id] = -2;
+    }
+
+    for (const auto &[start, neighbors] : adj)
+    {
+      (void)neighbors;
+      if (assignment[start] != -2)
+        continue;
+
+      assignment[start] = 0;
+      std::queue<int> q;
+      q.push(start);
+
+      while (!q.empty())
+      {
+        int u = q.front();
+        q.pop();
+        for (int v : adj.at(u))
+        {
+          if (assignment[v] == -2)
+          {
+            assignment[v] = 1 - assignment[u];
+            q.push(v);
+          }
+          else if (assignment[v] == assignment[u])
+          {
+            assignment.clear();
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+  }
+
+  int countSpills(const std::map<int, int> &assignment)
+  {
+    int spills = 0;
+    for (const auto &[id, reg] : assignment)
+    {
+      (void)id;
+      if (reg < 0)
+        ++spills;
+    }
+    return spills;
+  }
+
+  std::map<int, int> dsaturSpillHeuristic(const std::map<int, std::set<int>> &adj,
+                                          const std::vector<int> &ids,
+                                          int numRegisters)
+  {
+    std::map<int, int> assignment;
+    for (int id : ids)
+      assignment[id] = -2; // -2 means unassigned; -1 means intentionally spilled.
+
+    std::set<int> uncolored(ids.begin(), ids.end());
+    while (!uncolored.empty())
+    {
+      int bestId = -1;
+      int bestSat = -1;
+      int bestDegree = -1;
+      int bestUncoloredDegree = -1;
+
+      for (int id : uncolored)
+      {
+        std::set<int> satColors;
+        int uncoloredDegree = 0;
+
+        for (int neighbor : adj.at(id))
+        {
+          auto it = assignment.find(neighbor);
+          if (it != assignment.end() && it->second >= 0)
+            satColors.insert(it->second);
+          else if (it != assignment.end() && it->second == -2)
+            ++uncoloredDegree;
+        }
+
+        int sat = static_cast<int>(satColors.size());
+        int degree = static_cast<int>(adj.at(id).size());
+        if (bestId < 0 ||
+            sat > bestSat ||
+            (sat == bestSat && degree > bestDegree) ||
+            (sat == bestSat && degree == bestDegree && uncoloredDegree > bestUncoloredDegree) ||
+            (sat == bestSat && degree == bestDegree && uncoloredDegree == bestUncoloredDegree && id < bestId))
+        {
+          bestId = id;
+          bestSat = sat;
+          bestDegree = degree;
+          bestUncoloredDegree = uncoloredDegree;
+        }
+      }
+
+      std::set<int> used;
+      for (int neighbor : adj.at(bestId))
+      {
+        auto it = assignment.find(neighbor);
+        if (it != assignment.end() && it->second >= 0)
+          used.insert(it->second);
+      }
+
+      int chosen = -1;
+      for (int color = 0; color < numRegisters; ++color)
+      {
+        if (!used.count(color))
+        {
+          chosen = color;
+          break;
+        }
+      }
+
+      assignment[bestId] = chosen;
+      uncolored.erase(bestId);
+    }
+
+    return assignment;
+  }
+
+  std::map<int, int> exactMinSpillColoring(const std::map<int, std::set<int>> &adj,
+                                           const std::vector<int> &ids,
+                                           int numRegisters,
+                                           const std::map<int, int> &initial)
+  {
+    std::map<int, int> best = initial;
+    int bestSpills = countSpills(best);
+
+    std::map<int, int> partial;
+    for (int id : ids)
+      partial[id] = -2;
+
+    auto chooseVertex = [&]() -> int
+    {
+      int bestId = -1;
+      int bestSat = -1;
+      int bestDegree = -1;
+      int bestUncoloredDegree = -1;
+
+      for (int id : ids)
+      {
+        if (partial[id] != -2)
+          continue;
+
+        std::set<int> satColors;
+        int uncoloredDegree = 0;
+        for (int neighbor : adj.at(id))
+        {
+          if (partial[neighbor] >= 0)
+            satColors.insert(partial[neighbor]);
+          else if (partial[neighbor] == -2)
+            ++uncoloredDegree;
+        }
+
+        int sat = static_cast<int>(satColors.size());
+        int degree = static_cast<int>(adj.at(id).size());
+        if (bestId < 0 ||
+            sat > bestSat ||
+            (sat == bestSat && degree > bestDegree) ||
+            (sat == bestSat && degree == bestDegree && uncoloredDegree > bestUncoloredDegree) ||
+            (sat == bestSat && degree == bestDegree && uncoloredDegree == bestUncoloredDegree && id < bestId))
+        {
+          bestId = id;
+          bestSat = sat;
+          bestDegree = degree;
+          bestUncoloredDegree = uncoloredDegree;
+        }
+      }
+      return bestId;
+    };
+
+    std::function<void(int, int)> search = [&](int remaining, int spills)
+    {
+      if (spills >= bestSpills)
+        return;
+      if (remaining == 0)
+      {
+        best = partial;
+        bestSpills = spills;
+        return;
+      }
+
+      int id = chooseVertex();
+      if (id < 0)
+        return;
+
+      std::set<int> blocked;
+      for (int neighbor : adj.at(id))
+      {
+        if (partial[neighbor] >= 0)
+          blocked.insert(partial[neighbor]);
+      }
+
+      for (int color = 0; color < numRegisters; ++color)
+      {
+        if (blocked.count(color))
+          continue;
+
+        partial[id] = color;
+        search(remaining - 1, spills);
+        if (bestSpills == 0)
+        {
+          partial[id] = -2;
+          return;
+        }
+      }
+
+      if (spills + 1 < bestSpills)
+      {
+        partial[id] = -1;
+        search(remaining - 1, spills + 1);
+      }
+      partial[id] = -2;
+    };
+
+    search(static_cast<int>(ids.size()), 0);
     return best;
   }
 
@@ -171,31 +476,23 @@ namespace
     return true;
   }
 
-  // Split the selected web into two derived webs. Returns false if split is impossible.
-  bool splitWebById(std::vector<Web> &webs, int webId, SplitRecord &record)
+  struct SplitChoice
   {
-    int idx = -1;
-    for (size_t i = 0; i < webs.size(); ++i)
-    {
-      if (webs[i].id == webId)
-      {
-        idx = (int)i;
-        break;
-      }
-    }
-    if (idx < 0)
-      return false;
-
-    const Web original = webs[idx];
-    if (original.ranges.empty())
-      return false;
-
+    int sourceIndex = -1;
     Web left;
     Web right;
-    left.id = original.id;
-    right.id = maxWebId(webs) + 1;
-    left.variable = original.variable;
-    right.variable = original.variable;
+    SplitRecord record;
+    bool colorable = false;
+    int edges = std::numeric_limits<int>::max();
+    int maximumDegree = std::numeric_limits<int>::max();
+  };
+
+  std::vector<std::pair<Web, Web>> enumerateSplitsForWeb(const Web &original,
+                                                         int rightWebId)
+  {
+    std::vector<std::pair<Web, Web>> candidates;
+    if (original.ranges.empty())
+      return candidates;
 
     if (original.ranges.size() >= 2)
     {
@@ -208,64 +505,116 @@ namespace
                   return aLine < bLine;
                 });
 
-      size_t splitIndex = sortedRanges.size() / 2;
-      for (size_t i = 0; i < sortedRanges.size(); ++i)
+      for (size_t splitIndex = 1; splitIndex < sortedRanges.size(); ++splitIndex)
       {
-        if (i < splitIndex)
-          left.ranges.push_back(sortedRanges[i]);
-        else
-          right.ranges.push_back(sortedRanges[i]);
-      }
-      if (right.ranges.empty())
-      {
-        right.ranges.push_back(left.ranges.back());
-        left.ranges.pop_back();
+        Web left;
+        Web right;
+        left.id = original.id;
+        right.id = rightWebId;
+        left.variable = original.variable;
+        right.variable = original.variable;
+
+        for (size_t i = 0; i < sortedRanges.size(); ++i)
+        {
+          if (i < splitIndex)
+            left.ranges.push_back(sortedRanges[i]);
+          else
+            right.ranges.push_back(sortedRanges[i]);
+        }
+
+        candidates.push_back({std::move(left), std::move(right)});
       }
     }
     else
     {
       // Single range: split the sequence of program points in two contiguous pieces.
+      // Markers are copied exactly.  A split boundary is not a real definition/use.
       const LiveRange &r = original.ranges.front();
       if (r.points.size() < 2)
-        return false;
+        return candidates;
 
-      size_t mid = r.points.size() / 2;
-      if (mid == 0 || mid >= r.points.size())
-        return false;
+      for (size_t splitIndex = 1; splitIndex < r.points.size(); ++splitIndex)
+      {
+        LiveRange a;
+        LiveRange b;
+        a.variable = original.variable;
+        b.variable = original.variable;
 
-      LiveRange a;
-      LiveRange b;
-      a.variable = original.variable;
-      b.variable = original.variable;
+        for (size_t i = 0; i < splitIndex; ++i)
+          a.points.push_back(r.points[i]);
+        for (size_t i = splitIndex; i < r.points.size(); ++i)
+          b.points.push_back(r.points[i]);
 
-      for (size_t i = 0; i < mid; ++i)
-        a.points.push_back(r.points[i]);
-      for (size_t i = mid; i < r.points.size(); ++i)
-        b.points.push_back(r.points[i]);
-
-      if (a.points.empty() || b.points.empty())
-        return false;
-
-      // Normalise endpoints to satisfy parser/output conventions.
-      a.points.front().marker = '+';
-      a.points.back().marker = '-';
-      b.points.front().marker = '+';
-      b.points.back().marker = '-';
-
-      left.ranges.push_back(std::move(a));
-      right.ranges.push_back(std::move(b));
+        Web left;
+        Web right;
+        left.id = original.id;
+        right.id = rightWebId;
+        left.variable = original.variable;
+        right.variable = original.variable;
+        left.ranges.push_back(std::move(a));
+        right.ranges.push_back(std::move(b));
+        candidates.push_back({std::move(left), std::move(right)});
+      }
     }
 
-    if (left.ranges.empty() || right.ranges.empty())
-      return false;
+    return candidates;
+  }
 
-    record.sourceWebId = original.id;
-    record.leftWebId = left.id;
-    record.rightWebId = right.id;
+  bool splitChoiceIsBetter(const SplitChoice &candidate,
+                           const SplitChoice &best)
+  {
+    if (best.sourceIndex < 0)
+      return true;
+    if (candidate.colorable != best.colorable)
+      return candidate.colorable;
+    if (candidate.edges != best.edges)
+      return candidate.edges < best.edges;
+    if (candidate.maximumDegree != best.maximumDegree)
+      return candidate.maximumDegree < best.maximumDegree;
+    return candidate.record.sourceWebId < best.record.sourceWebId;
+  }
 
-    webs[idx] = std::move(left);
-    webs.push_back(std::move(right));
-    return true;
+  bool chooseBestSplit(const std::vector<Web> &webs,
+                       int numRegisters,
+                       SplitChoice &best)
+  {
+    const int rightWebId = maxWebId(webs) + 1;
+
+    for (size_t index = 0; index < webs.size(); ++index)
+    {
+      const Web &source = webs[index];
+      auto candidates = enumerateSplitsForWeb(source, rightWebId);
+
+      for (auto &[left, right] : candidates)
+      {
+        if (InterferenceGraph::interferes(left, right))
+          continue;
+
+        std::vector<Web> trial = webs;
+        trial[index] = left;
+        trial.push_back(right);
+
+        Graph<int> trialGraph = InterferenceGraph::buildGraph(trial);
+        std::map<int, int> assignment;
+        const bool colorable = kColorSubgraph(
+            trialGraph, numRegisters, collectWebIds(trial), assignment);
+        const auto adj = buildAdjacency(trialGraph, trial);
+
+        SplitChoice candidate;
+        candidate.sourceIndex = static_cast<int>(index);
+        candidate.left = left;
+        candidate.right = right;
+        candidate.record = {source.id, left.id, right.id};
+        candidate.colorable = colorable;
+        candidate.edges = edgeCount(adj);
+        candidate.maximumDegree = maxDegree(adj);
+
+        if (splitChoiceIsBetter(candidate, best))
+          best = std::move(candidate);
+      }
+    }
+
+    return best.sourceIndex >= 0;
   }
 
 } // namespace
@@ -493,37 +842,13 @@ AllocationResult GraphColoring::splittingColoring(Graph<int> &graph,
 
   for (int splitCount = 0; splitCount < maxSplits; ++splitCount)
   {
-    // Prefer splitting currently spilled webs; tie-break by highest degree.
-    int bestId = -1;
-    int bestDeg = -1;
-
-    for (const auto &w : webs)
-    {
-      bool spilledNow = false;
-      auto it = current.webToRegister.find(w.id);
-      if (it != current.webToRegister.end() && it->second < 0)
-        spilledNow = true;
-
-      if (!spilledNow && bestId >= 0)
-        continue;
-
-      Vertex<int> *v = graph.findVertex(w.id);
-      int deg = v ? (int)v->getAdj().size() : 0;
-
-      if (bestId < 0 || deg > bestDeg)
-      {
-        bestId = w.id;
-        bestDeg = deg;
-      }
-    }
-
-    if (bestId < 0)
+    SplitChoice choice;
+    if (!chooseBestSplit(webs, numRegisters, choice))
       break;
 
-    SplitRecord record;
-    if (!splitWebById(webs, bestId, record))
-      break;
-    splitRecords.push_back(record);
+    webs[static_cast<size_t>(choice.sourceIndex)] = std::move(choice.left);
+    webs.push_back(std::move(choice.right));
+    splitRecords.push_back(choice.record);
 
     graph = InterferenceGraph::buildGraph(webs);
     std::map<int, int> splitAssignment;
@@ -554,68 +879,31 @@ AllocationResult GraphColoring::freeColoring(const Graph<int> &graph,
     assignment[w.id] = -1;
 
   if (numRegisters <= 0)
-    return finalizeResult(webs, assignment, true);
-
-  std::set<int> uncolored = collectWebIds(webs);
-
-  while (!uncolored.empty())
   {
-    int bestId = -1;
-    int bestSat = -1;
-    int bestDeg = -1;
+    AllocationResult res = finalizeResult(webs, assignment, true);
+    for (const auto &w : webs)
+      res.selectedSpills.insert(w.id);
+    return res;
+  }
 
-    for (int id : uncolored)
-    {
-      std::set<int> satColors;
-      int deg = 0;
+  const std::vector<int> ids = sortedWebIds(webs);
+  const auto adj = buildAdjacency(graph, webs);
 
-      Vertex<int> *v = graph.findVertex(id);
-      if (v)
-      {
-        for (const auto *e : v->getAdj())
-        {
-          int nid = e->getDest()->getInfo();
-          ++deg;
-          auto it = assignment.find(nid);
-          if (it != assignment.end() && it->second >= 0)
-            satColors.insert(it->second);
-        }
-      }
-
-      int sat = (int)satColors.size();
-      if (bestId < 0 || sat > bestSat || (sat == bestSat && deg > bestDeg))
-      {
-        bestId = id;
-        bestSat = sat;
-        bestDeg = deg;
-      }
-    }
-
-    std::set<int> used;
-    Vertex<int> *v = graph.findVertex(bestId);
-    if (v)
-    {
-      for (const auto *e : v->getAdj())
-      {
-        int nid = e->getDest()->getInfo();
-        auto it = assignment.find(nid);
-        if (it != assignment.end() && it->second >= 0)
-          used.insert(it->second);
-      }
-    }
-
-    int chosen = -1;
-    for (int c = 0; c < numRegisters; ++c)
-    {
-      if (!used.count(c))
-      {
-        chosen = c;
-        break;
-      }
-    }
-
-    assignment[bestId] = chosen; // if chosen == -1 => spill
-    uncolored.erase(bestId);
+  if (isEdgeless(adj))
+  {
+    for (int id : ids)
+      assignment[id] = 0;
+  }
+  else if (isCompleteGraph(adj))
+  {
+    for (size_t i = 0; i < ids.size(); ++i)
+      assignment[ids[i]] = (static_cast<int>(i) < numRegisters) ? static_cast<int>(i) : -1;
+  }
+  else if (!tryBipartiteColoring(adj, numRegisters, assignment))
+  {
+    assignment = dsaturSpillHeuristic(adj, ids, numRegisters);
+    if (ids.size() <= EXACT_FREE_SEARCH_LIMIT)
+      assignment = exactMinSpillColoring(adj, ids, numRegisters, assignment);
   }
 
   AllocationResult res = finalizeResult(webs, assignment, true);
@@ -626,8 +914,12 @@ AllocationResult GraphColoring::freeColoring(const Graph<int> &graph,
   }
   if (!colorsRespectInterference(graph, res.webToRegister))
   {
-    std::cerr << "Internal warning: freeColoring produced conflicting colors; falling back to basicColoring.\n";
-    return basicColoring(graph, webs, numRegisters);
+    std::cerr << "Internal warning: freeColoring produced conflicting colors; spilling all webs.\n";
+    for (const auto &w : webs)
+      assignment[w.id] = -1;
+    res = finalizeResult(webs, assignment, true);
+    for (const auto &w : webs)
+      res.selectedSpills.insert(w.id);
   }
   return res;
 }

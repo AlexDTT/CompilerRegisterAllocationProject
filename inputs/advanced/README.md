@@ -5,9 +5,9 @@ contains fused webs (`i`, `flag`, `acc`), high-pressure overlap around the middl
 program points, and late short-lived webs that show register reuse. Use it with
 `free4.txt` or `spilling5.txt`.
 
-`ranges/splitting_showcase.txt` is smaller on purpose: it isolates the web
-splitting behavior so the demo can clearly show one split making the graph
-2-colorable.
+`ranges/splitting_showcase.txt` is smaller on purpose: it isolates the corrected
+web-splitting behavior so the demo can clearly show one split making the graph
+2-colorable without fabricating new `+` or `-` markers at the split boundary.
 
 Example commands:
 

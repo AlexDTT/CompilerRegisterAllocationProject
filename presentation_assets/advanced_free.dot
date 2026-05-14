@@ -1,24 +1,24 @@
 graph allocation {
-    graph [bgcolor="transparent", color="#38393b", rankdir=LR, fontname="DejaVu Sans", fontcolor="#d2dbde", labelloc=t, label="Colored Register Allocation"];
+    graph [bgcolor="transparent", color="#38393b", rankdir=LR, fontname="DejaVu Sans", fontcolor="#d2dbde", labelloc=t, label="Colored Register Allocation\n4 register(s), 3 memory web(s)"];
     node [shape=ellipse, style="filled,bold", fontname="DejaVu Sans", fontcolor="#f8f9fa", color="#859399", penwidth=1.8];
     edge [color="#859399", fontcolor="#d2dbde", penwidth=1.3];
 
-    web0 [label="web0\nacc\nr0\n1+,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17-", fillcolor="#1982d2", color="#d2dbde", shape=ellipse, penwidth=1.8];
-    web1 [label="web1\narrVal\nr2\n8+,9,10,11,12,13,14-", fillcolor="#f3a600", color="#d2dbde", shape=ellipse, penwidth=1.8];
-    web2 [label="web2\nbridge\nr3\n12+,13,18-", fillcolor="#d67c3b", color="#d2dbde", shape=ellipse, penwidth=1.8];
-    web3 [label="web3\ncallArg\nM\n10+,11,12,13-", fillcolor="#38393b", color="#859399", shape=box, penwidth=1.8];
-    web4 [label="web4\ncallRet\nM\n13+,14,15,16-", fillcolor="#38393b", color="#859399", shape=box, penwidth=1.8];
+    web0 [label="web0\nacc\nM\n1+,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17-", fillcolor="#38393b", color="#859399", shape=box, penwidth=1.8];
+    web1 [label="web1\narrVal\nr1\n8+,9,10,11,12,13,14-", fillcolor="#44b86f", color="#d2dbde", shape=ellipse, penwidth=1.8];
+    web2 [label="web2\nbridge\nr2\n12+,13,18-", fillcolor="#f3a600", color="#d2dbde", shape=ellipse, penwidth=1.8];
+    web3 [label="web3\ncallArg\nr3\n10+,11,12,13-", fillcolor="#d67c3b", color="#d2dbde", shape=ellipse, penwidth=1.8];
+    web4 [label="web4\ncallRet\nr3\n13+,14,15,16-", fillcolor="#d67c3b", color="#d2dbde", shape=ellipse, penwidth=1.8];
     web5 [label="web5\nflag\nM\n3+,4,5,6,9,10,11,12,13-", fillcolor="#38393b", color="#859399", shape=box, penwidth=1.8];
-    web6 [label="web6\ni\nr1\n2+,3,4,5,6,7,8,9,10,11,12,13,14-", fillcolor="#44b86f", color="#d2dbde", shape=ellipse, penwidth=1.8];
-    web7 [label="web7\nlateA\nr1\n14+,15,16,17,18-", fillcolor="#44b86f", color="#d2dbde", shape=ellipse, penwidth=1.8];
-    web8 [label="web8\nlateB\nr3\n14+,15,16,17-", fillcolor="#d67c3b", color="#d2dbde", shape=ellipse, penwidth=1.8];
-    web9 [label="web9\nlateC\nr2\n15+,16,17,18-", fillcolor="#f3a600", color="#d2dbde", shape=ellipse, penwidth=1.8];
-    web10 [label="web10\nlimit\nM\n1+,2,3,4,5,6,7,8,9-", fillcolor="#38393b", color="#859399", shape=box, penwidth=1.8];
-    web11 [label="web11\nreload\nr1\n18+,19,20-", fillcolor="#44b86f", color="#d2dbde", shape=ellipse, penwidth=1.8];
-    web12 [label="web12\nresult\nr0\n17+,18,19,20-", fillcolor="#1982d2", color="#d2dbde", shape=ellipse, penwidth=1.8];
-    web13 [label="web13\ntmpA\nr2\n4+,5,6,7,8-", fillcolor="#f3a600", color="#d2dbde", shape=ellipse, penwidth=1.8];
+    web6 [label="web6\ni\nr0\n2+,3,4,5,6,7,8,9,10,11,12,13,14-", fillcolor="#1982d2", color="#d2dbde", shape=ellipse, penwidth=1.8];
+    web7 [label="web7\nlateA\nr0\n14+,15,16,17,18-", fillcolor="#1982d2", color="#d2dbde", shape=ellipse, penwidth=1.8];
+    web8 [label="web8\nlateB\nr2\n14+,15,16,17-", fillcolor="#f3a600", color="#d2dbde", shape=ellipse, penwidth=1.8];
+    web9 [label="web9\nlateC\nr1\n15+,16,17,18-", fillcolor="#44b86f", color="#d2dbde", shape=ellipse, penwidth=1.8];
+    web10 [label="web10\nlimit\nr3\n1+,2,3,4,5,6,7,8,9-", fillcolor="#d67c3b", color="#d2dbde", shape=ellipse, penwidth=1.8];
+    web11 [label="web11\nreload\nr0\n18+,19,20-", fillcolor="#1982d2", color="#d2dbde", shape=ellipse, penwidth=1.8];
+    web12 [label="web12\nresult\nr3\n17+,18,19,20-", fillcolor="#d67c3b", color="#d2dbde", shape=ellipse, penwidth=1.8];
+    web13 [label="web13\ntmpA\nr1\n4+,5,6,7,8-", fillcolor="#44b86f", color="#d2dbde", shape=ellipse, penwidth=1.8];
     web14 [label="web14\ntmpB\nM\n5+,6,7,8,9,10-", fillcolor="#38393b", color="#859399", shape=box, penwidth=1.8];
-    web15 [label="web15\ntmpC\nr3\n6+,7,8,9,10,11-", fillcolor="#d67c3b", color="#d2dbde", shape=ellipse, penwidth=1.8];
+    web15 [label="web15\ntmpC\nr2\n6+,7,8,9,10,11-", fillcolor="#f3a600", color="#d2dbde", shape=ellipse, penwidth=1.8];
     web0 -- web1;
     web0 -- web2;
     web0 -- web3;
@@ -82,10 +82,10 @@ graph allocation {
         color="#38393b";
         style="rounded,filled";
         fillcolor="#252628";
-        key_reg [label="register color", fillcolor="#1982d2", shape=ellipse];
+        key_reg [label="same fill = same register", fillcolor="#1982d2", shape=ellipse];
         key_mem [label="M = memory", fillcolor="#38393b", shape=box, color="#859399"];
-        key_split [label="split-derived web", fillcolor="#252628", color="#ff8800", penwidth=3.0];
+        key_split [label="orange border = split-derived", fillcolor="#252628", color="#ff8800", penwidth=3.0];
     }
 
-    note [shape=note, fillcolor="#252628", color="#ff8800", fontcolor="#d2dbde", label="spills: web3, web4, web5, web10, web14"];
+    note [shape=note, fillcolor="#252628", color="#ff8800", fontcolor="#d2dbde", label="spills: web0, web5, web14"];
 }

@@ -148,8 +148,8 @@ Classes</h2></td></tr>
 <p>Four algorithm variants are provided:</p><ul>
 <li><b>Basic</b>: simplify/select greedy graph coloring. When the graph cannot be colored with the configured number of registers without recovery actions, the allocation is reported as infeasible.</li>
 <li><b>Spilling</b>: Greedy coloring with selective web spilling (committing webs to memory) to reduce the graph's chromatic number.</li>
-<li><b>Splitting</b>: Greedy coloring with selective web splitting (breaking webs into sub-webs with fewer interferences) to enable coloring.</li>
-<li><b>Free</b>: custom pressure-aware coloring that prioritises highly constrained webs and safely spills webs that cannot receive a compatible register. </li>
+<li><b>Splitting</b>: selective web splitting that preserves the original live-range markers and tries the split points that most reduce interference.</li>
+<li><b>Free</b>: custom hybrid coloring with graph-class fast paths, DSatur ordering, and a bounded exact branch-and-bound pass for small/medium graphs. </li>
 </ul>
 
 <p class="definition">Definition in file <a class="el" href="GraphColoring_8h_source.html">GraphColoring.h</a>.</p>

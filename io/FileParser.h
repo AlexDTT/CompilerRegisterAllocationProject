@@ -36,6 +36,7 @@ public:
    * @endcode
    * A '+' suffix on a line number marks the start (definition); '-' marks the end (last use).
    * Ranges without '+'/'-' on their endpoints are allowed (intersection-only ranges).
+   * Malformed point tokens and duplicate line numbers within one range are rejected.
    * Validation rule: for each variable, at least one '+' and at least one '-' must
    * appear across all ranges of that variable.
    *

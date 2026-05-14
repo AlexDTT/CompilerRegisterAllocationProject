@@ -22,7 +22,7 @@ The tool includes four allocation modes:
 | `basic` | Pure graph coloring | Simplify-and-select coloring without user-authorized recovery actions. |
 | `spilling, K` | Coloring with bounded spilling | Removes up to `K` webs from the graph and assigns them to memory. |
 | `splitting, K` | Coloring with bounded splitting | Splits up to `K` webs into derived webs, rebuilds the graph, and retries coloring. |
-| `free` | Custom heuristic | Colors the most constrained webs first and spills only when no compatible register remains. |
+| `free` | Custom allocator | Uses graph-class fast paths, DSatur ordering, and bounded branch-and-bound to reduce spills. |
 
 ## Group T9G2 Members
 This project was developed by Group T9G2:
@@ -104,6 +104,10 @@ by replacing the output extension with `.dot`. For example, `allocation.txt`
 produces `allocation.dot`. Nodes are colored by register, memory-assigned webs
 are gray boxes, and split-derived webs receive highlighted borders.
 
+Splitting preserves the original live-range markers exactly. If a range such as
+`1+,2,3,4-` is split into `1+,2` and `3,4-`, the second derived web is not forced
+to become `3+,4-`; the split boundary is not a new definition or last use.
+
 ## System Architecture
 The application pipeline follows the live-range to web to interference-graph workflow:
 
@@ -167,8 +171,8 @@ The application pipeline follows the live-range to web to interference-graph wor
 | Build interference graph | `O(W^2 * P + E * W)` |
 | Basic coloring | `O(W * (W^2 + E))` |
 | Spilling allocator | `O((S + 1) * W * (W^2 + E))` |
-| Splitting allocator | `O((S + 1) * (W^2 * P + E * W + W * (W^2 + E)))` |
-| Free allocator | `O(W * (W^2 + E))` |
+| Splitting allocator | `O(S * Q * (W^2 * P + E * W + W * (W^2 + E)))` |
+| Free allocator | `O(W^2 + E log W)` heuristic; guarded exact pass `O((K + 1)^W * (W + E))` |
 
 Where:
 - `L` is the number of input lines,
@@ -178,11 +182,16 @@ Where:
 - `W` is the number of webs,
 - `E` is the number of directed adjacency entries in the interference graph,
 - `S` is the configured maximum number of spill/split recovery actions.
+- `Q` is the number of candidate split positions evaluated in one split iteration.
 
 The coloring bounds include the current vector-backed course `Graph<int>` implementation,
 where `findVertex` is `O(W)`. Replacing the vertex store with an indexed map would reduce
 several lookup-driven factors, but the project intentionally keeps the provided graph as
 the primary representation.
+
+The `free` allocator only runs the exponential branch-and-bound refinement below a
+fixed small/medium graph-size threshold. Larger inputs keep the polynomial DSatur
+result, which is more appropriate for an interactive demo tool.
 
 ## Project Requirements Coverage
 
@@ -194,7 +203,7 @@ the primary representation.
 | T2.1 basic allocation | Implemented. |
 | T2.2 bounded spilling | Implemented. |
 | T2.3 bounded splitting | Implemented. |
-| T2.4 custom allocation | Implemented with pressure-aware web selection and safe spill fallback. |
+| T2.4 custom allocation | Implemented with graph-class fast paths, DSatur ordering, and bounded exact spill minimization. |
 | T3.1 demo support | Interactive menu plus `Presentation.pdf`, graph assets, and editable `Presentation.typ` source. |
 | Testing | Unit and integration tests are available through `make test`. |
 
@@ -204,7 +213,7 @@ The repository includes:
 - six baseline datasets mirrored under `inputs/basic/`;
 - advanced demo inputs under `inputs/advanced/`, including a dense custom/free
   case, a bounded-spilling case, and a focused splitting showcase;
-- white-box unit tests for parsing, graph construction, spilling, splitting, and output generation;
+- white-box unit tests for parsing, graph construction, spilling, marker-preserving splitting, free-mode coloring, and output generation;
 - deterministic integration tests that compare batch-mode outputs against expected files.
 
 Run everything with:

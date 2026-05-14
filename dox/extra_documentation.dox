@@ -155,7 +155,7 @@ allocatable after spilling one web:
 
 <div class="interactive_dotgraph">
 
-\dotfile dox/example_spilling.dot
+\dotfile dox/example_spilling.dot "Triangle graph: one web must be spilled for K = 2"
 
 </div>
 
@@ -186,10 +186,23 @@ Two split strategies are used:
 - if the original web already contains multiple ranges, split those ranges into
   two ordered groups;
 - if it contains only one range, split the sequence of program points into two
-  contiguous derived ranges and normalize their endpoints with `+` and `-`.
+  contiguous derived ranges.
 
-This approach is deterministic and directly targets the source of excessive
-interference by slicing a long-lived web into shorter derived webs.
+The split operation deliberately preserves the original markers. A boundary
+created by the allocator is not a new definition and is not a new last use. For
+example, splitting `1+,2,3,4-` may produce `1+,2` and `3,4-`, never `1+,2-` and
+`3+,4-`.
+
+Candidates whose two derived webs would still interfere with each other are
+discarded, because such a split would not represent two non-overlapping live
+pieces of the value.
+
+Candidate selection is also more deliberate than "split the first failed web":
+for every legal split position, the allocator rebuilds the graph and tests
+K-colorability. It chooses a split that makes the graph colorable if one exists;
+otherwise it chooses the split that leaves the fewest interference edges, then
+the smallest maximum degree. This keeps the heuristic understandable while still
+targeting the pressure that actually blocks coloring.
 
 The output metadata records every performed split as
 `split: webSource -> webLeft,webRight`, which identifies the selected source
@@ -197,12 +210,12 @@ web and the derived webs that define the save/restore boundaries.
 
 @subsection ext_t4_split_example Example
 
-The following case starts as a 3-clique. After splitting `web0` into two derived
-webs, the resulting graph becomes 2-colorable:
+The following case starts as a 3-clique. `web0` has an early region and a late
+region; after splitting it, the resulting graph becomes a 2-colorable path:
 
 <div class="interactive_dotgraph">
 
-\dotfile dox/example_splitting.dot
+\dotfile dox/example_splitting.dot "One split reduces the chromatic requirement without inventing markers"
 
 </div>
 
@@ -210,9 +223,10 @@ webs, the resulting graph becomes 2-colorable:
 
 | Step | Complexity |
 |------|-----------|
-| Split candidate selection | `O(W^2 + E)` |
-| Graph rebuild after each split | `O(W^2 * P + E * W)` |
-| Full allocator with at most `K` splits | `O((K + 1) * (W^2 * P + E * W + W * (W^2 + E)))` |
+| Candidate evaluation in one split iteration | `O(Q * (W^2 * P + E * W + W * (W^2 + E)))` |
+| Full allocator with at most `K` splits | `O(K * Q * (W^2 * P + E * W + W * (W^2 + E)))` |
+
+Here `Q` is the number of legal split positions currently available.
 
 ---
 
@@ -220,31 +234,33 @@ webs, the resulting graph becomes 2-colorable:
 
 @subsection ext_t5_free_approach Approach
 
-The custom mode uses pressure-aware greedy coloring:
+The custom mode is a hybrid allocator:
 
-- for each uncolored web, count how many distinct register colors already appear
-  in its colored neighbors;
-- select the web with the highest such count, because it has the fewest safe
-  choices left;
-- break ties using the highest graph degree, because that web has more total
-  interference constraints;
-- assign the lowest-numbered compatible register;
-- if every register is blocked by a colored neighbor, assign the web to memory.
+- edgeless graphs are assigned one register, because no webs interfere;
+- complete graphs color at most `K` webs and spill the unavoidable remainder;
+- bipartite graphs are recognized and 2-colored by BFS when `K >= 2`;
+- all other graphs use DSatur ordering: choose the uncolored web with the largest
+  number of distinct neighbor colors, breaking ties by degree;
+- for small/medium graphs, a branch-and-bound refinement searches for a coloring
+  with fewer spills than the DSatur result.
 
-The rationale is to spend registers first on the webs under the strongest
-current pressure. Less constrained webs are delayed because they still have more
-available choices. This keeps the invariant that no two interfering colored webs
-share a register, while still producing a feasible partial allocation by using
-memory only for webs that cannot be colored safely.
+This keeps the technique recognizable from standard graph coloring material:
+BFS for bipartite graphs, direct handling for cliques, DSatur for practical
+greedy coloring, and branch-and-bound for bounded exact improvement. The
+invariant remains simple: no two interfering colored webs may share a register;
+memory is used only for webs left uncolored by the selected strategy.
 
 @subsection ext_t5_free_complexity Complexity
 
 | Step | Complexity |
 |------|-----------|
-| Pressure-aware selection and coloring | `O(W * (W^2 + E))` |
+| Graph-class checks and adjacency extraction | `O(W^2 + E log W)` |
+| DSatur fallback | `O(W^2 + E log W)` |
+| Guarded branch-and-bound refinement | `O((K + 1)^W * (W + E))` worst case |
 
-Each selection round scans the remaining vertices and their adjacency lists, and
-each vertex lookup is linear in `W` in the current graph structure.
+The exact refinement is guarded by a fixed graph-size threshold. Larger graphs
+return the polynomial DSatur result so the application remains responsive during
+the demo.
 
 @section ext_t5_examples Additional Graph Examples
 
@@ -256,7 +272,7 @@ line because of a definition, the two webs can reuse the same register.
 
 <div class="interactive_dotgraph">
 
-\dotfile dox/example_noninterference_chain.dot
+\dotfile dox/example_noninterference_chain.dot "Definition at last-use line allows register reuse"
 
 </div>
 
@@ -268,7 +284,7 @@ is connected, so all ranges belong to one web.
 
 <div class="interactive_dotgraph">
 
-\dotfile dox/example_web_fusion.dot
+\dotfile dox/example_web_fusion.dot "Transitive fusion of overlapping live ranges"
 
 </div>
 

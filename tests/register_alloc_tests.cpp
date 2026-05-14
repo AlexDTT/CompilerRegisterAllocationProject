@@ -205,6 +205,21 @@ static void test_parseRanges_requires_plus_and_minus()
   std::remove(path.c_str());
 }
 
+static void test_parseRanges_rejects_malformed_points()
+{
+  const fs::path path = tempPath("ra_ranges_malformed.txt");
+  {
+    std::ofstream out(path);
+    out << "a: 1+,2x,3-\n";
+    out << "b: 1+,2,2,3-\n";
+  }
+
+  std::map<std::string, std::vector<LiveRange>> ranges;
+  ScopedStreamRedirect suppress(std::cerr);
+  EXPECT_TRUE(!FileParser::parseRanges(path.string(), ranges));
+  std::remove(path.c_str());
+}
+
 static void test_buildWebs_is_deterministic_and_merges_transitively()
 {
   auto raw = makeRanges1LikeInput();
@@ -281,9 +296,9 @@ static void test_spillingColoring_succeeds_with_bounded_spill()
 
 static void test_splittingColoring_succeeds_after_one_split()
 {
-  Web a{0, "a", {makeLR("a", {{1, '+'}, {2, '\0'}, {3, '\0'}, {4, '-'}})}};
-  Web b{1, "b", {makeLR("b", {{1, '+'}, {2, '\0'}, {3, '-'}})}};
-  Web c{2, "c", {makeLR("c", {{2, '+'}, {3, '\0'}, {4, '-'}})}};
+  Web a{0, "a", {makeLR("a", {{1, '+'}, {2, '\0'}, {5, '\0'}, {6, '-'}})}};
+  Web b{1, "b", {makeLR("b", {{1, '+'}, {2, '\0'}, {3, '\0'}, {4, '-'}})}};
+  Web c{2, "c", {makeLR("c", {{3, '+'}, {4, '\0'}, {5, '\0'}, {6, '-'}})}};
   std::vector<Web> webs = {a, b, c};
   Graph<int> graph = InterferenceGraph::buildGraph(webs);
 
@@ -291,6 +306,8 @@ static void test_splittingColoring_succeeds_after_one_split()
   EXPECT_TRUE(result.feasible);
   EXPECT_EQ((int)webs.size(), 4);
   EXPECT_EQ(result.spilledWebs, 0);
+  EXPECT_EQ(webs[0].ranges[0].points.back().marker, '\0');
+  EXPECT_EQ(webs[3].ranges[0].points.front().marker, '\0');
 
   Graph<int> rebuilt = InterferenceGraph::buildGraph(webs);
   EXPECT_TRUE(colorsRespectInterference(rebuilt, result.webToRegister));
@@ -307,6 +324,29 @@ static void test_freeColoring_returns_valid_allocation_with_spill()
   AllocationResult result = GraphColoring::freeColoring(graph, webs, 2);
   EXPECT_TRUE(result.feasible);
   EXPECT_EQ(result.spilledWebs, 1);
+  EXPECT_TRUE(colorsRespectInterference(graph, result.webToRegister));
+}
+
+static void test_freeColoring_recognizes_bipartite_graph()
+{
+  std::vector<Web> webs;
+  for (int i = 0; i < 6; ++i)
+  {
+    std::string name = "v" + std::to_string(i);
+    webs.push_back(Web{i, name, {makeLR(name, {{1, '+'}, {2, '-'}})}});
+  }
+
+  Graph<int> graph;
+  for (int i = 0; i < 6; ++i)
+    graph.addVertex(i);
+  for (int left = 0; left < 3; ++left)
+    for (int right = 3; right < 6; ++right)
+      graph.addBidirectionalEdge(left, right, 1.0);
+
+  AllocationResult result = GraphColoring::freeColoring(graph, webs, 2);
+  EXPECT_TRUE(result.feasible);
+  EXPECT_EQ(result.spilledWebs, 0);
+  EXPECT_EQ(result.registersUsed, 2);
   EXPECT_TRUE(colorsRespectInterference(graph, result.webToRegister));
 }
 
@@ -377,6 +417,7 @@ int main()
   test_parseConfig_variants();
   test_parseRanges_supports_intersection_only_lines();
   test_parseRanges_requires_plus_and_minus();
+  test_parseRanges_rejects_malformed_points();
   test_buildWebs_is_deterministic_and_merges_transitively();
   test_interference_definition_meets_last_use_is_not_edge();
   test_outputWriter_aggregates_ranges_per_web();
@@ -384,6 +425,7 @@ int main()
   test_spillingColoring_succeeds_with_bounded_spill();
   test_splittingColoring_succeeds_after_one_split();
   test_freeColoring_returns_valid_allocation_with_spill();
+  test_freeColoring_recognizes_bipartite_graph();
   test_allocationLogic_basic_infeasible_forces_all_memory();
   test_allocationLogic_spilling_preserves_partial_memory_assignment();
   test_allocationLogic_exports_colored_dot();

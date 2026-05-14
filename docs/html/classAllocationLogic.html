@@ -173,71 +173,71 @@ Static Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Estimated lower bound on the chromatic number. \par Complexity:<br  />
  O(W^3 + W * E) in the worst case with the current vector-backed <a class="el" href="classGraph.html">Graph&lt;int&gt;</a>, where W is the number of webs and E is the number of directed adjacency entries. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="AllocationLogic_8cpp_source.html#l00323">323</a> of file <a class="el" href="AllocationLogic_8cpp_source.html">AllocationLogic.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  325</span>{</div>
-<div class="line"><span class="lineno">  326</span>  <span class="comment">// Greedy clique lower bound: start with the highest-degree vertex and greedily</span></div>
-<div class="line"><span class="lineno">  327</span>  <span class="comment">// extend the clique by adding neighbors that are adjacent to all current members.</span></div>
-<div class="line"><span class="lineno">  328</span>  <span class="keywordflow">if</span> (webs.empty())</div>
-<div class="line"><span class="lineno">  329</span>    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  330</span> </div>
-<div class="line"><span class="lineno">  331</span>  <span class="comment">// Find the web with the highest degree as seed.</span></div>
-<div class="line"><span class="lineno">  332</span>  <span class="keywordtype">int</span> seedId = webs.front().id;</div>
-<div class="line"><span class="lineno">  333</span>  <span class="keywordtype">int</span> maxDeg = -1;</div>
-<div class="line"><span class="lineno">  334</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;web : webs)</div>
-<div class="line"><span class="lineno">  335</span>  {</div>
-<div class="line"><span class="lineno">  336</span>    Vertex&lt;int&gt; *v = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(web.id);</div>
-<div class="line"><span class="lineno">  337</span>    <span class="keywordflow">if</span> (!v)</div>
-<div class="line"><span class="lineno">  338</span>      <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  339</span>    <span class="keywordtype">int</span> deg = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(v-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>().size());</div>
-<div class="line"><span class="lineno">  340</span>    <span class="keywordflow">if</span> (deg &gt; maxDeg)</div>
-<div class="line"><span class="lineno">  341</span>    {</div>
-<div class="line"><span class="lineno">  342</span>      maxDeg = deg;</div>
-<div class="line"><span class="lineno">  343</span>      seedId = web.id;</div>
-<div class="line"><span class="lineno">  344</span>    }</div>
-<div class="line"><span class="lineno">  345</span>  }</div>
-<div class="line"><span class="lineno">  346</span> </div>
-<div class="line"><span class="lineno">  347</span>  std::vector&lt;int&gt; clique = {seedId};</div>
-<div class="line"><span class="lineno">  348</span> </div>
-<div class="line"><span class="lineno">  349</span>  <span class="comment">// Candidate set: neighbors of the seed.</span></div>
-<div class="line"><span class="lineno">  350</span>  Vertex&lt;int&gt; *sv = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(seedId);</div>
-<div class="line"><span class="lineno">  351</span>  <span class="keywordflow">if</span> (!sv)</div>
-<div class="line"><span class="lineno">  352</span>    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><span class="lineno">  353</span> </div>
-<div class="line"><span class="lineno">  354</span>  std::vector&lt;int&gt; candidates;</div>
-<div class="line"><span class="lineno">  355</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *e : sv-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>())</div>
-<div class="line"><span class="lineno">  356</span>    candidates.push_back(e-&gt;getDest()-&gt;getInfo());</div>
+<p class="definition">Definition at line <a class="el" href="AllocationLogic_8cpp_source.html#l00327">327</a> of file <a class="el" href="AllocationLogic_8cpp_source.html">AllocationLogic.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  329</span>{</div>
+<div class="line"><span class="lineno">  330</span>  <span class="comment">// Greedy clique lower bound: start with the highest-degree vertex and greedily</span></div>
+<div class="line"><span class="lineno">  331</span>  <span class="comment">// extend the clique by adding neighbors that are adjacent to all current members.</span></div>
+<div class="line"><span class="lineno">  332</span>  <span class="keywordflow">if</span> (webs.empty())</div>
+<div class="line"><span class="lineno">  333</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">  334</span> </div>
+<div class="line"><span class="lineno">  335</span>  <span class="comment">// Find the web with the highest degree as seed.</span></div>
+<div class="line"><span class="lineno">  336</span>  <span class="keywordtype">int</span> seedId = webs.front().id;</div>
+<div class="line"><span class="lineno">  337</span>  <span class="keywordtype">int</span> maxDeg = -1;</div>
+<div class="line"><span class="lineno">  338</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;web : webs)</div>
+<div class="line"><span class="lineno">  339</span>  {</div>
+<div class="line"><span class="lineno">  340</span>    Vertex&lt;int&gt; *v = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(web.id);</div>
+<div class="line"><span class="lineno">  341</span>    <span class="keywordflow">if</span> (!v)</div>
+<div class="line"><span class="lineno">  342</span>      <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  343</span>    <span class="keywordtype">int</span> deg = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(v-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>().size());</div>
+<div class="line"><span class="lineno">  344</span>    <span class="keywordflow">if</span> (deg &gt; maxDeg)</div>
+<div class="line"><span class="lineno">  345</span>    {</div>
+<div class="line"><span class="lineno">  346</span>      maxDeg = deg;</div>
+<div class="line"><span class="lineno">  347</span>      seedId = web.id;</div>
+<div class="line"><span class="lineno">  348</span>    }</div>
+<div class="line"><span class="lineno">  349</span>  }</div>
+<div class="line"><span class="lineno">  350</span> </div>
+<div class="line"><span class="lineno">  351</span>  std::vector&lt;int&gt; clique = {seedId};</div>
+<div class="line"><span class="lineno">  352</span> </div>
+<div class="line"><span class="lineno">  353</span>  <span class="comment">// Candidate set: neighbors of the seed.</span></div>
+<div class="line"><span class="lineno">  354</span>  Vertex&lt;int&gt; *sv = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(seedId);</div>
+<div class="line"><span class="lineno">  355</span>  <span class="keywordflow">if</span> (!sv)</div>
+<div class="line"><span class="lineno">  356</span>    <span class="keywordflow">return</span> 1;</div>
 <div class="line"><span class="lineno">  357</span> </div>
-<div class="line"><span class="lineno">  358</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c : candidates)</div>
-<div class="line"><span class="lineno">  359</span>  {</div>
-<div class="line"><span class="lineno">  360</span>    <span class="comment">// Check that c is adjacent to all current clique members.</span></div>
-<div class="line"><span class="lineno">  361</span>    Vertex&lt;int&gt; *cv = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(c);</div>
-<div class="line"><span class="lineno">  362</span>    <span class="keywordflow">if</span> (!cv)</div>
-<div class="line"><span class="lineno">  363</span>      <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  364</span> </div>
-<div class="line"><span class="lineno">  365</span>    <span class="keywordtype">bool</span> adjToAll = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  366</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> m : clique)</div>
-<div class="line"><span class="lineno">  367</span>    {</div>
-<div class="line"><span class="lineno">  368</span>      <span class="keywordtype">bool</span> found = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  369</span>      <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *e : cv-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>())</div>
-<div class="line"><span class="lineno">  370</span>      {</div>
-<div class="line"><span class="lineno">  371</span>        <span class="keywordflow">if</span> (e-&gt;getDest()-&gt;getInfo() == m)</div>
-<div class="line"><span class="lineno">  372</span>        {</div>
-<div class="line"><span class="lineno">  373</span>          found = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  374</span>          <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  375</span>        }</div>
-<div class="line"><span class="lineno">  376</span>      }</div>
-<div class="line"><span class="lineno">  377</span>      <span class="keywordflow">if</span> (!found)</div>
-<div class="line"><span class="lineno">  378</span>      {</div>
-<div class="line"><span class="lineno">  379</span>        adjToAll = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  380</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  381</span>      }</div>
-<div class="line"><span class="lineno">  382</span>    }</div>
-<div class="line"><span class="lineno">  383</span>    <span class="keywordflow">if</span> (adjToAll)</div>
-<div class="line"><span class="lineno">  384</span>      clique.push_back(c);</div>
-<div class="line"><span class="lineno">  385</span>  }</div>
-<div class="line"><span class="lineno">  386</span> </div>
-<div class="line"><span class="lineno">  387</span>  <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(clique.size());</div>
-<div class="line"><span class="lineno">  388</span>}</div>
+<div class="line"><span class="lineno">  358</span>  std::vector&lt;int&gt; candidates;</div>
+<div class="line"><span class="lineno">  359</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *e : sv-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>())</div>
+<div class="line"><span class="lineno">  360</span>    candidates.push_back(e-&gt;getDest()-&gt;getInfo());</div>
+<div class="line"><span class="lineno">  361</span> </div>
+<div class="line"><span class="lineno">  362</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c : candidates)</div>
+<div class="line"><span class="lineno">  363</span>  {</div>
+<div class="line"><span class="lineno">  364</span>    <span class="comment">// Check that c is adjacent to all current clique members.</span></div>
+<div class="line"><span class="lineno">  365</span>    Vertex&lt;int&gt; *cv = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(c);</div>
+<div class="line"><span class="lineno">  366</span>    <span class="keywordflow">if</span> (!cv)</div>
+<div class="line"><span class="lineno">  367</span>      <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  368</span> </div>
+<div class="line"><span class="lineno">  369</span>    <span class="keywordtype">bool</span> adjToAll = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  370</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> m : clique)</div>
+<div class="line"><span class="lineno">  371</span>    {</div>
+<div class="line"><span class="lineno">  372</span>      <span class="keywordtype">bool</span> found = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  373</span>      <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *e : cv-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>())</div>
+<div class="line"><span class="lineno">  374</span>      {</div>
+<div class="line"><span class="lineno">  375</span>        <span class="keywordflow">if</span> (e-&gt;getDest()-&gt;getInfo() == m)</div>
+<div class="line"><span class="lineno">  376</span>        {</div>
+<div class="line"><span class="lineno">  377</span>          found = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  378</span>          <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  379</span>        }</div>
+<div class="line"><span class="lineno">  380</span>      }</div>
+<div class="line"><span class="lineno">  381</span>      <span class="keywordflow">if</span> (!found)</div>
+<div class="line"><span class="lineno">  382</span>      {</div>
+<div class="line"><span class="lineno">  383</span>        adjToAll = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  384</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  385</span>      }</div>
+<div class="line"><span class="lineno">  386</span>    }</div>
+<div class="line"><span class="lineno">  387</span>    <span class="keywordflow">if</span> (adjToAll)</div>
+<div class="line"><span class="lineno">  388</span>      clique.push_back(c);</div>
+<div class="line"><span class="lineno">  389</span>  }</div>
+<div class="line"><span class="lineno">  390</span> </div>
+<div class="line"><span class="lineno">  391</span>  <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(clique.size());</div>
+<div class="line"><span class="lineno">  392</span>}</div>
 <div class="ttc" id="aclassGraph_html_a8b7b7465fbfd562e2a469f90a437ab75"><div class="ttname"><a href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">Graph::findVertex</a></div><div class="ttdeci">Vertex&lt; T &gt; * findVertex(const T &amp;in) const</div><div class="ttdoc">Finds a vertex with a given content.</div><div class="ttdef"><b>Definition</b> <a href="Graph_8h_source.html#l00498">Graph.h:498</a></div></div>
 <div class="ttc" id="aclassVertex_html_a0010a7d0b7db1bb81dd2ebb1ffae650a"><div class="ttname"><a href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">Vertex::getAdj</a></div><div class="ttdeci">std::vector&lt; Edge&lt; T &gt; * &gt; getAdj() const</div><div class="ttdef"><b>Definition</b> <a href="Graph_8h_source.html#l00325">Graph.h:325</a></div></div>
 </div><!-- fragment -->
@@ -310,101 +310,107 @@ Static Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  222</span>    splitDerived.insert(record.rightWebId);</div>
 <div class="line"><span class="lineno">  223</span>  }</div>
 <div class="line"><span class="lineno">  224</span> </div>
-<div class="line"><span class="lineno">  225</span>  out &lt;&lt; <span class="stringliteral">&quot;graph allocation {\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  226</span>  out &lt;&lt; <span class="stringliteral">&quot;    graph [bgcolor=\&quot;transparent\&quot;, color=\&quot;#38393b\&quot;, rankdir=LR, &quot;</span></div>
-<div class="line"><span class="lineno">  227</span>         <span class="stringliteral">&quot;fontname=\&quot;DejaVu Sans\&quot;, fontcolor=\&quot;#d2dbde\&quot;, labelloc=t, &quot;</span></div>
-<div class="line"><span class="lineno">  228</span>         <span class="stringliteral">&quot;label=\&quot;Colored Register Allocation\&quot;];\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  229</span>  out &lt;&lt; <span class="stringliteral">&quot;    node [shape=ellipse, style=\&quot;filled,bold\&quot;, fontname=\&quot;DejaVu Sans\&quot;, &quot;</span></div>
-<div class="line"><span class="lineno">  230</span>         <span class="stringliteral">&quot;fontcolor=\&quot;#f8f9fa\&quot;, color=\&quot;#859399\&quot;, penwidth=1.8];\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  231</span>  out &lt;&lt; <span class="stringliteral">&quot;    edge [color=\&quot;#859399\&quot;, fontcolor=\&quot;#d2dbde\&quot;, penwidth=1.3];\n\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  232</span> </div>
-<div class="line"><span class="lineno">  233</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;web : webs)</div>
-<div class="line"><span class="lineno">  234</span>  {</div>
-<div class="line"><span class="lineno">  235</span>    <span class="keyword">auto</span> it = result.<a class="code hl_variable" href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">webToRegister</a>.find(web.id);</div>
-<div class="line"><span class="lineno">  236</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> reg = (it == result.<a class="code hl_variable" href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">webToRegister</a>.end()) ? -1 : it-&gt;second;</div>
-<div class="line"><span class="lineno">  237</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> memory = reg &lt; 0;</div>
-<div class="line"><span class="lineno">  238</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> split = splitDerived.count(web.id) &gt; 0;</div>
-<div class="line"><span class="lineno">  239</span> </div>
-<div class="line"><span class="lineno">  240</span>    std::string label = <span class="stringliteral">&quot;web&quot;</span> + std::to_string(web.id) + <span class="stringliteral">&quot;\\n&quot;</span> +</div>
-<div class="line"><span class="lineno">  241</span>                        dotEscape(web.variable) + <span class="stringliteral">&quot;\\n&quot;</span> +</div>
-<div class="line"><span class="lineno">  242</span>                        (memory ? <span class="stringliteral">&quot;M&quot;</span> : <span class="stringliteral">&quot;r&quot;</span> + std::to_string(reg)) + <span class="stringliteral">&quot;\\n&quot;</span> +</div>
-<div class="line"><span class="lineno">  243</span>                        dotEscape(formatWebLinesForLabel(web));</div>
-<div class="line"><span class="lineno">  244</span> </div>
-<div class="line"><span class="lineno">  245</span>    out &lt;&lt; <span class="stringliteral">&quot;    web&quot;</span> &lt;&lt; web.id</div>
-<div class="line"><span class="lineno">  246</span>        &lt;&lt; <span class="stringliteral">&quot; [label=\&quot;&quot;</span> &lt;&lt; label &lt;&lt; <span class="stringliteral">&quot;\&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  247</span>        &lt;&lt; <span class="stringliteral">&quot;, fillcolor=\&quot;&quot;</span> &lt;&lt; colorForRegister(reg) &lt;&lt; <span class="stringliteral">&quot;\&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  248</span>        &lt;&lt; <span class="stringliteral">&quot;, color=\&quot;&quot;</span> &lt;&lt; (split ? <span class="stringliteral">&quot;#ff8800&quot;</span> : (memory ? <span class="stringliteral">&quot;#859399&quot;</span> : <span class="stringliteral">&quot;#d2dbde&quot;</span>)) &lt;&lt; <span class="stringliteral">&quot;\&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  249</span>        &lt;&lt; <span class="stringliteral">&quot;, shape=&quot;</span> &lt;&lt; (memory ? <span class="stringliteral">&quot;box&quot;</span> : <span class="stringliteral">&quot;ellipse&quot;</span>)</div>
-<div class="line"><span class="lineno">  250</span>        &lt;&lt; <span class="stringliteral">&quot;, penwidth=&quot;</span> &lt;&lt; (split ? <span class="stringliteral">&quot;3.0&quot;</span> : <span class="stringliteral">&quot;1.8&quot;</span>)</div>
-<div class="line"><span class="lineno">  251</span>        &lt;&lt; <span class="stringliteral">&quot;];\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  252</span>  }</div>
-<div class="line"><span class="lineno">  253</span> </div>
-<div class="line"><span class="lineno">  254</span>  std::set&lt;std::pair&lt;int, int&gt;&gt; printed;</div>
-<div class="line"><span class="lineno">  255</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;web : webs)</div>
-<div class="line"><span class="lineno">  256</span>  {</div>
-<div class="line"><span class="lineno">  257</span>    Vertex&lt;int&gt; *vertex = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(web.id);</div>
-<div class="line"><span class="lineno">  258</span>    <span class="keywordflow">if</span> (!vertex)</div>
-<div class="line"><span class="lineno">  259</span>      <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  260</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *edge : vertex-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>())</div>
-<div class="line"><span class="lineno">  261</span>    {</div>
-<div class="line"><span class="lineno">  262</span>      <span class="keywordtype">int</span> u = web.id;</div>
-<div class="line"><span class="lineno">  263</span>      <span class="keywordtype">int</span> v = edge-&gt;getDest()-&gt;getInfo();</div>
-<div class="line"><span class="lineno">  264</span>      <span class="keywordflow">if</span> (u &gt; v)</div>
-<div class="line"><span class="lineno">  265</span>        std::swap(u, v);</div>
-<div class="line"><span class="lineno">  266</span>      <span class="keywordflow">if</span> (printed.insert({u, v}).second)</div>
-<div class="line"><span class="lineno">  267</span>        out &lt;&lt; <span class="stringliteral">&quot;    web&quot;</span> &lt;&lt; u &lt;&lt; <span class="stringliteral">&quot; -- web&quot;</span> &lt;&lt; v &lt;&lt; <span class="stringliteral">&quot;;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  268</span>    }</div>
-<div class="line"><span class="lineno">  269</span>  }</div>
-<div class="line"><span class="lineno">  270</span> </div>
-<div class="line"><span class="lineno">  271</span>  out &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  272</span>  out &lt;&lt; <span class="stringliteral">&quot;    subgraph cluster_legend {\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  273</span>  out &lt;&lt; <span class="stringliteral">&quot;        label=\&quot;Legend\&quot;;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  274</span>  out &lt;&lt; <span class="stringliteral">&quot;        fontcolor=\&quot;#d2dbde\&quot;;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  275</span>  out &lt;&lt; <span class="stringliteral">&quot;        color=\&quot;#38393b\&quot;;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  276</span>  out &lt;&lt; <span class="stringliteral">&quot;        style=\&quot;rounded,filled\&quot;;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  277</span>  out &lt;&lt; <span class="stringliteral">&quot;        fillcolor=\&quot;#252628\&quot;;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  278</span>  out &lt;&lt; <span class="stringliteral">&quot;        key_reg [label=\&quot;register color\&quot;, fillcolor=\&quot;#1982d2\&quot;, shape=ellipse];\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  279</span>  out &lt;&lt; <span class="stringliteral">&quot;        key_mem [label=\&quot;M = memory\&quot;, fillcolor=\&quot;#38393b\&quot;, shape=box, color=\&quot;#859399\&quot;];\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  280</span>  out &lt;&lt; <span class="stringliteral">&quot;        key_split [label=\&quot;split-derived web\&quot;, fillcolor=\&quot;#252628\&quot;, color=\&quot;#ff8800\&quot;, penwidth=3.0];\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  281</span>  out &lt;&lt; <span class="stringliteral">&quot;    }\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  282</span> </div>
-<div class="line"><span class="lineno">  283</span>  <span class="keywordflow">if</span> (!result.<a class="code hl_variable" href="structAllocationResult.html#ae169a334412450e66797350b2831059d">selectedSpills</a>.empty() || !result.<a class="code hl_variable" href="structAllocationResult.html#a0a01856caf7e0298e5852bf8b87c80e6">splitRecords</a>.empty())</div>
-<div class="line"><span class="lineno">  284</span>  {</div>
-<div class="line"><span class="lineno">  285</span>    out &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  286</span>    out &lt;&lt; <span class="stringliteral">&quot;    note [shape=note, fillcolor=\&quot;#252628\&quot;, color=\&quot;#ff8800\&quot;, fontcolor=\&quot;#d2dbde\&quot;, label=\&quot;&quot;</span>;</div>
-<div class="line"><span class="lineno">  287</span>    <span class="keywordtype">bool</span> first = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  288</span>    <span class="keywordflow">if</span> (!result.<a class="code hl_variable" href="structAllocationResult.html#ae169a334412450e66797350b2831059d">selectedSpills</a>.empty())</div>
-<div class="line"><span class="lineno">  289</span>    {</div>
-<div class="line"><span class="lineno">  290</span>      out &lt;&lt; <span class="stringliteral">&quot;spills: &quot;</span>;</div>
-<div class="line"><span class="lineno">  291</span>      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <span class="keywordtype">id</span> : result.<a class="code hl_variable" href="structAllocationResult.html#ae169a334412450e66797350b2831059d">selectedSpills</a>)</div>
-<div class="line"><span class="lineno">  292</span>      {</div>
-<div class="line"><span class="lineno">  293</span>        <span class="keywordflow">if</span> (!first)</div>
-<div class="line"><span class="lineno">  294</span>          out &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><span class="lineno">  295</span>        out &lt;&lt; <span class="stringliteral">&quot;web&quot;</span> &lt;&lt; id;</div>
-<div class="line"><span class="lineno">  296</span>        first = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  297</span>      }</div>
-<div class="line"><span class="lineno">  298</span>    }</div>
-<div class="line"><span class="lineno">  299</span>    <span class="keywordflow">if</span> (!result.<a class="code hl_variable" href="structAllocationResult.html#a0a01856caf7e0298e5852bf8b87c80e6">splitRecords</a>.empty())</div>
-<div class="line"><span class="lineno">  300</span>    {</div>
-<div class="line"><span class="lineno">  301</span>      <span class="keywordflow">if</span> (!first)</div>
-<div class="line"><span class="lineno">  302</span>        out &lt;&lt; <span class="stringliteral">&quot;\\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  303</span>      out &lt;&lt; <span class="stringliteral">&quot;splits: &quot;</span>;</div>
-<div class="line"><span class="lineno">  304</span>      <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; result.<a class="code hl_variable" href="structAllocationResult.html#a0a01856caf7e0298e5852bf8b87c80e6">splitRecords</a>.size(); ++i)</div>
-<div class="line"><span class="lineno">  305</span>      {</div>
-<div class="line"><span class="lineno">  306</span>        <span class="keywordflow">if</span> (i &gt; 0)</div>
-<div class="line"><span class="lineno">  307</span>          out &lt;&lt; <span class="stringliteral">&quot;; &quot;</span>;</div>
-<div class="line"><span class="lineno">  308</span>        <span class="keyword">const</span> <span class="keyword">auto</span> &amp;r = result.<a class="code hl_variable" href="structAllocationResult.html#a0a01856caf7e0298e5852bf8b87c80e6">splitRecords</a>[i];</div>
-<div class="line"><span class="lineno">  309</span>        out &lt;&lt; <span class="stringliteral">&quot;web&quot;</span> &lt;&lt; r.sourceWebId &lt;&lt; <span class="stringliteral">&quot; -&gt; web&quot;</span> &lt;&lt; r.leftWebId &lt;&lt; <span class="stringliteral">&quot;,web&quot;</span> &lt;&lt; r.rightWebId;</div>
-<div class="line"><span class="lineno">  310</span>      }</div>
-<div class="line"><span class="lineno">  311</span>    }</div>
-<div class="line"><span class="lineno">  312</span>    out &lt;&lt; <span class="stringliteral">&quot;\&quot;];\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  313</span>  }</div>
-<div class="line"><span class="lineno">  314</span> </div>
-<div class="line"><span class="lineno">  315</span>  out &lt;&lt; <span class="stringliteral">&quot;}\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  316</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;Colored allocation DOT exported to &#39;&quot;</span> &lt;&lt; filename &lt;&lt; <span class="stringliteral">&quot;&#39;.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  317</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  318</span>}</div>
+<div class="line"><span class="lineno">  225</span>  <span class="keyword">const</span> std::string graphLabel = <span class="stringliteral">&quot;Colored Register Allocation\\n&quot;</span> +</div>
+<div class="line"><span class="lineno">  226</span>                                 std::to_string(result.<a class="code hl_variable" href="structAllocationResult.html#ad2745bf126a525f87be4ea94e99d393a">registersUsed</a>) + <span class="stringliteral">&quot; register(s), &quot;</span> +</div>
+<div class="line"><span class="lineno">  227</span>                                 std::to_string(result.<a class="code hl_variable" href="structAllocationResult.html#a4c0fc9d2c938b1b93ec376f3ab5481f1">spilledWebs</a>) + <span class="stringliteral">&quot; memory web(s)&quot;</span>;</div>
+<div class="line"><span class="lineno">  228</span> </div>
+<div class="line"><span class="lineno">  229</span>  out &lt;&lt; <span class="stringliteral">&quot;graph allocation {\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  230</span>  out &lt;&lt; <span class="stringliteral">&quot;    graph [bgcolor=\&quot;transparent\&quot;, color=\&quot;#38393b\&quot;, rankdir=LR, &quot;</span></div>
+<div class="line"><span class="lineno">  231</span>         <span class="stringliteral">&quot;fontname=\&quot;DejaVu Sans\&quot;, fontcolor=\&quot;#d2dbde\&quot;, labelloc=t, &quot;</span></div>
+<div class="line"><span class="lineno">  232</span>      &lt;&lt; <span class="stringliteral">&quot;label=\&quot;&quot;</span> &lt;&lt; graphLabel &lt;&lt; <span class="stringliteral">&quot;\&quot;];\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  233</span>  out &lt;&lt; <span class="stringliteral">&quot;    node [shape=ellipse, style=\&quot;filled,bold\&quot;, fontname=\&quot;DejaVu Sans\&quot;, &quot;</span></div>
+<div class="line"><span class="lineno">  234</span>         <span class="stringliteral">&quot;fontcolor=\&quot;#f8f9fa\&quot;, color=\&quot;#859399\&quot;, penwidth=1.8];\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  235</span>  out &lt;&lt; <span class="stringliteral">&quot;    edge [color=\&quot;#859399\&quot;, fontcolor=\&quot;#d2dbde\&quot;, penwidth=1.3];\n\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  236</span> </div>
+<div class="line"><span class="lineno">  237</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;web : webs)</div>
+<div class="line"><span class="lineno">  238</span>  {</div>
+<div class="line"><span class="lineno">  239</span>    <span class="keyword">auto</span> it = result.<a class="code hl_variable" href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">webToRegister</a>.find(web.id);</div>
+<div class="line"><span class="lineno">  240</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> reg = (it == result.<a class="code hl_variable" href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">webToRegister</a>.end()) ? -1 : it-&gt;second;</div>
+<div class="line"><span class="lineno">  241</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> memory = reg &lt; 0;</div>
+<div class="line"><span class="lineno">  242</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> split = splitDerived.count(web.id) &gt; 0;</div>
+<div class="line"><span class="lineno">  243</span> </div>
+<div class="line"><span class="lineno">  244</span>    std::string label = <span class="stringliteral">&quot;web&quot;</span> + std::to_string(web.id) + <span class="stringliteral">&quot;\\n&quot;</span> +</div>
+<div class="line"><span class="lineno">  245</span>                        dotEscape(web.variable) + <span class="stringliteral">&quot;\\n&quot;</span> +</div>
+<div class="line"><span class="lineno">  246</span>                        (memory ? <span class="stringliteral">&quot;M&quot;</span> : <span class="stringliteral">&quot;r&quot;</span> + std::to_string(reg)) + <span class="stringliteral">&quot;\\n&quot;</span> +</div>
+<div class="line"><span class="lineno">  247</span>                        dotEscape(formatWebLinesForLabel(web));</div>
+<div class="line"><span class="lineno">  248</span> </div>
+<div class="line"><span class="lineno">  249</span>    out &lt;&lt; <span class="stringliteral">&quot;    web&quot;</span> &lt;&lt; web.id</div>
+<div class="line"><span class="lineno">  250</span>        &lt;&lt; <span class="stringliteral">&quot; [label=\&quot;&quot;</span> &lt;&lt; label &lt;&lt; <span class="stringliteral">&quot;\&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  251</span>        &lt;&lt; <span class="stringliteral">&quot;, fillcolor=\&quot;&quot;</span> &lt;&lt; colorForRegister(reg) &lt;&lt; <span class="stringliteral">&quot;\&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  252</span>        &lt;&lt; <span class="stringliteral">&quot;, color=\&quot;&quot;</span> &lt;&lt; (split ? <span class="stringliteral">&quot;#ff8800&quot;</span> : (memory ? <span class="stringliteral">&quot;#859399&quot;</span> : <span class="stringliteral">&quot;#d2dbde&quot;</span>)) &lt;&lt; <span class="stringliteral">&quot;\&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  253</span>        &lt;&lt; <span class="stringliteral">&quot;, shape=&quot;</span> &lt;&lt; (memory ? <span class="stringliteral">&quot;box&quot;</span> : <span class="stringliteral">&quot;ellipse&quot;</span>)</div>
+<div class="line"><span class="lineno">  254</span>        &lt;&lt; <span class="stringliteral">&quot;, penwidth=&quot;</span> &lt;&lt; (split ? <span class="stringliteral">&quot;3.0&quot;</span> : <span class="stringliteral">&quot;1.8&quot;</span>)</div>
+<div class="line"><span class="lineno">  255</span>        &lt;&lt; <span class="stringliteral">&quot;];\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  256</span>  }</div>
+<div class="line"><span class="lineno">  257</span> </div>
+<div class="line"><span class="lineno">  258</span>  std::set&lt;std::pair&lt;int, int&gt;&gt; printed;</div>
+<div class="line"><span class="lineno">  259</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;web : webs)</div>
+<div class="line"><span class="lineno">  260</span>  {</div>
+<div class="line"><span class="lineno">  261</span>    Vertex&lt;int&gt; *vertex = graph.<a class="code hl_function" href="classGraph.html#a8b7b7465fbfd562e2a469f90a437ab75">findVertex</a>(web.id);</div>
+<div class="line"><span class="lineno">  262</span>    <span class="keywordflow">if</span> (!vertex)</div>
+<div class="line"><span class="lineno">  263</span>      <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  264</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *edge : vertex-&gt;<a class="code hl_function" href="classVertex.html#a0010a7d0b7db1bb81dd2ebb1ffae650a">getAdj</a>())</div>
+<div class="line"><span class="lineno">  265</span>    {</div>
+<div class="line"><span class="lineno">  266</span>      <span class="keywordtype">int</span> u = web.id;</div>
+<div class="line"><span class="lineno">  267</span>      <span class="keywordtype">int</span> v = edge-&gt;getDest()-&gt;getInfo();</div>
+<div class="line"><span class="lineno">  268</span>      <span class="keywordflow">if</span> (u &gt; v)</div>
+<div class="line"><span class="lineno">  269</span>        std::swap(u, v);</div>
+<div class="line"><span class="lineno">  270</span>      <span class="keywordflow">if</span> (printed.insert({u, v}).second)</div>
+<div class="line"><span class="lineno">  271</span>        out &lt;&lt; <span class="stringliteral">&quot;    web&quot;</span> &lt;&lt; u &lt;&lt; <span class="stringliteral">&quot; -- web&quot;</span> &lt;&lt; v &lt;&lt; <span class="stringliteral">&quot;;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  272</span>    }</div>
+<div class="line"><span class="lineno">  273</span>  }</div>
+<div class="line"><span class="lineno">  274</span> </div>
+<div class="line"><span class="lineno">  275</span>  out &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  276</span>  out &lt;&lt; <span class="stringliteral">&quot;    subgraph cluster_legend {\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  277</span>  out &lt;&lt; <span class="stringliteral">&quot;        label=\&quot;Legend\&quot;;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  278</span>  out &lt;&lt; <span class="stringliteral">&quot;        fontcolor=\&quot;#d2dbde\&quot;;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  279</span>  out &lt;&lt; <span class="stringliteral">&quot;        color=\&quot;#38393b\&quot;;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  280</span>  out &lt;&lt; <span class="stringliteral">&quot;        style=\&quot;rounded,filled\&quot;;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  281</span>  out &lt;&lt; <span class="stringliteral">&quot;        fillcolor=\&quot;#252628\&quot;;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  282</span>  out &lt;&lt; <span class="stringliteral">&quot;        key_reg [label=\&quot;same fill = same register\&quot;, fillcolor=\&quot;#1982d2\&quot;, shape=ellipse];\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  283</span>  out &lt;&lt; <span class="stringliteral">&quot;        key_mem [label=\&quot;M = memory\&quot;, fillcolor=\&quot;#38393b\&quot;, shape=box, color=\&quot;#859399\&quot;];\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  284</span>  out &lt;&lt; <span class="stringliteral">&quot;        key_split [label=\&quot;orange border = split-derived\&quot;, fillcolor=\&quot;#252628\&quot;, color=\&quot;#ff8800\&quot;, penwidth=3.0];\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  285</span>  out &lt;&lt; <span class="stringliteral">&quot;    }\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  286</span> </div>
+<div class="line"><span class="lineno">  287</span>  <span class="keywordflow">if</span> (!result.<a class="code hl_variable" href="structAllocationResult.html#ae169a334412450e66797350b2831059d">selectedSpills</a>.empty() || !result.<a class="code hl_variable" href="structAllocationResult.html#a0a01856caf7e0298e5852bf8b87c80e6">splitRecords</a>.empty())</div>
+<div class="line"><span class="lineno">  288</span>  {</div>
+<div class="line"><span class="lineno">  289</span>    out &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  290</span>    out &lt;&lt; <span class="stringliteral">&quot;    note [shape=note, fillcolor=\&quot;#252628\&quot;, color=\&quot;#ff8800\&quot;, fontcolor=\&quot;#d2dbde\&quot;, label=\&quot;&quot;</span>;</div>
+<div class="line"><span class="lineno">  291</span>    <span class="keywordtype">bool</span> first = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  292</span>    <span class="keywordflow">if</span> (!result.<a class="code hl_variable" href="structAllocationResult.html#ae169a334412450e66797350b2831059d">selectedSpills</a>.empty())</div>
+<div class="line"><span class="lineno">  293</span>    {</div>
+<div class="line"><span class="lineno">  294</span>      out &lt;&lt; <span class="stringliteral">&quot;spills: &quot;</span>;</div>
+<div class="line"><span class="lineno">  295</span>      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <span class="keywordtype">id</span> : result.<a class="code hl_variable" href="structAllocationResult.html#ae169a334412450e66797350b2831059d">selectedSpills</a>)</div>
+<div class="line"><span class="lineno">  296</span>      {</div>
+<div class="line"><span class="lineno">  297</span>        <span class="keywordflow">if</span> (!first)</div>
+<div class="line"><span class="lineno">  298</span>          out &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><span class="lineno">  299</span>        out &lt;&lt; <span class="stringliteral">&quot;web&quot;</span> &lt;&lt; id;</div>
+<div class="line"><span class="lineno">  300</span>        first = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  301</span>      }</div>
+<div class="line"><span class="lineno">  302</span>    }</div>
+<div class="line"><span class="lineno">  303</span>    <span class="keywordflow">if</span> (!result.<a class="code hl_variable" href="structAllocationResult.html#a0a01856caf7e0298e5852bf8b87c80e6">splitRecords</a>.empty())</div>
+<div class="line"><span class="lineno">  304</span>    {</div>
+<div class="line"><span class="lineno">  305</span>      <span class="keywordflow">if</span> (!first)</div>
+<div class="line"><span class="lineno">  306</span>        out &lt;&lt; <span class="stringliteral">&quot;\\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  307</span>      out &lt;&lt; <span class="stringliteral">&quot;splits: &quot;</span>;</div>
+<div class="line"><span class="lineno">  308</span>      <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; result.<a class="code hl_variable" href="structAllocationResult.html#a0a01856caf7e0298e5852bf8b87c80e6">splitRecords</a>.size(); ++i)</div>
+<div class="line"><span class="lineno">  309</span>      {</div>
+<div class="line"><span class="lineno">  310</span>        <span class="keywordflow">if</span> (i &gt; 0)</div>
+<div class="line"><span class="lineno">  311</span>          out &lt;&lt; <span class="stringliteral">&quot;; &quot;</span>;</div>
+<div class="line"><span class="lineno">  312</span>        <span class="keyword">const</span> <span class="keyword">auto</span> &amp;r = result.<a class="code hl_variable" href="structAllocationResult.html#a0a01856caf7e0298e5852bf8b87c80e6">splitRecords</a>[i];</div>
+<div class="line"><span class="lineno">  313</span>        out &lt;&lt; <span class="stringliteral">&quot;web&quot;</span> &lt;&lt; r.sourceWebId &lt;&lt; <span class="stringliteral">&quot; -&gt; web&quot;</span> &lt;&lt; r.leftWebId &lt;&lt; <span class="stringliteral">&quot;,web&quot;</span> &lt;&lt; r.rightWebId;</div>
+<div class="line"><span class="lineno">  314</span>      }</div>
+<div class="line"><span class="lineno">  315</span>    }</div>
+<div class="line"><span class="lineno">  316</span>    out &lt;&lt; <span class="stringliteral">&quot;\&quot;];\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  317</span>  }</div>
+<div class="line"><span class="lineno">  318</span> </div>
+<div class="line"><span class="lineno">  319</span>  out &lt;&lt; <span class="stringliteral">&quot;}\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  320</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;Colored allocation DOT exported to &#39;&quot;</span> &lt;&lt; filename &lt;&lt; <span class="stringliteral">&quot;&#39;.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  321</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  322</span>}</div>
 <div class="ttc" id="astructAllocationResult_html_a0a01856caf7e0298e5852bf8b87c80e6"><div class="ttname"><a href="structAllocationResult.html#a0a01856caf7e0298e5852bf8b87c80e6">AllocationResult::splitRecords</a></div><div class="ttdeci">std::vector&lt; SplitRecord &gt; splitRecords</div><div class="ttdoc">Records of web splits performed by splitting-capable algorithms.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8h_source.html#l00063">GraphColoring.h:63</a></div></div>
+<div class="ttc" id="astructAllocationResult_html_a4c0fc9d2c938b1b93ec376f3ab5481f1"><div class="ttname"><a href="structAllocationResult.html#a4c0fc9d2c938b1b93ec376f3ab5481f1">AllocationResult::spilledWebs</a></div><div class="ttdeci">int spilledWebs</div><div class="ttdoc">Number of webs assigned to memory.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8h_source.html#l00057">GraphColoring.h:57</a></div></div>
+<div class="ttc" id="astructAllocationResult_html_ad2745bf126a525f87be4ea94e99d393a"><div class="ttname"><a href="structAllocationResult.html#ad2745bf126a525f87be4ea94e99d393a">AllocationResult::registersUsed</a></div><div class="ttdeci">int registersUsed</div><div class="ttdoc">Number of physical registers actually used.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8h_source.html#l00054">GraphColoring.h:54</a></div></div>
 <div class="ttc" id="astructAllocationResult_html_ae169a334412450e66797350b2831059d"><div class="ttname"><a href="structAllocationResult.html#ae169a334412450e66797350b2831059d">AllocationResult::selectedSpills</a></div><div class="ttdeci">std::set&lt; int &gt; selectedSpills</div><div class="ttdoc">Web ids deliberately selected for memory by spilling-capable algorithms.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8h_source.html#l00060">GraphColoring.h:60</a></div></div>
 <div class="ttc" id="astructAllocationResult_html_aeb09a1803c90a5ba1a8d6638f9ff3b3d"><div class="ttname"><a href="structAllocationResult.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d">AllocationResult::webToRegister</a></div><div class="ttdeci">std::map&lt; int, int &gt; webToRegister</div><div class="ttdoc">Maps web ID → physical register index (0-based), or -1 if the web was spilled.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8h_source.html#l00046">GraphColoring.h:46</a></div></div>
 </div><!-- fragment -->
@@ -479,8 +485,6 @@ Static Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  200</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;-------------------------\n&quot;</span>;</div>
 <div class="line"><span class="lineno">  201</span>}</div>
 <div class="ttc" id="astructAllocationResult_html_a15e2d2c98221ee91b5b55197423e522a"><div class="ttname"><a href="structAllocationResult.html#a15e2d2c98221ee91b5b55197423e522a">AllocationResult::feasible</a></div><div class="ttdeci">bool feasible</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8h_source.html#l00051">GraphColoring.h:51</a></div></div>
-<div class="ttc" id="astructAllocationResult_html_a4c0fc9d2c938b1b93ec376f3ab5481f1"><div class="ttname"><a href="structAllocationResult.html#a4c0fc9d2c938b1b93ec376f3ab5481f1">AllocationResult::spilledWebs</a></div><div class="ttdeci">int spilledWebs</div><div class="ttdoc">Number of webs assigned to memory.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8h_source.html#l00057">GraphColoring.h:57</a></div></div>
-<div class="ttc" id="astructAllocationResult_html_ad2745bf126a525f87be4ea94e99d393a"><div class="ttname"><a href="structAllocationResult.html#ad2745bf126a525f87be4ea94e99d393a">AllocationResult::registersUsed</a></div><div class="ttdeci">int registersUsed</div><div class="ttdoc">Number of physical registers actually used.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8h_source.html#l00054">GraphColoring.h:54</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -593,10 +597,10 @@ Static Public Member Functions</h2></td></tr>
 <div class="ttc" id="aParameters_8h_html_a9243adfb7445f1adcf51b73329e774c9a5c763dd81f02716fd953962fdba7b080"><div class="ttname"><a href="Parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a5c763dd81f02716fd953962fdba7b080">AlgorithmType::Spilling</a></div><div class="ttdeci">@ Spilling</div><div class="ttdoc">Graph coloring with web spilling (commit webs to memory).</div><div class="ttdef"><b>Definition</b> <a href="Parameters_8h_source.html#l00018">Parameters.h:18</a></div></div>
 <div class="ttc" id="aParameters_8h_html_a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94"><div class="ttname"><a href="Parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94">AlgorithmType::Basic</a></div><div class="ttdeci">@ Basic</div><div class="ttdoc">Basic greedy graph-coloring. No spilling or splitting.</div><div class="ttdef"><b>Definition</b> <a href="Parameters_8h_source.html#l00017">Parameters.h:17</a></div></div>
 <div class="ttc" id="aParameters_8h_html_a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594"><div class="ttname"><a href="Parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594">AlgorithmType::Free</a></div><div class="ttdeci">@ Free</div><div class="ttdoc">Custom allocation algorithm.</div><div class="ttdef"><b>Definition</b> <a href="Parameters_8h_source.html#l00020">Parameters.h:20</a></div></div>
-<div class="ttc" id="aclassGraphColoring_html_a3a5e5cff3599a8f31be231fb019f7187"><div class="ttname"><a href="classGraphColoring.html#a3a5e5cff3599a8f31be231fb019f7187">GraphColoring::spillingColoring</a></div><div class="ttdeci">static AllocationResult spillingColoring(const Graph&lt; int &gt; &amp;graph, const std::vector&lt; Web &gt; &amp;webs, int numRegisters, int maxSpills)</div><div class="ttdoc">Graph coloring with selective web spilling.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8cpp_source.html#l00413">GraphColoring.cpp:413</a></div></div>
-<div class="ttc" id="aclassGraphColoring_html_a6934e9c69003431b39f772f1ca391fe1"><div class="ttname"><a href="classGraphColoring.html#a6934e9c69003431b39f772f1ca391fe1">GraphColoring::splittingColoring</a></div><div class="ttdeci">static AllocationResult splittingColoring(Graph&lt; int &gt; &amp;graph, std::vector&lt; Web &gt; &amp;webs, int numRegisters, int maxSplits)</div><div class="ttdoc">Graph coloring with selective web splitting.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8cpp_source.html#l00477">GraphColoring.cpp:477</a></div></div>
-<div class="ttc" id="aclassGraphColoring_html_ac577d2fd01bb72b5d14d966893937440"><div class="ttname"><a href="classGraphColoring.html#ac577d2fd01bb72b5d14d966893937440">GraphColoring::basicColoring</a></div><div class="ttdeci">static AllocationResult basicColoring(const Graph&lt; int &gt; &amp;graph, const std::vector&lt; Web &gt; &amp;webs, int numRegisters)</div><div class="ttdoc">Basic simplify/select graph coloring.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8cpp_source.html#l00314">GraphColoring.cpp:314</a></div></div>
-<div class="ttc" id="aclassGraphColoring_html_ad97fc256957b5e215426e4f567e38fc1"><div class="ttname"><a href="classGraphColoring.html#ad97fc256957b5e215426e4f567e38fc1">GraphColoring::freeColoring</a></div><div class="ttdeci">static AllocationResult freeColoring(const Graph&lt; int &gt; &amp;graph, const std::vector&lt; Web &gt; &amp;webs, int numRegisters)</div><div class="ttdoc">Custom register allocation algorithm.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8cpp_source.html#l00548">GraphColoring.cpp:548</a></div></div>
+<div class="ttc" id="aclassGraphColoring_html_a3a5e5cff3599a8f31be231fb019f7187"><div class="ttname"><a href="classGraphColoring.html#a3a5e5cff3599a8f31be231fb019f7187">GraphColoring::spillingColoring</a></div><div class="ttdeci">static AllocationResult spillingColoring(const Graph&lt; int &gt; &amp;graph, const std::vector&lt; Web &gt; &amp;webs, int numRegisters, int maxSpills)</div><div class="ttdoc">Graph coloring with selective web spilling.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8cpp_source.html#l00762">GraphColoring.cpp:762</a></div></div>
+<div class="ttc" id="aclassGraphColoring_html_a6934e9c69003431b39f772f1ca391fe1"><div class="ttname"><a href="classGraphColoring.html#a6934e9c69003431b39f772f1ca391fe1">GraphColoring::splittingColoring</a></div><div class="ttdeci">static AllocationResult splittingColoring(Graph&lt; int &gt; &amp;graph, std::vector&lt; Web &gt; &amp;webs, int numRegisters, int maxSplits)</div><div class="ttdoc">Graph coloring with selective web splitting.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8cpp_source.html#l00826">GraphColoring.cpp:826</a></div></div>
+<div class="ttc" id="aclassGraphColoring_html_ac577d2fd01bb72b5d14d966893937440"><div class="ttname"><a href="classGraphColoring.html#ac577d2fd01bb72b5d14d966893937440">GraphColoring::basicColoring</a></div><div class="ttdeci">static AllocationResult basicColoring(const Graph&lt; int &gt; &amp;graph, const std::vector&lt; Web &gt; &amp;webs, int numRegisters)</div><div class="ttdoc">Basic simplify/select graph coloring.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8cpp_source.html#l00663">GraphColoring.cpp:663</a></div></div>
+<div class="ttc" id="aclassGraphColoring_html_ad97fc256957b5e215426e4f567e38fc1"><div class="ttname"><a href="classGraphColoring.html#ad97fc256957b5e215426e4f567e38fc1">GraphColoring::freeColoring</a></div><div class="ttdeci">static AllocationResult freeColoring(const Graph&lt; int &gt; &amp;graph, const std::vector&lt; Web &gt; &amp;webs, int numRegisters)</div><div class="ttdoc">Custom register allocation algorithm.</div><div class="ttdef"><b>Definition</b> <a href="GraphColoring_8cpp_source.html#l00873">GraphColoring.cpp:873</a></div></div>
 <div class="ttc" id="aclassOutputWriter_html_a1bf21c55051e9e3276abae9b8c8498f7"><div class="ttname"><a href="classOutputWriter.html#a1bf21c55051e9e3276abae9b8c8498f7">OutputWriter::write</a></div><div class="ttdeci">static bool write(const std::string &amp;filename, const std::vector&lt; Web &gt; &amp;webs, const std::map&lt; int, int &gt; &amp;webToRegister, const std::vector&lt; std::string &gt; &amp;metadataLines={})</div><div class="ttdoc">Writes the full allocation result to filename.</div><div class="ttdef"><b>Definition</b> <a href="OutputWriter_8cpp_source.html#l00054">OutputWriter.cpp:54</a></div></div>
 <div class="ttc" id="astructParameters_html_a227a10402acf80499a1e3d1d2cebd433"><div class="ttname"><a href="structParameters.html#a227a10402acf80499a1e3d1d2cebd433">Parameters::algorithmParam</a></div><div class="ttdeci">int algorithmParam</div><div class="ttdoc">K parameter for spilling/splitting algorithms.</div><div class="ttdef"><b>Definition</b> <a href="Parameters_8h_source.html#l00041">Parameters.h:41</a></div></div>
 <div class="ttc" id="astructParameters_html_a5de38c3e65224753edbdee569c5c5675"><div class="ttname"><a href="structParameters.html#a5de38c3e65224753edbdee569c5c5675">Parameters::numRegisters</a></div><div class="ttdeci">int numRegisters</div><div class="ttdoc">Maximum number of available physical registers.</div><div class="ttdef"><b>Definition</b> <a href="Parameters_8h_source.html#l00039">Parameters.h:39</a></div></div>

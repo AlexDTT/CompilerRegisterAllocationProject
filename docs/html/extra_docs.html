@@ -222,7 +222,9 @@ Approach</h2>
 Example</h2>
 <p>The triangle below needs 3 colors, but with <span class="tt">K = 2</span> registers it becomes allocatable after spilling one web:</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_spilling.svg" width="667" height="622"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_spilling.svg" width="619" height="543"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+Triangle graph: one web must be spilled for K = 2</div>
+</div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="ext_t3_spill_complexity"></a>
 Complexity</h2>
 <table class="markdownTable">
@@ -248,62 +250,73 @@ Approach</h2>
 <p>Two split strategies are used:</p>
 <ul>
 <li>if the original web already contains multiple ranges, split those ranges into two ordered groups;</li>
-<li>if it contains only one range, split the sequence of program points into two contiguous derived ranges and normalize their endpoints with <span class="tt">+</span> and <span class="tt">-</span>.</li>
+<li>if it contains only one range, split the sequence of program points into two contiguous derived ranges.</li>
 </ul>
-<p>This approach is deterministic and directly targets the source of excessive interference by slicing a long-lived web into shorter derived webs.</p>
+<p>The split operation deliberately preserves the original markers. A boundary created by the allocator is not a new definition and is not a new last use. For example, splitting <span class="tt">1+,2,3,4-</span> may produce <span class="tt">1+,2</span> and <span class="tt">3,4-</span>, never <span class="tt">1+,2-</span> and <span class="tt">3+,4-</span>.</p>
+<p>Candidates whose two derived webs would still interfere with each other are discarded, because such a split would not represent two non-overlapping live pieces of the value.</p>
+<p>Candidate selection is also more deliberate than "split the first failed web": for every legal split position, the allocator rebuilds the graph and tests K-colorability. It chooses a split that makes the graph colorable if one exists; otherwise it chooses the split that leaves the fewest interference edges, then the smallest maximum degree. This keeps the heuristic understandable while still targeting the pressure that actually blocks coloring.</p>
 <p>The output metadata records every performed split as <span class="tt">split: webSource -&gt; webLeft,webRight</span>, which identifies the selected source web and the derived webs that define the save/restore boundaries.</p>
 <h2 class="doxsection"><a class="anchor" id="ext_t4_split_example"></a>
 Example</h2>
-<p>The following case starts as a 3-clique. After splitting <span class="tt">web0</span> into two derived webs, the resulting graph becomes 2-colorable:</p>
+<p>The following case starts as a 3-clique. <span class="tt">web0</span> has an early region and a late region; after splitting it, the resulting graph becomes a 2-colorable path:</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_splitting.svg" width="599" height="383"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_splitting.svg" width="547" height="816"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+One split reduces the chromatic requirement without inventing markers</div>
+</div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="ext_t4_split_complexity"></a>
 Complexity</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Step  </th><th class="markdownTableHeadNone">Complexity  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Split candidate selection  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 + E)</span>  </td></tr>
+<td class="markdownTableBodyNone">Candidate evaluation in one split iteration  </td><td class="markdownTableBodyNone"><span class="tt">O(Q * (W^2 * P + E * W + W * (W^2 + E)))</span>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><a class="el" href="classGraph.html" title="Represents a general graph using an adjacency list.">Graph</a> rebuild after each split  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 * P + E * W)</span>  </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Full allocator with at most <span class="tt">K</span> splits  </td><td class="markdownTableBodyNone"><span class="tt">O((K + 1) * (W^2 * P + E * W + W * (W^2 + E)))</span>  </td></tr>
+<td class="markdownTableBodyNone">Full allocator with at most <span class="tt">K</span> splits  </td><td class="markdownTableBodyNone"><span class="tt">O(K * Q * (W^2 * P + E * W + W * (W^2 + E)))</span>  </td></tr>
 </table>
+<p>Here <span class="tt">Q</span> is the number of legal split positions currently available.</p>
 <hr  />
 <h1 class="doxsection"><a class="anchor" id="ext_t5"></a>
 T2.4 - Custom Allocation Strategy</h1>
 <h2 class="doxsection"><a class="anchor" id="ext_t5_free_approach"></a>
 Approach</h2>
-<p>The custom mode uses pressure-aware greedy coloring:</p>
+<p>The custom mode is a hybrid allocator:</p>
 <ul>
-<li>for each uncolored web, count how many distinct register colors already appear in its colored neighbors;</li>
-<li>select the web with the highest such count, because it has the fewest safe choices left;</li>
-<li>break ties using the highest graph degree, because that web has more total interference constraints;</li>
-<li>assign the lowest-numbered compatible register;</li>
-<li>if every register is blocked by a colored neighbor, assign the web to memory.</li>
+<li>edgeless graphs are assigned one register, because no webs interfere;</li>
+<li>complete graphs color at most <span class="tt">K</span> webs and spill the unavoidable remainder;</li>
+<li>bipartite graphs are recognized and 2-colored by BFS when <span class="tt">K &gt;= 2</span>;</li>
+<li>all other graphs use DSatur ordering: choose the uncolored web with the largest number of distinct neighbor colors, breaking ties by degree;</li>
+<li>for small/medium graphs, a branch-and-bound refinement searches for a coloring with fewer spills than the DSatur result.</li>
 </ul>
-<p>The rationale is to spend registers first on the webs under the strongest current pressure. Less constrained webs are delayed because they still have more available choices. This keeps the invariant that no two interfering colored webs share a register, while still producing a feasible partial allocation by using memory only for webs that cannot be colored safely.</p>
+<p>This keeps the technique recognizable from standard graph coloring material: BFS for bipartite graphs, direct handling for cliques, DSatur for practical greedy coloring, and branch-and-bound for bounded exact improvement. The invariant remains simple: no two interfering colored webs may share a register; memory is used only for webs left uncolored by the selected strategy.</p>
 <h2 class="doxsection"><a class="anchor" id="ext_t5_free_complexity"></a>
 Complexity</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Step  </th><th class="markdownTableHeadNone">Complexity  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Pressure-aware selection and coloring  </td><td class="markdownTableBodyNone"><span class="tt">O(W * (W^2 + E))</span>  </td></tr>
+<td class="markdownTableBodyNone">Graph-class checks and adjacency extraction  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 + E log W)</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">DSatur fallback  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 + E log W)</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Guarded branch-and-bound refinement  </td><td class="markdownTableBodyNone"><span class="tt">O((K + 1)^W * (W + E))</span> worst case  </td></tr>
 </table>
-<p>Each selection round scans the remaining vertices and their adjacency lists, and each vertex lookup is linear in <span class="tt">W</span> in the current graph structure.</p>
+<p>The exact refinement is guarded by a fixed graph-size threshold. Larger graphs return the polynomial DSatur result so the application remains responsive during the demo.</p>
 <h1 class="doxsection"><a class="anchor" id="ext_t5_examples"></a>
 Additional Graph Examples</h1>
 <h2 class="doxsection"><a class="anchor" id="ext_t5_noninterference"></a>
 Last-use/definition adjacency</h2>
 <p>This example documents the subtle interference exception: if one web ends at a line because of a last use and another starts at the same line because of a definition, the two webs can reuse the same register.</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_noninterference_chain.svg" width="668" height="404"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_noninterference_chain.svg" width="1015" height="902"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+Definition at last-use line allows register reuse</div>
+</div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="ext_t5_fusion"></a>
 Transitive web fusion</h2>
 <p>The following example mirrors the overlapping <span class="tt">x</span> ranges used in the web-fusion tests. Even if not every range overlaps every other range directly, the overlap graph is connected, so all ranges belong to one web.</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_web_fusion.svg" width="654" height="255"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_web_fusion.svg" width="394" height="431"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+Transitive fusion of overlapping live ranges</div>
+</div>
 </div><div class="interactive_dotgraph"></div><hr  />
 <h1 class="doxsection"><a class="anchor" id="ext_t6"></a>
 Error Handling, CLI, and Testing</h1>

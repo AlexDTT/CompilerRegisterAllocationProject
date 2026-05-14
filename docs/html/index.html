@@ -135,7 +135,7 @@ About the Project</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">splitting, K</span>  </td><td class="markdownTableBodyNone">Coloring with bounded splitting  </td><td class="markdownTableBodyNone">Splits up to <span class="tt">K</span> webs into derived webs, rebuilds the graph, and retries coloring.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">free</span>  </td><td class="markdownTableBodyNone">Custom heuristic  </td><td class="markdownTableBodyNone">Colors the most constrained webs first and spills only when no compatible register remains.  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">free</span>  </td><td class="markdownTableBodyNone">Custom allocator  </td><td class="markdownTableBodyNone">Uses graph-class fast paths, DSatur ordering, and bounded branch-and-bound to reduce spills.  </td></tr>
 </table>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
 Group T9G2 Members</h1>
@@ -191,11 +191,12 @@ Allocation output</h2>
 <li>for alternative algorithms, a processing-friendly metadata section such as <span class="tt">spills: 1</span> / <span class="tt">spill: web0</span> or <span class="tt">splits: 1</span> / <span class="tt">split: web0 -&gt; web0,web3</span>.</li>
 </ul>
 <p>Batch mode also writes a colored DOT visualization next to the allocation file by replacing the output extension with <span class="tt">.dot</span>. For example, <span class="tt">allocation.txt</span> produces <span class="tt">allocation.dot</span>. Nodes are colored by register, memory-assigned webs are gray boxes, and split-derived webs receive highlighted borders.</p>
+<p>Splitting preserves the original live-range markers exactly. If a range such as <span class="tt">1+,2,3,4-</span> is split into <span class="tt">1+,2</span> and <span class="tt">3,4-</span>, the second derived web is not forced to become <span class="tt">3+,4-</span>; the split boundary is not a new definition or last use.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
 System Architecture</h1>
 <p>The application pipeline follows the live-range to web to interference-graph workflow:</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_annotated_architecture.svg" width="1704" height="151"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_annotated_architecture.svg" width="315" height="484"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Compiler Register Allocation Project Pipeline</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
@@ -203,37 +204,37 @@ Example Interference Graphs</h1>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
 Basic coloring example</h2>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_basic.svg" width="275" height="358"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_basic.svg" width="244" height="356"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Basic allocation example</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
 Spilling example</h2>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_spilling.svg" width="667" height="622"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_spilling.svg" width="619" height="543"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Spilling one web in a 3-clique</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
 Splitting example</h2>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_splitting.svg" width="599" height="383"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_splitting.svg" width="547" height="816"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Splitting a web to reduce the chromatic requirement</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
 Free heuristic example</h2>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_free.svg" width="576" height="544"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_free.svg" width="691" height="590"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Custom allocator with selective spill fallback</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
 Non-interference adjacency example</h2>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_noninterference_chain.svg" width="668" height="404"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_noninterference_chain.svg" width="1015" height="902"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Definition at last-use line allows register reuse</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
 Web fusion example</h2>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_web_fusion.svg" width="654" height="255"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_web_fusion.svg" width="394" height="431"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Transitive fusion of overlapping live ranges</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h1 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
@@ -254,9 +255,9 @@ Complexity Summary</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Spilling allocator  </td><td class="markdownTableBodyNone"><span class="tt">O((S + 1) * W * (W^2 + E))</span>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Splitting allocator  </td><td class="markdownTableBodyNone"><span class="tt">O((S + 1) * (W^2 * P + E * W + W * (W^2 + E)))</span>  </td></tr>
+<td class="markdownTableBodyNone">Splitting allocator  </td><td class="markdownTableBodyNone"><span class="tt">O(S * Q * (W^2 * P + E * W + W * (W^2 + E)))</span>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Free allocator  </td><td class="markdownTableBodyNone"><span class="tt">O(W * (W^2 + E))</span>  </td></tr>
+<td class="markdownTableBodyNone">Free allocator  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 + E log W)</span> heuristic; guarded exact pass <span class="tt">O((K + 1)^W * (W + E))</span>  </td></tr>
 </table>
 <p>Where:</p><ul>
 <li><span class="tt">L</span> is the number of input lines,</li>
@@ -266,8 +267,10 @@ Complexity Summary</h1>
 <li><span class="tt">W</span> is the number of webs,</li>
 <li><span class="tt">E</span> is the number of directed adjacency entries in the interference graph,</li>
 <li><span class="tt">S</span> is the configured maximum number of spill/split recovery actions.</li>
+<li><span class="tt">Q</span> is the number of candidate split positions evaluated in one split iteration.</li>
 </ul>
 <p>The coloring bounds include the current vector-backed course <span class="tt"><a class="el" href="classGraph.html" title="Represents a general graph using an adjacency list.">Graph</a>&lt;int&gt;</span> implementation, where <span class="tt">findVertex</span> is <span class="tt">O(W)</span>. Replacing the vertex store with an indexed map would reduce several lookup-driven factors, but the project intentionally keeps the provided graph as the primary representation.</p>
+<p>The <span class="tt">free</span> allocator only runs the exponential branch-and-bound refinement below a fixed small/medium graph-size threshold. Larger inputs keep the polynomial DSatur result, which is more appropriate for an interactive demo tool.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
 Project Requirements Coverage</h1>
 <table class="markdownTable">
@@ -286,7 +289,7 @@ Project Requirements Coverage</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">T2.3 bounded splitting  </td><td class="markdownTableBodyNone">Implemented.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">T2.4 custom allocation  </td><td class="markdownTableBodyNone">Implemented with pressure-aware web selection and safe spill fallback.  </td></tr>
+<td class="markdownTableBodyNone">T2.4 custom allocation  </td><td class="markdownTableBodyNone">Implemented with graph-class fast paths, DSatur ordering, and bounded exact spill minimization.  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">T3.1 demo support  </td><td class="markdownTableBodyNone">Interactive menu plus <span class="tt">Presentation.pdf</span>, graph assets, and editable <span class="tt">Presentation.typ</span> source.  </td></tr>
 <tr class="markdownTableRowOdd">
@@ -298,7 +301,7 @@ Test Coverage</h1>
 <ul>
 <li>six baseline datasets mirrored under <span class="tt">inputs/basic/</span>;</li>
 <li>advanced demo inputs under <span class="tt">inputs/advanced/</span>, including a dense custom/free case, a bounded-spilling case, and a focused splitting showcase;</li>
-<li>white-box unit tests for parsing, graph construction, spilling, splitting, and output generation;</li>
+<li>white-box unit tests for parsing, graph construction, spilling, marker-preserving splitting, free-mode coloring, and output generation;</li>
 <li>deterministic integration tests that compare batch-mode outputs against expected files.</li>
 </ul>
 <p>Run everything with:</p>

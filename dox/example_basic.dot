@@ -1,16 +1,14 @@
 graph basic_example {
     layout=neato;
     overlap=false;
-    node [shape=circle, style=filled, fontname="Helvetica", fillcolor="#edf7f2", color="#2f6b56"];
-    edge [color="#2f6b56", penwidth=1.5];
+    bgcolor="transparent";
+    node [shape=circle, style=filled, fontname="DejaVu Sans", fontcolor="#f8f9fa", color="#859399", penwidth=1.6];
+    edge [color="#859399", penwidth=1.4];
 
-    web0 [label="web0\ni"];
-    web1 [label="web1\ni"];
-    web2 [label="web2\nsum"];
+    web0 [label="web0\ni", fillcolor="#1982d2"];
+    web1 [label="web1\ni", fillcolor="#44b86f"];
+    web2 [label="web2\nsum", fillcolor="#f3a600"];
 
     web0 -- web1;
     web1 -- web2;
-
-    label="ranges1: two colors are sufficient";
-    labelloc=t;
 }
