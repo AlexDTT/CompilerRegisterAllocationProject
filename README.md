@@ -12,14 +12,14 @@ Given the live ranges of program variables, the application:
 
 - merges compatible live ranges into **webs**;
 - builds the corresponding **interference graph**;
-- allocates webs to a bounded number of physical registers;
+- allocates webs to a bounded number of physical registers (using graph coloring);
 - applies **spilling** or **splitting** when selected by the configuration file.
 
 The tool includes four allocation modes:
 
 | Mode | Summary | Main idea |
 |---|---|---|
-| `basic` | Pure graph coloring | Simplify-and-select coloring without user-authorized recovery actions. |
+| `basic` | Pure graph coloring | Simplify-and-select coloring. It's the greedy algorithm provided by the teacher. |
 | `spilling, K` | Coloring with bounded spilling | Removes up to `K` webs from the graph and assigns them to memory. |
 | `splitting, K` | Coloring with bounded splitting | Splits up to `K` webs into derived webs, rebuilds the graph, and retries coloring. |
 | `free` | Custom allocator | Uses graph-class fast paths, DSatur ordering, and bounded branch-and-bound to reduce spills. |
