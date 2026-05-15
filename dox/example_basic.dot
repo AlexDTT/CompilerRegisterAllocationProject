@@ -5,10 +5,9 @@ graph basic_example {
     node [shape=circle, style=filled, fontname="DejaVu Sans", fontcolor="#f8f9fa", color="#859399", penwidth=1.6];
     edge [color="#859399", penwidth=1.4];
 
-    web0 [label="web0\ni", fillcolor="#1982d2"];
-    web1 [label="web1\ni", fillcolor="#44b86f"];
-    web2 [label="web2\nsum", fillcolor="#f3a600"];
+    web0 [label="web0\ni\n1+,2,3,4,5,6-", fillcolor="#1982d2"];
+    web1 [label="web1\ni\n9+,10,11-,20+", fillcolor="#44b86f"];
+    web2 [label="web2\nsum\n7+,8,9,10-", fillcolor="#1982d2"];
 
-    web0 -- web1;
     web1 -- web2;
 }

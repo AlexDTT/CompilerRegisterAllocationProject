@@ -1,8 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"main_8cpp.html":[3,0,8],
-"main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97":[3,0,8,0],
-"main_8cpp_source.html":[3,0,8],
 "pages.html":[],
 "register__alloc__tests_8cpp.html":[3,0,6,0],
 "register__alloc__tests_8cpp.html#a0d204f57105f0df2e1c640f408decab0":[3,0,6,0,8],

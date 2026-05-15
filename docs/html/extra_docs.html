@@ -125,7 +125,7 @@ Data model</h2>
 Web construction</h2>
 <p>The input file may contain multiple live ranges for the same variable. Those ranges are merged into a web whenever they share at least one program point. The implementation uses a union-find structure over the live ranges of a single variable:</p>
 <ul>
-<li>Build one union-find element per live range.</li>
+<li>Build one union-find element per live range (we based our struct in the provided UFDS that was available in previous TP classes).</li>
 <li>For every pair of ranges of the same variable, test whether they overlap.</li>
 <li>Union overlapping pairs.</li>
 <li>Emit one web per connected component.</li>
@@ -307,8 +307,8 @@ Additional Graph Examples</h1>
 Last-use/definition adjacency</h2>
 <p>This example documents the subtle interference exception: if one web ends at a line because of a last use and another starts at the same line because of a definition, the two webs can reuse the same register.</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_noninterference_chain.svg" width="867" height="771"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
-Definition at last-use line allows register reuse</div>
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_noninterference_chain.svg" width="650" height="574"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+Definition at last-use line allows register reuse (red means no interference, the dashed edges are not actual interferences)</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="ext_t5_fusion"></a>
 Transitive web fusion</h2>
