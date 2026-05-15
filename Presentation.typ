@@ -58,11 +58,13 @@
 
 // --- Slide 2: Pipeline ---
 #pagebreak()
-#slide("Pipeline", [
-  #align(center)[#image("presentation_assets/pipeline_graph.svg", height: 2.35cm)]
-  #v(0.08cm)
-  #text(size: 7.8pt, fill: muted)[Course `Graph<int>` as primary representation. Web ids are vertex labels.]
-])
+#rect(width: 100%, height: 100%, fill: bg)[
+  #place(top + right, dx: -0.38cm, dy: 0.28cm)[#image("logo.png", width: 0.42cm)]
+  #place(top + left)[#rect(width: 0.08cm, height: 100%, fill: orange)]
+  #pad(x: 0.68cm, y: 0.26cm)[
+    #align(center)[#image("presentation_assets/annotated_architecture.svg", width: 10cm)]
+  ]
+]
 
 // --- Slide 3: Recovery Modes ---
 #pagebreak()
