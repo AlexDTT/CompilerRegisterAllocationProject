@@ -48,9 +48,9 @@
     #v(0.12cm)
     #text(size: 9pt, fill: muted)[Group T9G2  /  Spring 2026]
     #v(0.28cm)
-    Alexandre Dinis Alves Teixeira \
-    Carlos Francisco de Sousa Ferreira Magalhaes Diogo \
-    Rodrigo Martins Dias
+    Alexandre Teixeira \
+    Carlos Diogo \
+    Rodrigo Dias
     #v(0.30cm)
     #pill[make test]  #pill[make docs]  #pill[./register_alloc -b ...]
   ]
@@ -147,7 +147,26 @@
   ]
 ])
 
-// --- Slide 5: Recovery Modes ---
+// --- Slide 5: Basic Algorithm ---
+#pagebreak()
+#slide("Basic Algorithm", [
+  #panelbox[
+    #text(weight: "bold", fill: orange-light, size: 9.5pt)[Core coloring loop]
+    #v(0.08cm)
+    - Build interference graph from webs
+    - Simplify: remove node with degree < K, push to stack
+    - Spill candidate: select high-degree node when no low-degree node exists
+    - Assign: pop stack, assign available register or mark for spill
+    - Rewrite program and repeat until colored or bounded spilling applied
+  ]
+
+  #v(0.10cm)
+  #rect(fill: code, radius: 4pt, inset: 6pt, stroke: 0.4pt + rgb("#38393b"))[
+    #text(size: 7.8pt, fill: muted)[Notes: K = number of physical registers. Spill heuristic: minimize cost/degree ratio.]
+  ]
+])
+
+// --- Slide 6: Recovery Modes ---
 #pagebreak()
 #slide("Spilling and Splitting", [
   #grid(columns: (2fr, 2fr), gutter: 0cm)[
