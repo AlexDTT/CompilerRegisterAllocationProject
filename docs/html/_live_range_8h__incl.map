@@ -1,0 +1,7 @@
+<map id="models/LiveRange.h" name="models/LiveRange.h">
+<area shape="rect" id="Node000001" title="Data model for a single live range of a variable." alt="" coords="5,5,146,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="9,79,62,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,33,52,67,47,64,67,30"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="87,79,144,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="84,30,104,64,99,67,80,33"/>
+</map>
