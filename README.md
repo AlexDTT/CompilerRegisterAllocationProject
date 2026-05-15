@@ -150,7 +150,7 @@ The application pipeline follows the live-range to web to interference-graph wor
 ### Non-interference adjacency example
 <div class="interactive_dotgraph">
 
-\dotfile dox/example_noninterference_chain.dot "Definition at last-use line allows register reuse"
+\dotfile dox/example_noninterference_chain.dot "Definition at last-use line allows register reuse (red means no interference, the dashed edges are not actual interferences)"
 
 </div>
 

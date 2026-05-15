@@ -121,7 +121,7 @@ About the Project</h1>
 <ul>
 <li>merges compatible live ranges into <b>webs</b>;</li>
 <li>builds the corresponding <b>interference graph</b>;</li>
-<li>allocates webs to a bounded number of physical registers;</li>
+<li>allocates webs to a bounded number of physical registers (using graph coloring);</li>
 <li>applies <b>spilling</b> or <b>splitting</b> when selected by the configuration file.</li>
 </ul>
 <p>The tool includes four allocation modes:</p>
@@ -129,7 +129,7 @@ About the Project</h1>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Mode  </th><th class="markdownTableHeadNone">Summary  </th><th class="markdownTableHeadNone">Main idea  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">basic</span>  </td><td class="markdownTableBodyNone">Pure graph coloring  </td><td class="markdownTableBodyNone">Simplify-and-select coloring without user-authorized recovery actions.  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">basic</span>  </td><td class="markdownTableBodyNone">Pure graph coloring  </td><td class="markdownTableBodyNone">Simplify-and-select coloring. It's the greedy algorithm provided by the teacher.  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">spilling, K</span>  </td><td class="markdownTableBodyNone">Coloring with bounded spilling  </td><td class="markdownTableBodyNone">Removes up to <span class="tt">K</span> webs from the graph and assigns them to memory.  </td></tr>
 <tr class="markdownTableRowOdd">
@@ -204,7 +204,7 @@ Example Interference Graphs</h1>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
 Basic coloring example</h2>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_basic.svg" width="223" height="324"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_basic.svg" width="836" height="392"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Basic allocation example</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
@@ -228,8 +228,8 @@ Custom allocator with selective spill fallback</div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
 Non-interference adjacency example</h2>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_noninterference_chain.svg" width="867" height="771"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
-Definition at last-use line allows register reuse</div>
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_noninterference_chain.svg" width="650" height="574"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+Definition at last-use line allows register reuse (red means no interference, the dashed edges are not actual interferences)</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
 Web fusion example</h2>
