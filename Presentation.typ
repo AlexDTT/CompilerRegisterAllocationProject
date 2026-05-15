@@ -59,19 +59,7 @@
 // --- Slide 2: Pipeline ---
 #pagebreak()
 #slide("Pipeline", [
-  #grid(columns: (1fr, 1fr), gutter: 0.45cm)[
-    #panelbox[
-      #text(weight: "bold", fill: orange-light, size: 9.5pt)[Core flow]
-      #v(0.08cm)
-      - parse ranges + config
-      - fuse ranges into webs
-      - build `Graph<int>` interference graph
-      - color with at most `K` registers
-      - export allocation text + colored DOT
-    ]
-  ][
-    #align(center)[#image("presentation_assets/splitting_example.svg", height: 4.2cm)]
-  ]
+  #align(center)[#image("presentation_assets/pipeline_graph.svg", height: 2.35cm)]
   #v(0.08cm)
   #text(size: 7.8pt, fill: muted)[Course `Graph<int>` as primary representation. Web ids are vertex labels.]
 ])
@@ -79,7 +67,7 @@
 // --- Slide 3: Recovery Modes ---
 #pagebreak()
 #slide("Spilling and Splitting", [
-  #grid(columns: (1fr, 1fr), gutter: 0.40cm)[
+  #grid(columns: (1fr, 1fr), gutter: 0.4cm)[
     #panelbox[
       #text(weight: "bold", fill: orange-light, size: 9.5pt)[Bounded spilling]
       #v(0.06cm)
@@ -146,20 +134,39 @@
 // --- Slide 6: Complexity ---
 #pagebreak()
 #slide("Complexities", [
-  #set text(size: 8.5pt)
-  #grid(columns: (1fr, 1fr), gutter: 0.35cm)[
+  #let complexity-row(label, formula) = [
+    #grid(columns: (1.5cm, 1fr), gutter: 0.2cm, align: horizon)[
+      #text(size: 7.5pt, weight: "bold", fill: fg)[#label]
+    ][
+      #text(size: 8pt, fill: fg)[#formula]
+    ]
+    #v(0.04cm)
+  ]
+  
+  #grid(columns: (1fr, 1fr), gutter: 0.4cm)[
     #panelbox[
-      Parse: $O(L P)$ | Build webs: $O(V R^2 P log P)$ \
-      Build graph: $O(W^2 P + E W)$ \
-      Basic: $O(W (W^2 + E))$
+      #text(weight: "bold", fill: orange-light, size: 9pt)[Input & graph building]
+      #v(0.12cm)
+      #complexity-row("Parse:", $O(L P)$)
+      #complexity-row("Build webs:", $O(V R^2 P log P)$)
+      #complexity-row("Interference:", $O(W^2 P + E W)$)
+      #v(0.08cm)
     ]
   ][
     #panelbox[
-      Spilling: $O((S + 1) W (W^2 + E))$ \
-      Splitting: $O(S Q (W^2 P + E W + W (W^2 + E)))$ \
-      Free: $O(W^2 + E log W)$ heuristic; exact pass guarded
+      #text(weight: "bold", fill: orange-light, size: 9pt)[Coloring algorithms]
+      #v(0.12cm)
+      #complexity-row("Basic:", $O(W (W^2 + E))$)
+      #complexity-row("Spilling:", $O((S+1) W (W^2 + E))$)
+      #complexity-row("Splitting:", $O(S Q (W^2 P + E W + W(W^2+E)))$)
+      #complexity-row("Free:", [$O(W^2 + E log W)$ (heuristic)])
     ]
   ]
-  #v(0.18cm)
-  #text(size: 7.8pt, fill: muted)[`W` = webs, `E` = adjacency entries, `P` = program points, `R` = ranges/variable, `S` = recovery bound, `Q` = candidate split positions. Bounds include vector-backed `Graph<int>` findVertex cost. Doxygen: `docs/html/index.html`.]
+  
+  #v(0.10cm)
+  #rect(fill: code, radius: 3pt, inset: 5pt)[
+    #text(size: 7pt, fill: muted)[
+      *Variables:* `W`=webs, `E`=edges, `P`=points, `R`=ranges/var, `S`=recovery bound, `Q`=split candidates, `L`=live ranges.
+    ]
+  ]
 ])

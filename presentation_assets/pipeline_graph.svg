@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 76" width="480" height="76">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>text { font-family: 'DejaVu Sans', sans-serif; }</style>
+  </defs>
+
+  <!-- Node 1: Parse -->
+  <rect x="12"  y="12" width="80" height="52" rx="5" fill="#2e3133" stroke="#4a4c50" stroke-width="0.5"/>
+  <text x="52"  y="33" text-anchor="middle" font-size="7.8" font-weight="bold" fill="#c8cbce">Parse</text>
+  <text x="52"  y="46" text-anchor="middle" font-size="7"   fill="#859399">ranges</text>
+  <text x="52"  y="56" text-anchor="middle" font-size="7"   fill="#859399">+ config</text>
+
+  <line x1="92" y1="38" x2="106" y2="38" stroke="#859399" stroke-width="1.2" fill="none" marker-end="url(#a)"/>
+
+  <!-- Node 2: Fuse webs -->
+  <rect x="106" y="12" width="80" height="52" rx="5" fill="#0d4a38" stroke="#1d7a5c" stroke-width="0.5"/>
+  <text x="146" y="33" text-anchor="middle" font-size="7.8" font-weight="bold" fill="#7dd9b8">Fuse webs</text>
+  <text x="146" y="46" text-anchor="middle" font-size="7"   fill="#859399">merge live</text>
+  <text x="146" y="56" text-anchor="middle" font-size="7"   fill="#859399">ranges</text>
+
+  <line x1="186" y1="38" x2="200" y2="38" stroke="#859399" stroke-width="1.2" fill="none" marker-end="url(#a)"/>
+
+  <!-- Node 3: Build graph -->
+  <rect x="200" y="12" width="80" height="52" rx="5" fill="#2d2a5a" stroke="#6b63c4" stroke-width="0.5"/>
+  <text x="240" y="33" text-anchor="middle" font-size="7.8" font-weight="bold" fill="#b8b0f0">Build graph</text>
+  <text x="240" y="46" text-anchor="middle" font-size="7"   fill="#859399">Graph&lt;int&gt;</text>
+  <text x="240" y="56" text-anchor="middle" font-size="7"   fill="#859399">interference</text>
+
+  <line x1="280" y1="38" x2="294" y2="38" stroke="#859399" stroke-width="1.2" fill="none" marker-end="url(#a)"/>
+
+  <!-- Node 4: Color ≤K -->
+  <rect x="294" y="12" width="80" height="52" rx="5" fill="#3d2d0a" stroke="#c47e14" stroke-width="0.5"/>
+  <text x="334" y="33" text-anchor="middle" font-size="7.8" font-weight="bold" fill="#f0ba60">Color</text>
+  <text x="334" y="46" text-anchor="middle" font-size="7"   fill="#859399">at most</text>
+  <text x="334" y="56" text-anchor="middle" font-size="7"   fill="#859399">K registers</text>
+
+  <line x1="374" y1="38" x2="388" y2="38" stroke="#859399" stroke-width="1.2" fill="none" marker-end="url(#a)"/>
+
+  <!-- Node 5: Export -->
+  <rect x="388" y="12" width="80" height="52" rx="5" fill="#0d4a38" stroke="#1d7a5c" stroke-width="0.5"/>
+  <text x="428" y="33" text-anchor="middle" font-size="7.8" font-weight="bold" fill="#7dd9b8">Export</text>
+  <text x="428" y="46" text-anchor="middle" font-size="7"   fill="#859399">alloc text</text>
+  <text x="428" y="56" text-anchor="middle" font-size="7"   fill="#859399">+ colored DOT</text>
+</svg>
