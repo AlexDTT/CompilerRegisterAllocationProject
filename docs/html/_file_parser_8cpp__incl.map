@@ -1,0 +1,32 @@
+<map id="io/FileParser.cpp" name="io/FileParser.cpp">
+<area shape="rect" id="Node000001" title="Implementation of FileParser." alt="" coords="483,5,601,31"/>
+<area shape="rect" id="Node000002" href="$_file_parser_8h.html" title="Parses the live&#45;ranges input file and the registers/config file." alt="" coords="147,79,251,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="484,34,267,79,266,74,483,29"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="276,79,341,105"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="503,34,357,79,355,74,501,29"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="365,79,436,105"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="519,34,439,74,437,69,517,29"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="460,79,528,105"/>
+<area shape="poly" id="edge12_Node000001_Node000010" title=" " alt="" coords="536,33,513,67,508,64,532,30"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="552,79,630,105"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="552,30,577,65,572,68,548,33"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="654,79,728,105"/>
+<area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="568,29,653,70,651,74,566,34"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="753,79,813,105"/>
+<area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="584,29,739,75,737,80,582,34"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="837,79,876,105"/>
+<area shape="poly" id="edge16_Node000001_Node000014" title=" " alt="" coords="602,27,702,46,823,76,822,81,701,51,601,32"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,153,52,178"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="171,108,67,151,65,146,169,103"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="172,226,226,252"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="171,107,140,126,127,139,116,154,113,172,122,189,139,204,160,217,157,222,136,209,118,192,108,173,111,152,123,135,137,122,168,103"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="390,226,448,252"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="252,101,375,128,426,141,450,151,457,167,456,184,441,215,436,213,451,183,452,168,447,155,424,146,374,134,251,107"/>
+<area shape="rect" id="Node000006" href="$_live_range_8h.html" title="Data model for a single live range of a variable." alt="" coords="296,153,436,178"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="228,103,325,144,322,149,226,108"/>
+<area shape="rect" id="Node000007" href="$_parameters_8h.html" title="Configuration parameters parsed from the registers/config input file." alt="" coords="126,153,272,178"/>
+<area shape="poly" id="edge8_Node000002_Node000007" title=" " alt="" coords="202,105,202,137,196,137,196,105"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="339,181,241,223,239,218,337,176"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="377,177,403,212,399,215,373,180"/>
+<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="202,179,202,211,196,211,196,179"/>
+</map>

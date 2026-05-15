@@ -1,6 +1,6 @@
 var register__alloc__tests_8cpp =
 [
-    [ "ScopedStreamRedirect", "classScopedStreamRedirect.html", "classScopedStreamRedirect" ],
+    [ "ScopedStreamRedirect", "class_scoped_stream_redirect.html", "class_scoped_stream_redirect" ],
     [ "EXPECT_EQ", "register__alloc__tests_8cpp.html#a7c198106d8a380a0b194d16c918943d2", null ],
     [ "EXPECT_TRUE", "register__alloc__tests_8cpp.html#a160011a1d2f68d002f76eef2263489e6", null ],
     [ "colorsRespectInterference", "register__alloc__tests_8cpp.html#a81484c302ed69e03423e4e77215a2348", null ],

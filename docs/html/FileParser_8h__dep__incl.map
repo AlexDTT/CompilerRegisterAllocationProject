@@ -1,9 +1,0 @@
-<map id="io/FileParser.h" name="io/FileParser.h">
-<area shape="rect" id="Node000001" title="Parses the live&#45;ranges input file and the registers/config file." alt="" coords="162,5,266,32"/>
-<area shape="rect" id="Node000002" href="$FileParser_8cpp.html" title="Implementation of FileParser." alt="" coords="5,88,124,115"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="179,42,89,90,86,85,176,37"/>
-<area shape="rect" id="Node000003" href="$register__alloc__tests_8cpp.html" title="Unit tests for the compiler register allocation project." alt="" coords="148,80,280,123"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="216,48,216,80,211,80,211,48"/>
-<area shape="rect" id="Node000004" href="$RegisterAllocApp_8cpp.html" title="Implementation of the interactive CLI and batch mode." alt="" coords="304,88,465,115"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="255,37,359,85,357,90,253,41"/>
-</map>

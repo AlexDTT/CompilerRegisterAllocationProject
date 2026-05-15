@@ -1,0 +1,29 @@
+<map id="models/Parameters.h" name="models/Parameters.h">
+<area shape="rect" id="Node000001" title="Configuration parameters parsed from the registers/config input file." alt="" coords="412,5,557,31"/>
+<area shape="rect" id="Node000002" href="$_graph_coloring_8h.html" title="Graph&#45;coloring&#45;based register allocation algorithms." alt="" coords="166,79,345,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="432,39,295,81,294,76,430,34"/>
+<area shape="rect" id="Node000004" href="$_allocation_logic_8h.html" title="Orchestration layer: runs the selected algorithm and writes output." alt="" coords="274,153,447,178"/>
+<area shape="poly" id="edge14_Node000001_Node000004" title=" " alt="" coords="467,45,373,154,369,150,463,41"/>
+<area shape="rect" id="Node000006" href="$register__alloc__tests_8cpp.html" title="Unit tests for the compiler register allocation project." alt="" coords="295,226,426,267"/>
+<area shape="poly" id="edge15_Node000001_Node000006" title=" " alt="" coords="489,47,486,110,477,146,462,180,436,208,406,228,403,224,433,204,457,177,472,144,480,109,484,46"/>
+<area shape="rect" id="Node000007" href="$_register_alloc_app_8h.html" title="Main application controller: CLI and batch&#45;mode entry points." alt="" coords="451,234,598,260"/>
+<area shape="poly" id="edge16_Node000001_Node000007" title=" " alt="" coords="497,45,506,78,520,167,527,233,521,234,515,168,501,80,492,47"/>
+<area shape="rect" id="Node000010" href="$_file_parser_8h.html" title="Parses the live&#45;ranges input file and the registers/config file." alt="" coords="606,153,710,178"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="512,39,645,150,642,154,509,43"/>
+<area shape="rect" id="Node000003" href="$_graph_coloring_8cpp.html" title="Implementations of graph&#45;coloring register allocation algorithms." alt="" coords="5,153,199,178"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="217,114,129,154,127,150,214,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="287,111,344,150,341,154,284,116"/>
+<area shape="poly" id="edge9_Node000002_Node000006" title=" " alt="" coords="254,120,255,149,264,177,287,204,317,224,314,228,284,208,260,180,250,150,249,120"/>
+<area shape="rect" id="Node000005" href="$_allocation_logic_8cpp.html" title="Implementation of the AllocationLogic orchestration layer." alt="" coords="83,234,270,260"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="319,187,206,236,204,231,317,182"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="363,194,363,226,358,226,358,194"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="401,183,501,231,498,236,399,188"/>
+<area shape="rect" id="Node000008" href="$main_8cpp.html" title=" " alt="" coords="488,315,562,341"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="527,275,527,314,522,314,522,275"/>
+<area shape="rect" id="Node000009" href="$_register_alloc_app_8cpp.html" title="Implementation of the interactive CLI and batch mode." alt="" coords="641,315,803,341"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="570,263,693,312,691,317,568,268"/>
+<area shape="poly" id="edge12_Node000010_Node000006" title=" " alt="" coords="598,185,428,230,426,225,597,180"/>
+<area shape="poly" id="edge13_Node000010_Node000009" title=" " alt="" coords="708,183,734,201,755,225,761,250,756,275,745,298,734,316,729,313,741,296,751,274,756,250,750,228,731,205,705,188"/>
+<area shape="rect" id="Node000011" href="$_file_parser_8cpp.html" title="Implementation of FileParser." alt="" coords="623,234,741,260"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="669,192,681,233,676,234,664,194"/>
+</map>
