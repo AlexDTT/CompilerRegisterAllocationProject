@@ -70,7 +70,84 @@
   ]
 ]
 
-// --- Slide 3: Recovery Modes ---
+// --- Slide 3: Input Format ---
+#pagebreak()
+#slide("Input Format", [
+  #grid(columns: (1fr, 1fr), gutter: 0.45cm, align: center)[
+    #panelbox[
+      #text(weight: "bold", fill: orange-light, size: 9.5pt)[Live ranges file]
+      #v(0.08cm)
+      #rect(fill: code, radius: 4pt, inset: 5pt)[
+        #text(font: "DejaVu Sans Mono", size: 7.2pt, fill: fg)[
+          sum: 7+,8,9,10- \
+          i: 1+,2,3,4,5,6- \
+          i: 9+,10,11,12-
+        ]
+      ]
+      #v(0.08cm)
+      - `var:` comma-separated line numbers
+      - `+` = definition, `-` = last use
+      - same variable → multiple ranges
+      - `#` starts a comment
+    ]
+  ][
+    #panelbox[
+      #text(weight: "bold", fill: orange-light, size: 9.5pt)[Register config file]
+      #v(0.08cm)
+      #rect(fill: code, radius: 4pt, inset: 5pt)[
+        #text(font: "DejaVu Sans Mono", size: 7.2pt, fill: fg)[
+          registers: 2 \
+          algorithm: spilling, 1
+        ]
+      ]
+      #v(0.08cm)
+      - `registers:` number of physical regs
+      - `algorithm:` `basic` | `spilling,N` | `splitting,N` | `free`
+      - missing algorithm defaults to `basic`
+    ]
+  ]
+])
+
+// --- Slide 4: Output Format ---
+#pagebreak()
+#slide("Output Format", [
+  #grid(columns: (1fr, 1fr), gutter: -1.4cm, align: center)[
+    #panelbox[
+      #text(weight: "bold", fill: orange-light, size: 9.5pt)[Allocation file]
+      #v(0.06cm)
+      #rect(fill: code, radius: 4pt, inset: 5pt)[
+        #text(font: "DejaVu Sans Mono", size: 7pt, fill: fg)[
+          webs: 3 \
+          web0: 1+,2,3,4,5,6- \
+          web1: 9+,10,11,12,14-,20+ \
+          web2: 7+,8,9,10- \
+          \
+          registers: 2 \
+          r0: web0 \
+          r0: web2 \
+          r1: web1
+        ]
+      ]
+    ]
+  ][
+    #panelbox[
+      #text(weight: "bold", fill: orange-light, size: 9.5pt)[Sections]
+      #v(0.10cm)
+      - *Web list:* `webN:` sorted points
+      - *Assignment:* `rN` or `M` per web
+      - *Metadata:* `spills`/`splits` record
+      #v(0.12cm)
+      #text(weight: "bold", fill: orange-light, size: 9.5pt)[DOT output]
+      #v(0.10cm)
+      - Same register = same fill color
+      - Memory webs → gray boxes
+      - Split webs → orange border
+      - Written alongside allocation
+    ]
+  ]
+])
+
+// --- Slide 5: Recovery Modes ---
 #pagebreak()
 #slide("Spilling and Splitting", [
   #grid(columns: (1fr, 1fr), gutter: 0.4cm)[
@@ -92,7 +169,7 @@
   ]
 ])
 
-// --- Slide 4: Free Algorithm ---
+// --- Slide 6: Free Algorithm ---
 #pagebreak()
 #slide("Custom Free Algorithm", [
   #grid(columns: (1fr, 1fr), gutter: 0.45cm)[
@@ -114,7 +191,7 @@
   ]
 ])
 
-// --- Slide 5: Demo Commands ---
+// --- Slide 7: Demo Commands ---
 #pagebreak()
 #slide("Demo and Testing", [
   #grid(columns: (1fr, 1fr), gutter: 0.45cm)[
@@ -141,7 +218,7 @@
   ]
 ])
 
-// --- Slide 6: Complexity ---
+// --- Slide 8: Complexity ---
 #pagebreak()
 #slide("Complexities", [
   #let complexity-row(label, formula) = [
