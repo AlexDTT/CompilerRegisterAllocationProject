@@ -63,6 +63,10 @@
   #place(top + left)[#rect(width: 0.08cm, height: 100%, fill: orange)]
   #pad(x: 0.68cm, y: 0.26cm)[
     #align(center)[#image("presentation_assets/annotated_architecture.svg", width: 10cm)]
+    #v(0.08cm)
+    #rect(fill: code, radius: 4pt, inset: 6pt, stroke: 0.4pt + rgb("#38393b"))[
+      #text(size: 7.8pt, fill: muted)[Course `Graph<int>` as primary representation. Web ids are vertex labels.]
+    ]
   ]
 ]
 
@@ -83,7 +87,9 @@
     ]
   ]
   #v(0.08cm)
-  #text(size: 7.8pt, fill: muted)[Splitting preserves original markers. `1+,2,5,6-` splits into `1+,2` and `5,6-` — no fabricated `2-` or `5+`. Metadata: `spills: N` / `splits: N`.]
+  #rect(fill: code, radius: 4pt, inset: 6pt, stroke: 0.4pt + rgb("#38393b"))[
+    #text(size: 7.8pt, fill: muted)[Splitting preserves original markers. `1+,2,5,6-` splits into `1+,2` and `5,6-` — no fabricated `2-` or `5+`. Metadata: `spills: N` / `splits: N`.]
+  ]
 ])
 
 // --- Slide 4: Free Algorithm ---
@@ -93,18 +99,18 @@
     #panelbox[
       #text(weight: "bold", fill: orange-light, size: 9.5pt)[Hybrid strategy]
       #v(0.08cm)
-      - edgeless graphs: 1 register
-      - complete graphs: K colored, rest spilled
-      - bipartite graphs: BFS 2-coloring
-      - general: DSatur greedy coloring
-      - small/medium: branch-and-bound refines spills
+      - Edgeless graphs: 1 register
+      - Complete graphs: K colored, rest spilled
+      - Bipartite graphs: BFS 2-coloring
+      - General: DSatur greedy coloring
+      - Small/medium: branch-and-bound refines spills
     ]
   ][
     #align(center)[#image("presentation_assets/free_triangle.svg", height: 4.5cm)]
   ]
   #v(0.10cm)
-  #rect(fill: code, radius: 4pt, inset: 6pt)[
-    #text(size: 8pt)[Invariant: interfering colored webs never share a register. Memory only for uncolored webs.]
+  #rect(fill: code, radius: 4pt, inset: 6pt, stroke: 0.4pt + rgb("#38393b"))[
+    #text(size: 7.8pt, fill: muted)[Invariant: interfering colored webs never share a register. Memory only for uncolored webs.]
   ]
 ])
 
@@ -130,7 +136,9 @@
     ]
   ]
   #v(0.08cm)
-  #text(size: 7.5pt, fill: muted)[`make test` — 76 unit + 9 integration (passes clean). DOT graphs written alongside allocation output.]
+  #rect(fill: code, radius: 4pt, inset: 6pt, stroke: 0.4pt + rgb("#38393b"))[
+    #text(size: 7.8pt, fill: muted)[`make test` — 76 unit + 9 integration (passes clean). DOT graphs written alongside allocation output.]
+  ]
 ])
 
 // --- Slide 6: Complexity ---
@@ -166,8 +174,8 @@
   ]
   
   #v(0.10cm)
-  #rect(fill: code, radius: 3pt, inset: 5pt)[
-    #text(size: 7pt, fill: muted)[
+  #rect(fill: code, radius: 4pt, inset: 6pt, stroke: 0.4pt + rgb("#38393b"))[
+    #text(size: 7.8pt, fill: muted)[
       *Variables:* `W`=webs, `E`=edges, `P`=points, `R`=ranges/var, `S`=recovery bound, `Q`=split candidates, `L`=live ranges.
     ]
   ]
