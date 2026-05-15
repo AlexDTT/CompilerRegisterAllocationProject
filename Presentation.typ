@@ -150,7 +150,7 @@
 // --- Slide 5: Recovery Modes ---
 #pagebreak()
 #slide("Spilling and Splitting", [
-  #grid(columns: (1fr, 1fr), gutter: 0.4cm)[
+  #grid(columns: (2fr, 2fr), gutter: 0cm)[
     #panelbox[
       #text(weight: "bold", fill: orange-light, size: 9.5pt)[Bounded spilling]
       #v(0.06cm)
@@ -160,7 +160,7 @@
     #panelbox[
       #text(weight: "bold", fill: orange-light, size: 9.5pt)[Bounded splitting]
       #v(0.06cm)
-      #align(center)[#image("presentation_assets/splitting_bridge.svg", height: 3.8cm)]
+      #align(center)[#image("presentation_assets/splitting_bridge.svg", height: 3.4cm)]
     ]
   ]
   #rect(fill: code, radius: 4pt, inset: 6pt, stroke: 0.4pt + rgb("#38393b"))[
