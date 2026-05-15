@@ -105,11 +105,9 @@ public:
     bool isSelected() const;
     Vertex<T> *getOrig() const;
     Edge<T> *getReverse() const;
-    double getFlow() const;
 
     void setSelected(bool selected);
     void setReverse(Edge<T> *reverse);
-    void setFlow(double flow);
 
 protected:
     Vertex<T> *dest;
@@ -120,7 +118,6 @@ protected:
     Vertex<T> *orig;
     Edge<T> *reverse = nullptr;
 
-    double flow = 0;
 };
 
 /********************** Graph  ****************************/
@@ -456,12 +453,6 @@ bool Edge<T>::isSelected() const
 }
 
 template <class T>
-double Edge<T>::getFlow() const
-{
-    return flow;
-}
-
-template <class T>
 void Edge<T>::setSelected(bool selected)
 {
     this->selected = selected;
@@ -473,11 +464,6 @@ void Edge<T>::setReverse(Edge<T> *reverse)
     this->reverse = reverse;
 }
 
-template <class T>
-void Edge<T>::setFlow(double flow)
-{
-    this->flow = flow;
-}
 
 /********************** Graph  ****************************/
 
