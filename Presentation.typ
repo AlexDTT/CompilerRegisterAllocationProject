@@ -52,7 +52,7 @@
     Carlos Francisco de Sousa Ferreira Magalhaes Diogo \
     Rodrigo Martins Dias
     #v(0.30cm)
-    #pill[`make test`]  #pill[`make docs`]  #pill[`./register_alloc -b ...`]
+    #pill[make test]  #pill[make docs]  #pill[./register_alloc -b ...]
   ]
 ])
 
@@ -65,7 +65,7 @@
     #align(center)[#image("presentation_assets/annotated_architecture.svg", width: 10cm)]
     #v(0.08cm)
     #rect(fill: code, radius: 4pt, inset: 6pt, stroke: 0.4pt + rgb("#38393b"))[
-      #text(size: 7.8pt, fill: muted)[Course `Graph<int>` as primary representation. Web ids are vertex labels.]
+      #text(size: 7.8pt, fill: muted)[Course Graph<int> as primary representation. Web ids are vertex labels.]
     ]
   ]
 ]
@@ -73,7 +73,7 @@
 // --- Slide 3: Input Format ---
 #pagebreak()
 #slide("Input Format", [
-  #grid(columns: (1fr, 1fr), gutter: 0.45cm, align: center)[
+  #grid(columns: (1fr, 1fr), gutter: 0.45cm)[
     #panelbox[
       #text(weight: "bold", fill: orange-light, size: 9.5pt)[Live ranges file]
       #v(0.08cm)
@@ -85,10 +85,10 @@
         ]
       ]
       #v(0.08cm)
-      - `var:` comma-separated line numbers
-      - `+` = definition, `-` = last use
+      - var: comma-separated line numbers
+      - \+ = definition, - = last use
       - same variable → multiple ranges
-      - `#` starts a comment
+      - \# starts a comment
     ]
   ][
     #panelbox[
@@ -101,9 +101,9 @@
         ]
       ]
       #v(0.08cm)
-      - `registers:` number of physical regs
-      - `algorithm:` `basic` | `spilling,N` | `splitting,N` | `free`
-      - missing algorithm defaults to `basic`
+      - registers: number of physical regs
+      - algorithm: basic | spilling,N | splitting,N | free
+      - missing algorithm defaults to basic
     ]
   ]
 ])
@@ -111,7 +111,7 @@
 // --- Slide 4: Output Format ---
 #pagebreak()
 #slide("Output Format", [
-  #grid(columns: (1fr, 1fr), gutter: -1.4cm, align: center)[
+  #grid(columns: (1fr, 1fr), gutter: -1.4cm, align: left)[
     #panelbox[
       #text(weight: "bold", fill: orange-light, size: 9.5pt)[Allocation file]
       #v(0.06cm)
@@ -133,9 +133,9 @@
     #panelbox[
       #text(weight: "bold", fill: orange-light, size: 9.5pt)[Sections]
       #v(0.10cm)
-      - *Web list:* `webN:` sorted points
-      - *Assignment:* `rN` or `M` per web
-      - *Metadata:* `spills`/`splits` record
+      - *Web list:* webN: sorted points
+      - *Assignment:* rN or M per web
+      - *Metadata:* spills/splits record
       #v(0.12cm)
       #text(weight: "bold", fill: orange-light, size: 9.5pt)[DOT output]
       #v(0.10cm)
@@ -163,9 +163,8 @@
       #align(center)[#image("presentation_assets/splitting_bridge.svg", height: 3.8cm)]
     ]
   ]
-  #v(0.08cm)
   #rect(fill: code, radius: 4pt, inset: 6pt, stroke: 0.4pt + rgb("#38393b"))[
-    #text(size: 7.8pt, fill: muted)[Splitting preserves original markers. `1+,2,5,6-` splits into `1+,2` and `5,6-` — no fabricated `2-` or `5+`. Metadata: `spills: N` / `splits: N`.]
+    #text(size: 7.8pt, fill: muted)[Splitting preserves original markers. 1+,2,5,6- splits into 1+,2 and 5,6- — no fabricated 2- or 5+. Metadata: spills: N / splits: N.]
   ]
 ])
 
@@ -198,9 +197,9 @@
     #panelbox[
       #text(weight: "bold", fill: orange-light, size: 9.5pt)[Inputs for the demo]
       #v(0.08cm)
-      - `complex_allocation.txt` + `free4.txt`: dense allocator stress test
-      - `splitting_showcase.txt` + `splitting2.txt`: split reduces K from 3 to 2
-      - `spilling5.txt`: bounded spilling in a dense graph
+      - complex_allocation.txt + free4.txt: dense allocator stress test
+      - splitting_showcase.txt + splitting2.txt: split reduces K from 3 to 2
+      - spilling5.txt: bounded spilling in a dense graph
     ]
   ][
     #rect(fill: code, radius: 5pt, inset: 7pt)[
@@ -214,7 +213,7 @@
   ]
   #v(0.08cm)
   #rect(fill: code, radius: 4pt, inset: 6pt, stroke: 0.4pt + rgb("#38393b"))[
-    #text(size: 7.8pt, fill: muted)[`make test` — 76 unit + 9 integration (passes clean). DOT graphs written alongside allocation output.]
+    #text(size: 7.8pt, fill: muted)[make test — 76 unit + 9 integration (passes clean). DOT graphs written alongside allocation output.]
   ]
 ])
 
@@ -222,7 +221,7 @@
 #pagebreak()
 #slide("Complexities", [
   #let complexity-row(label, formula) = [
-    #grid(columns: (1.5cm, 1fr), gutter: 0.2cm, align: horizon)[
+    #grid(columns: (2.4cm, 1fr), gutter: 0.3cm, align: horizon)[
       #text(size: 7.5pt, weight: "bold", fill: fg)[#label]
     ][
       #text(size: 8pt, fill: fg)[#formula]
@@ -253,7 +252,7 @@
   #v(0.10cm)
   #rect(fill: code, radius: 4pt, inset: 6pt, stroke: 0.4pt + rgb("#38393b"))[
     #text(size: 7.8pt, fill: muted)[
-      *Variables:* `W`=webs, `E`=edges, `P`=points, `R`=ranges/var, `S`=recovery bound, `Q`=split candidates, `L`=live ranges.
+      *Variables:* W=webs, E=edges, P=points, R=ranges/var, S=recovery bound, Q=split candidates, L=live ranges.
     ]
   ]
 ])
