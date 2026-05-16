@@ -313,7 +313,7 @@ void RegisterAllocApp::runInteractiveMode()
       menuVisualization();
       break;
     case 0:
-      std::cout << "Goodbye!\n";
+      std::cout << "See you soon! If you ever need to figure out how to allocate some more registers, don't hesitate to ask!\n";
       return;
     default:
       std::cout << "   Unknown option. Try again.\n";
