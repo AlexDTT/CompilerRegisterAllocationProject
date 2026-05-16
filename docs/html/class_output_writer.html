@@ -308,49 +308,44 @@ Static Private Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   90</span>  }</div>
 <div class="line"><span class="lineno">   91</span> </div>
 <div class="line"><span class="lineno">   92</span>  <span class="keywordtype">bool</span> allSpilled = usedRegs.empty();</div>
-<div class="line"><span class="lineno">   93</span>  <span class="keywordflow">if</span> (allSpilled)</div>
-<div class="line"><span class="lineno">   94</span>  {</div>
-<div class="line"><span class="lineno">   95</span>    std::cerr &lt;&lt; <span class="stringliteral">&quot;Warning: register allocation was not feasible – all webs spilled to memory.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">   96</span>  }</div>
-<div class="line"><span class="lineno">   97</span> </div>
-<div class="line"><span class="lineno">   98</span>  out &lt;&lt; <span class="stringliteral">&quot;# Total number of registers used, followed by assignment to webs\n&quot;</span>;</div>
-<div class="line"><span class="lineno">   99</span>  out &lt;&lt; <span class="stringliteral">&quot;registers: &quot;</span> &lt;&lt; (allSpilled ? 0 : (int)usedRegs.size()) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  100</span> </div>
-<div class="line"><span class="lineno">  101</span>  <span class="comment">// Group webs by register for output</span></div>
-<div class="line"><span class="lineno">  102</span>  <span class="comment">// First output register assignments, then memory spills</span></div>
-<div class="line"><span class="lineno">  103</span>  std::map&lt;int, std::vector&lt;int&gt;&gt; regToWebs;</div>
-<div class="line"><span class="lineno">  104</span>  std::vector&lt;int&gt; spilledWebs;</div>
-<div class="line"><span class="lineno">  105</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;web : orderedWebs)</div>
-<div class="line"><span class="lineno">  106</span>  {</div>
-<div class="line"><span class="lineno">  107</span>    <span class="keyword">auto</span> it = webToRegister.find(web.id);</div>
-<div class="line"><span class="lineno">  108</span>    <span class="keywordtype">int</span> reg = (it != webToRegister.end()) ? it-&gt;second : -1;</div>
-<div class="line"><span class="lineno">  109</span>    <span class="keywordflow">if</span> (reg &gt;= 0)</div>
-<div class="line"><span class="lineno">  110</span>      regToWebs[reg].push_back(web.id);</div>
-<div class="line"><span class="lineno">  111</span>    <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  112</span>      spilledWebs.push_back(web.id);</div>
-<div class="line"><span class="lineno">  113</span>  }</div>
-<div class="line"><span class="lineno">  114</span> </div>
-<div class="line"><span class="lineno">  115</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;[reg, wids] : regToWebs)</div>
-<div class="line"><span class="lineno">  116</span>  {</div>
-<div class="line"><span class="lineno">  117</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> wid : wids)</div>
-<div class="line"><span class="lineno">  118</span>    {</div>
-<div class="line"><span class="lineno">  119</span>      out &lt;&lt; <span class="stringliteral">&quot;r&quot;</span> &lt;&lt; reg &lt;&lt; <span class="stringliteral">&quot;: web&quot;</span> &lt;&lt; wid &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  120</span>    }</div>
-<div class="line"><span class="lineno">  121</span>  }</div>
-<div class="line"><span class="lineno">  122</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> wid : spilledWebs)</div>
+<div class="line"><span class="lineno">   93</span>  out &lt;&lt; <span class="stringliteral">&quot;# Total number of registers used, followed by assignment to webs\n&quot;</span>;</div>
+<div class="line"><span class="lineno">   94</span>  out &lt;&lt; <span class="stringliteral">&quot;registers: &quot;</span> &lt;&lt; (allSpilled ? 0 : (int)usedRegs.size()) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">   95</span> </div>
+<div class="line"><span class="lineno">   96</span>  <span class="comment">// Group webs by register for output</span></div>
+<div class="line"><span class="lineno">   97</span>  <span class="comment">// First output register assignments, then memory spills</span></div>
+<div class="line"><span class="lineno">   98</span>  std::map&lt;int, std::vector&lt;int&gt;&gt; regToWebs;</div>
+<div class="line"><span class="lineno">   99</span>  std::vector&lt;int&gt; spilledWebs;</div>
+<div class="line"><span class="lineno">  100</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;web : orderedWebs)</div>
+<div class="line"><span class="lineno">  101</span>  {</div>
+<div class="line"><span class="lineno">  102</span>    <span class="keyword">auto</span> it = webToRegister.find(web.id);</div>
+<div class="line"><span class="lineno">  103</span>    <span class="keywordtype">int</span> reg = (it != webToRegister.end()) ? it-&gt;second : -1;</div>
+<div class="line"><span class="lineno">  104</span>    <span class="keywordflow">if</span> (reg &gt;= 0)</div>
+<div class="line"><span class="lineno">  105</span>      regToWebs[reg].push_back(web.id);</div>
+<div class="line"><span class="lineno">  106</span>    <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  107</span>      spilledWebs.push_back(web.id);</div>
+<div class="line"><span class="lineno">  108</span>  }</div>
+<div class="line"><span class="lineno">  109</span> </div>
+<div class="line"><span class="lineno">  110</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;[reg, wids] : regToWebs)</div>
+<div class="line"><span class="lineno">  111</span>  {</div>
+<div class="line"><span class="lineno">  112</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> wid : wids)</div>
+<div class="line"><span class="lineno">  113</span>    {</div>
+<div class="line"><span class="lineno">  114</span>      out &lt;&lt; <span class="stringliteral">&quot;r&quot;</span> &lt;&lt; reg &lt;&lt; <span class="stringliteral">&quot;: web&quot;</span> &lt;&lt; wid &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  115</span>    }</div>
+<div class="line"><span class="lineno">  116</span>  }</div>
+<div class="line"><span class="lineno">  117</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> wid : spilledWebs)</div>
+<div class="line"><span class="lineno">  118</span>  {</div>
+<div class="line"><span class="lineno">  119</span>    out &lt;&lt; <span class="stringliteral">&quot;M: web&quot;</span> &lt;&lt; wid &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  120</span>  }</div>
+<div class="line"><span class="lineno">  121</span> </div>
+<div class="line"><span class="lineno">  122</span>  <span class="keywordflow">if</span> (!metadataLines.empty())</div>
 <div class="line"><span class="lineno">  123</span>  {</div>
-<div class="line"><span class="lineno">  124</span>    out &lt;&lt; <span class="stringliteral">&quot;M: web&quot;</span> &lt;&lt; wid &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  125</span>  }</div>
-<div class="line"><span class="lineno">  126</span> </div>
-<div class="line"><span class="lineno">  127</span>  <span class="keywordflow">if</span> (!metadataLines.empty())</div>
-<div class="line"><span class="lineno">  128</span>  {</div>
-<div class="line"><span class="lineno">  129</span>    out &lt;&lt; <span class="stringliteral">&quot;# Alternative algorithm metadata, one processing-friendly record per line\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  130</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;line : metadataLines)</div>
-<div class="line"><span class="lineno">  131</span>      out &lt;&lt; line &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  132</span>  }</div>
-<div class="line"><span class="lineno">  133</span> </div>
-<div class="line"><span class="lineno">  134</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  135</span>}</div>
+<div class="line"><span class="lineno">  124</span>    out &lt;&lt; <span class="stringliteral">&quot;# Alternative algorithm metadata, one processing-friendly record per line\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  125</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;line : metadataLines)</div>
+<div class="line"><span class="lineno">  126</span>      out &lt;&lt; line &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  127</span>  }</div>
+<div class="line"><span class="lineno">  128</span> </div>
+<div class="line"><span class="lineno">  129</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  130</span>}</div>
 <div class="ttc" id="aclass_output_writer_html_ae32955443148b7078bf139e6fd8a67e8"><div class="ttname"><a href="#ae32955443148b7078bf139e6fd8a67e8">OutputWriter::formatWeb</a></div><div class="ttdeci">static std::string formatWeb(const Web &amp;web)</div><div class="ttdoc">Formats a whole web as a single sorted program-point list.</div><div class="ttdef"><b>Definition</b> <a href="_output_writer_8cpp_source.html#l00017">OutputWriter.cpp:17</a></div></div>
 </div><!-- fragment -->
 </div>

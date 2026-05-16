@@ -284,24 +284,24 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00745">745</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  746</span>{</div>
-<div class="line"><span class="lineno">  747</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a1eeb9805ac2b1c9fd72365f419166e59">mGraphBuilt</a>)</div>
-<div class="line"><span class="lineno">  748</span>  {</div>
-<div class="line"><span class="lineno">  749</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   Graph not built.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  750</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  751</span>  }</div>
-<div class="line"><span class="lineno">  752</span>  <span class="keywordflow">if</span> (<a class="code hl_variable" href="#a0310fe9942c9eee5d334d52e19642c93">mLastResult</a>.webToRegister.empty())</div>
-<div class="line"><span class="lineno">  753</span>  {</div>
-<div class="line"><span class="lineno">  754</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   No allocation result available. Run register allocation first.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  755</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  756</span>  }</div>
-<div class="line"><span class="lineno">  757</span> </div>
-<div class="line"><span class="lineno">  758</span>  std::string path = <a class="code hl_function" href="#a96377595b90d45d115fc0ecb8bbae490">readLine</a>(<span class="stringliteral">&quot;Output colored DOT file path [allocation_colored.dot]: &quot;</span>);</div>
-<div class="line"><span class="lineno">  759</span>  <span class="keywordflow">if</span> (path.empty())</div>
-<div class="line"><span class="lineno">  760</span>    path = <span class="stringliteral">&quot;allocation_colored.dot&quot;</span>;</div>
-<div class="line"><span class="lineno">  761</span>  <a class="code hl_function" href="class_allocation_logic.html#a1e852e13b68f84b708ef033fb430e820">AllocationLogic::exportAllocationDOT</a>(<a class="code hl_variable" href="#a560e6fe2bdeead895e5d1a8fa983ffa9">mGraph</a>, <a class="code hl_variable" href="#a61d7eb2d25c35722797f0788ba1a0b66">mWebs</a>, <a class="code hl_variable" href="#a0310fe9942c9eee5d334d52e19642c93">mLastResult</a>, path);</div>
-<div class="line"><span class="lineno">  762</span>}</div>
+<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00766">766</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  767</span>{</div>
+<div class="line"><span class="lineno">  768</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a1eeb9805ac2b1c9fd72365f419166e59">mGraphBuilt</a>)</div>
+<div class="line"><span class="lineno">  769</span>  {</div>
+<div class="line"><span class="lineno">  770</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   Graph not built.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  771</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  772</span>  }</div>
+<div class="line"><span class="lineno">  773</span>  <span class="keywordflow">if</span> (<a class="code hl_variable" href="#a0310fe9942c9eee5d334d52e19642c93">mLastResult</a>.webToRegister.empty())</div>
+<div class="line"><span class="lineno">  774</span>  {</div>
+<div class="line"><span class="lineno">  775</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   No allocation result available. Run register allocation first.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  776</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  777</span>  }</div>
+<div class="line"><span class="lineno">  778</span> </div>
+<div class="line"><span class="lineno">  779</span>  std::string path = <a class="code hl_function" href="#a96377595b90d45d115fc0ecb8bbae490">readLine</a>(<span class="stringliteral">&quot;Output colored DOT file path [allocation_colored.dot]: &quot;</span>);</div>
+<div class="line"><span class="lineno">  780</span>  <span class="keywordflow">if</span> (path.empty())</div>
+<div class="line"><span class="lineno">  781</span>    path = <span class="stringliteral">&quot;allocation_colored.dot&quot;</span>;</div>
+<div class="line"><span class="lineno">  782</span>  <a class="code hl_function" href="class_allocation_logic.html#a1e852e13b68f84b708ef033fb430e820">AllocationLogic::exportAllocationDOT</a>(<a class="code hl_variable" href="#a560e6fe2bdeead895e5d1a8fa983ffa9">mGraph</a>, <a class="code hl_variable" href="#a61d7eb2d25c35722797f0788ba1a0b66">mWebs</a>, <a class="code hl_variable" href="#a0310fe9942c9eee5d334d52e19642c93">mLastResult</a>, path);</div>
+<div class="line"><span class="lineno">  783</span>}</div>
 <div class="ttc" id="aclass_allocation_logic_html_a1e852e13b68f84b708ef033fb430e820"><div class="ttname"><a href="class_allocation_logic.html#a1e852e13b68f84b708ef033fb430e820">AllocationLogic::exportAllocationDOT</a></div><div class="ttdeci">static bool exportAllocationDOT(const Graph&lt; int &gt; &amp;graph, const std::vector&lt; Web &gt; &amp;webs, const AllocationResult &amp;result, const std::string &amp;filename)</div><div class="ttdoc">Exports a colored DOT graph for a completed allocation result.</div><div class="ttdef"><b>Definition</b> <a href="_allocation_logic_8cpp_source.html#l00206">AllocationLogic.cpp:206</a></div></div>
 <div class="ttc" id="aclass_register_alloc_app_html_a0310fe9942c9eee5d334d52e19642c93"><div class="ttname"><a href="#a0310fe9942c9eee5d334d52e19642c93">RegisterAllocApp::mLastResult</a></div><div class="ttdeci">AllocationResult mLastResult</div><div class="ttdoc">Most recent allocation result.</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8h_source.html#l00060">RegisterAllocApp.h:60</a></div></div>
 <div class="ttc" id="aclass_register_alloc_app_html_a96377595b90d45d115fc0ecb8bbae490"><div class="ttname"><a href="#a96377595b90d45d115fc0ecb8bbae490">RegisterAllocApp::readLine</a></div><div class="ttdeci">std::string readLine(const std::string &amp;prompt) const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00101">RegisterAllocApp.cpp:101</a></div></div>
@@ -331,18 +331,18 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00732">732</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  733</span>{</div>
-<div class="line"><span class="lineno">  734</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a1eeb9805ac2b1c9fd72365f419166e59">mGraphBuilt</a>)</div>
-<div class="line"><span class="lineno">  735</span>  {</div>
-<div class="line"><span class="lineno">  736</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   Graph not built.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  737</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  738</span>  }</div>
-<div class="line"><span class="lineno">  739</span>  std::string path = <a class="code hl_function" href="#a96377595b90d45d115fc0ecb8bbae490">readLine</a>(<span class="stringliteral">&quot;Output DOT file path [interference.dot]: &quot;</span>);</div>
-<div class="line"><span class="lineno">  740</span>  <span class="keywordflow">if</span> (path.empty())</div>
-<div class="line"><span class="lineno">  741</span>    path = <span class="stringliteral">&quot;interference.dot&quot;</span>;</div>
-<div class="line"><span class="lineno">  742</span>  <a class="code hl_function" href="class_interference_graph.html#a6c2be86bbb30e5bd71c27f4719c4731f">InterferenceGraph::exportDOT</a>(<a class="code hl_variable" href="#a560e6fe2bdeead895e5d1a8fa983ffa9">mGraph</a>, <a class="code hl_variable" href="#a61d7eb2d25c35722797f0788ba1a0b66">mWebs</a>, path);</div>
-<div class="line"><span class="lineno">  743</span>}</div>
+<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00753">753</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  754</span>{</div>
+<div class="line"><span class="lineno">  755</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a1eeb9805ac2b1c9fd72365f419166e59">mGraphBuilt</a>)</div>
+<div class="line"><span class="lineno">  756</span>  {</div>
+<div class="line"><span class="lineno">  757</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   Graph not built.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  758</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  759</span>  }</div>
+<div class="line"><span class="lineno">  760</span>  std::string path = <a class="code hl_function" href="#a96377595b90d45d115fc0ecb8bbae490">readLine</a>(<span class="stringliteral">&quot;Output DOT file path [interference.dot]: &quot;</span>);</div>
+<div class="line"><span class="lineno">  761</span>  <span class="keywordflow">if</span> (path.empty())</div>
+<div class="line"><span class="lineno">  762</span>    path = <span class="stringliteral">&quot;interference.dot&quot;</span>;</div>
+<div class="line"><span class="lineno">  763</span>  <a class="code hl_function" href="class_interference_graph.html#a6c2be86bbb30e5bd71c27f4719c4731f">InterferenceGraph::exportDOT</a>(<a class="code hl_variable" href="#a560e6fe2bdeead895e5d1a8fa983ffa9">mGraph</a>, <a class="code hl_variable" href="#a61d7eb2d25c35722797f0788ba1a0b66">mWebs</a>, path);</div>
+<div class="line"><span class="lineno">  764</span>}</div>
 <div class="ttc" id="aclass_interference_graph_html_a6c2be86bbb30e5bd71c27f4719c4731f"><div class="ttname"><a href="class_interference_graph.html#a6c2be86bbb30e5bd71c27f4719c4731f">InterferenceGraph::exportDOT</a></div><div class="ttdeci">static void exportDOT(const Graph&lt; int &gt; &amp;graph, const std::vector&lt; Web &gt; &amp;webs, const std::string &amp;filename)</div><div class="ttdoc">Exports the interference graph in DOT format to filename.</div><div class="ttdef"><b>Definition</b> <a href="_interference_graph_8cpp_source.html#l00283">InterferenceGraph.cpp:283</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -370,12 +370,12 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00637">637</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  638</span>{</div>
-<div class="line"><span class="lineno">  639</span>  std::string path = <a class="code hl_function" href="#a96377595b90d45d115fc0ecb8bbae490">readLine</a>(<span class="stringliteral">&quot;Enter path to config file: &quot;</span>);</div>
-<div class="line"><span class="lineno">  640</span>  <span class="keywordflow">if</span> (!path.empty())</div>
-<div class="line"><span class="lineno">  641</span>    <a class="code hl_function" href="#ac249ab95434a294fa80b36eb27be7030">loadConfigFile</a>(path);</div>
-<div class="line"><span class="lineno">  642</span>}</div>
+<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00658">658</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  659</span>{</div>
+<div class="line"><span class="lineno">  660</span>  std::string path = <a class="code hl_function" href="#a96377595b90d45d115fc0ecb8bbae490">readLine</a>(<span class="stringliteral">&quot;Enter path to config file: &quot;</span>);</div>
+<div class="line"><span class="lineno">  661</span>  <span class="keywordflow">if</span> (!path.empty())</div>
+<div class="line"><span class="lineno">  662</span>    <a class="code hl_function" href="#ac249ab95434a294fa80b36eb27be7030">loadConfigFile</a>(path);</div>
+<div class="line"><span class="lineno">  663</span>}</div>
 <div class="ttc" id="aclass_register_alloc_app_html_ac249ab95434a294fa80b36eb27be7030"><div class="ttname"><a href="#ac249ab95434a294fa80b36eb27be7030">RegisterAllocApp::loadConfigFile</a></div><div class="ttdeci">bool loadConfigFile(const std::string &amp;path)</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00135">RegisterAllocApp.cpp:135</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -403,78 +403,78 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00534">534</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  535</span>{</div>
-<div class="line"><span class="lineno">  536</span>  std::string dirPath = <span class="stringliteral">&quot;inputs&quot;</span>;</div>
-<div class="line"><span class="lineno">  537</span>  <span class="keywordflow">if</span> (!fs::exists(dirPath))</div>
-<div class="line"><span class="lineno">  538</span>    dirPath = <span class="stringliteral">&quot;tests/input&quot;</span>;</div>
-<div class="line"><span class="lineno">  539</span> </div>
-<div class="line"><span class="lineno">  540</span>  std::vector&lt;std::string&gt; files;</div>
-<div class="line"><span class="lineno">  541</span>  <span class="keywordflow">if</span> (fs::exists(dirPath))</div>
-<div class="line"><span class="lineno">  542</span>  {</div>
-<div class="line"><span class="lineno">  543</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;entry : fs::recursive_directory_iterator(dirPath))</div>
-<div class="line"><span class="lineno">  544</span>    {</div>
-<div class="line"><span class="lineno">  545</span>      <span class="keywordflow">if</span> (!entry.is_regular_file())</div>
-<div class="line"><span class="lineno">  546</span>        <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  547</span>      <span class="keyword">auto</span> ext = entry.path().extension().string();</div>
-<div class="line"><span class="lineno">  548</span>      <span class="keywordflow">if</span> (ext == <span class="stringliteral">&quot;.txt&quot;</span> || ext == <span class="stringliteral">&quot;.ranges&quot;</span> || ext == <span class="stringliteral">&quot;.cfg&quot;</span> || ext == <span class="stringliteral">&quot;.conf&quot;</span>)</div>
-<div class="line"><span class="lineno">  549</span>      {</div>
-<div class="line"><span class="lineno">  550</span>        files.push_back(entry.path().string());</div>
-<div class="line"><span class="lineno">  551</span>      }</div>
-<div class="line"><span class="lineno">  552</span>    }</div>
-<div class="line"><span class="lineno">  553</span>  }</div>
-<div class="line"><span class="lineno">  554</span> </div>
-<div class="line"><span class="lineno">  555</span>  <span class="keywordflow">if</span> (files.empty())</div>
-<div class="line"><span class="lineno">  556</span>  {</div>
-<div class="line"><span class="lineno">  557</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   No candidate input files found in &#39;&quot;</span> &lt;&lt; dirPath &lt;&lt; <span class="stringliteral">&quot;&#39;.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  558</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  559</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00555">555</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  556</span>{</div>
+<div class="line"><span class="lineno">  557</span>  std::string dirPath = <span class="stringliteral">&quot;inputs&quot;</span>;</div>
+<div class="line"><span class="lineno">  558</span>  <span class="keywordflow">if</span> (!fs::exists(dirPath))</div>
+<div class="line"><span class="lineno">  559</span>    dirPath = <span class="stringliteral">&quot;tests/input&quot;</span>;</div>
 <div class="line"><span class="lineno">  560</span> </div>
-<div class="line"><span class="lineno">  561</span>  std::sort(files.begin(), files.end());</div>
-<div class="line"><span class="lineno">  562</span> </div>
-<div class="line"><span class="lineno">  563</span>  std::vector&lt;int&gt; cfgIdx;</div>
-<div class="line"><span class="lineno">  564</span>  std::vector&lt;int&gt; rngIdx;</div>
-<div class="line"><span class="lineno">  565</span> </div>
-<div class="line"><span class="lineno">  566</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;   Files in &#39;&quot;</span> &lt;&lt; dirPath &lt;&lt; <span class="stringliteral">&quot;&#39;:\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  567</span>  <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; files.size(); ++i)</div>
-<div class="line"><span class="lineno">  568</span>  {</div>
-<div class="line"><span class="lineno">  569</span>    <span class="keywordtype">bool</span> isCfg = looksLikeConfigPath(files[i]);</div>
-<div class="line"><span class="lineno">  570</span>    <span class="keywordflow">if</span> (isCfg)</div>
-<div class="line"><span class="lineno">  571</span>      cfgIdx.push_back((<span class="keywordtype">int</span>)i + 1);</div>
-<div class="line"><span class="lineno">  572</span>    <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  573</span>      rngIdx.push_back((<span class="keywordtype">int</span>)i + 1);</div>
-<div class="line"><span class="lineno">  574</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   [&quot;</span> &lt;&lt; i + 1 &lt;&lt; <span class="stringliteral">&quot;] &quot;</span> &lt;&lt; files[i]</div>
-<div class="line"><span class="lineno">  575</span>              &lt;&lt; (isCfg ? <span class="stringliteral">&quot;   (config?)&quot;</span> : <span class="stringliteral">&quot;   (ranges?)&quot;</span>) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  576</span>  }</div>
-<div class="line"><span class="lineno">  577</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;   [0] Cancel\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  578</span> </div>
-<div class="line"><span class="lineno">  579</span>  <span class="keywordtype">int</span> defaultRange = rngIdx.empty() ? 0 : rngIdx.front();</div>
-<div class="line"><span class="lineno">  580</span>  <span class="keywordtype">int</span> defaultCfg = cfgIdx.empty() ? 0 : cfgIdx.front();</div>
+<div class="line"><span class="lineno">  561</span>  std::vector&lt;std::string&gt; files;</div>
+<div class="line"><span class="lineno">  562</span>  <span class="keywordflow">if</span> (fs::exists(dirPath))</div>
+<div class="line"><span class="lineno">  563</span>  {</div>
+<div class="line"><span class="lineno">  564</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;entry : fs::recursive_directory_iterator(dirPath))</div>
+<div class="line"><span class="lineno">  565</span>    {</div>
+<div class="line"><span class="lineno">  566</span>      <span class="keywordflow">if</span> (!entry.is_regular_file())</div>
+<div class="line"><span class="lineno">  567</span>        <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  568</span>      <span class="keyword">auto</span> ext = entry.path().extension().string();</div>
+<div class="line"><span class="lineno">  569</span>      <span class="keywordflow">if</span> (ext == <span class="stringliteral">&quot;.txt&quot;</span> || ext == <span class="stringliteral">&quot;.ranges&quot;</span> || ext == <span class="stringliteral">&quot;.cfg&quot;</span> || ext == <span class="stringliteral">&quot;.conf&quot;</span>)</div>
+<div class="line"><span class="lineno">  570</span>      {</div>
+<div class="line"><span class="lineno">  571</span>        files.push_back(entry.path().string());</div>
+<div class="line"><span class="lineno">  572</span>      }</div>
+<div class="line"><span class="lineno">  573</span>    }</div>
+<div class="line"><span class="lineno">  574</span>  }</div>
+<div class="line"><span class="lineno">  575</span> </div>
+<div class="line"><span class="lineno">  576</span>  <span class="keywordflow">if</span> (files.empty())</div>
+<div class="line"><span class="lineno">  577</span>  {</div>
+<div class="line"><span class="lineno">  578</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   No candidate input files found in &#39;&quot;</span> &lt;&lt; dirPath &lt;&lt; <span class="stringliteral">&quot;&#39;.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  579</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  580</span>  }</div>
 <div class="line"><span class="lineno">  581</span> </div>
-<div class="line"><span class="lineno">  582</span>  <span class="keywordflow">if</span> (defaultRange &gt; 0 &amp;&amp; defaultCfg &gt; 0)</div>
-<div class="line"><span class="lineno">  583</span>  {</div>
-<div class="line"><span class="lineno">  584</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   Suggested pair:\n&quot;</span></div>
-<div class="line"><span class="lineno">  585</span>              &lt;&lt; <span class="stringliteral">&quot;     ranges -&gt; [&quot;</span> &lt;&lt; defaultRange &lt;&lt; <span class="stringliteral">&quot;] &quot;</span> &lt;&lt; files[defaultRange - 1] &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
-<div class="line"><span class="lineno">  586</span>              &lt;&lt; <span class="stringliteral">&quot;     config -&gt; [&quot;</span> &lt;&lt; defaultCfg &lt;&lt; <span class="stringliteral">&quot;] &quot;</span> &lt;&lt; files[defaultCfg - 1] &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  587</span>  }</div>
-<div class="line"><span class="lineno">  588</span> </div>
-<div class="line"><span class="lineno">  589</span>  <span class="keywordtype">int</span> rangesChoice = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Select ranges file index: &quot;</span>);</div>
-<div class="line"><span class="lineno">  590</span>  <span class="keywordflow">if</span> (rangesChoice &lt;= 0 || rangesChoice &gt; (<span class="keywordtype">int</span>)files.size())</div>
-<div class="line"><span class="lineno">  591</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  592</span> </div>
-<div class="line"><span class="lineno">  593</span>  <span class="keywordtype">int</span> configChoice = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Select config file index: &quot;</span>);</div>
-<div class="line"><span class="lineno">  594</span>  <span class="keywordflow">if</span> (configChoice &lt;= 0 || configChoice &gt; (<span class="keywordtype">int</span>)files.size())</div>
-<div class="line"><span class="lineno">  595</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  596</span> </div>
-<div class="line"><span class="lineno">  597</span>  <span class="keywordtype">bool</span> okRanges = <a class="code hl_function" href="#a4717f4891543c88541d016fb57b4d5bf">loadRangesFile</a>(files[rangesChoice - 1]);</div>
-<div class="line"><span class="lineno">  598</span>  <span class="keywordtype">bool</span> okConfig = <a class="code hl_function" href="#ac249ab95434a294fa80b36eb27be7030">loadConfigFile</a>(files[configChoice - 1]);</div>
+<div class="line"><span class="lineno">  582</span>  std::sort(files.begin(), files.end());</div>
+<div class="line"><span class="lineno">  583</span> </div>
+<div class="line"><span class="lineno">  584</span>  std::vector&lt;int&gt; cfgIdx;</div>
+<div class="line"><span class="lineno">  585</span>  std::vector&lt;int&gt; rngIdx;</div>
+<div class="line"><span class="lineno">  586</span> </div>
+<div class="line"><span class="lineno">  587</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;   Files in &#39;&quot;</span> &lt;&lt; dirPath &lt;&lt; <span class="stringliteral">&quot;&#39;:\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  588</span>  <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; files.size(); ++i)</div>
+<div class="line"><span class="lineno">  589</span>  {</div>
+<div class="line"><span class="lineno">  590</span>    <span class="keywordtype">bool</span> isCfg = looksLikeConfigPath(files[i]);</div>
+<div class="line"><span class="lineno">  591</span>    <span class="keywordflow">if</span> (isCfg)</div>
+<div class="line"><span class="lineno">  592</span>      cfgIdx.push_back((<span class="keywordtype">int</span>)i + 1);</div>
+<div class="line"><span class="lineno">  593</span>    <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  594</span>      rngIdx.push_back((<span class="keywordtype">int</span>)i + 1);</div>
+<div class="line"><span class="lineno">  595</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   [&quot;</span> &lt;&lt; i + 1 &lt;&lt; <span class="stringliteral">&quot;] &quot;</span> &lt;&lt; files[i]</div>
+<div class="line"><span class="lineno">  596</span>              &lt;&lt; (isCfg ? <span class="stringliteral">&quot;   (config?)&quot;</span> : <span class="stringliteral">&quot;   (ranges?)&quot;</span>) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  597</span>  }</div>
+<div class="line"><span class="lineno">  598</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;   [0] Cancel\n&quot;</span>;</div>
 <div class="line"><span class="lineno">  599</span> </div>
-<div class="line"><span class="lineno">  600</span>  <span class="keywordflow">if</span> (okRanges &amp;&amp; okConfig)</div>
-<div class="line"><span class="lineno">  601</span>  {</div>
-<div class="line"><span class="lineno">  602</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   Both files loaded successfully.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  603</span>    <a class="code hl_function" href="#a621b4a55682ca28ff36921f90f783e5d">buildGraphFromData</a>();</div>
-<div class="line"><span class="lineno">  604</span>  }</div>
-<div class="line"><span class="lineno">  605</span>}</div>
+<div class="line"><span class="lineno">  600</span>  <span class="keywordtype">int</span> defaultRange = rngIdx.empty() ? 0 : rngIdx.front();</div>
+<div class="line"><span class="lineno">  601</span>  <span class="keywordtype">int</span> defaultCfg = cfgIdx.empty() ? 0 : cfgIdx.front();</div>
+<div class="line"><span class="lineno">  602</span> </div>
+<div class="line"><span class="lineno">  603</span>  <span class="keywordflow">if</span> (defaultRange &gt; 0 &amp;&amp; defaultCfg &gt; 0)</div>
+<div class="line"><span class="lineno">  604</span>  {</div>
+<div class="line"><span class="lineno">  605</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   Suggested pair:\n&quot;</span></div>
+<div class="line"><span class="lineno">  606</span>              &lt;&lt; <span class="stringliteral">&quot;     ranges -&gt; [&quot;</span> &lt;&lt; defaultRange &lt;&lt; <span class="stringliteral">&quot;] &quot;</span> &lt;&lt; files[defaultRange - 1] &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line"><span class="lineno">  607</span>              &lt;&lt; <span class="stringliteral">&quot;     config -&gt; [&quot;</span> &lt;&lt; defaultCfg &lt;&lt; <span class="stringliteral">&quot;] &quot;</span> &lt;&lt; files[defaultCfg - 1] &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  608</span>  }</div>
+<div class="line"><span class="lineno">  609</span> </div>
+<div class="line"><span class="lineno">  610</span>  <span class="keywordtype">int</span> rangesChoice = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Select ranges file index: &quot;</span>);</div>
+<div class="line"><span class="lineno">  611</span>  <span class="keywordflow">if</span> (rangesChoice &lt;= 0 || rangesChoice &gt; (<span class="keywordtype">int</span>)files.size())</div>
+<div class="line"><span class="lineno">  612</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  613</span> </div>
+<div class="line"><span class="lineno">  614</span>  <span class="keywordtype">int</span> configChoice = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Select config file index: &quot;</span>);</div>
+<div class="line"><span class="lineno">  615</span>  <span class="keywordflow">if</span> (configChoice &lt;= 0 || configChoice &gt; (<span class="keywordtype">int</span>)files.size())</div>
+<div class="line"><span class="lineno">  616</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  617</span> </div>
+<div class="line"><span class="lineno">  618</span>  <span class="keywordtype">bool</span> okRanges = <a class="code hl_function" href="#a4717f4891543c88541d016fb57b4d5bf">loadRangesFile</a>(files[rangesChoice - 1]);</div>
+<div class="line"><span class="lineno">  619</span>  <span class="keywordtype">bool</span> okConfig = <a class="code hl_function" href="#ac249ab95434a294fa80b36eb27be7030">loadConfigFile</a>(files[configChoice - 1]);</div>
+<div class="line"><span class="lineno">  620</span> </div>
+<div class="line"><span class="lineno">  621</span>  <span class="keywordflow">if</span> (okRanges &amp;&amp; okConfig)</div>
+<div class="line"><span class="lineno">  622</span>  {</div>
+<div class="line"><span class="lineno">  623</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   Both files loaded successfully.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  624</span>    <a class="code hl_function" href="#a621b4a55682ca28ff36921f90f783e5d">buildGraphFromData</a>();</div>
+<div class="line"><span class="lineno">  625</span>  }</div>
+<div class="line"><span class="lineno">  626</span>}</div>
 <div class="ttc" id="aclass_register_alloc_app_html_a4717f4891543c88541d016fb57b4d5bf"><div class="ttname"><a href="#a4717f4891543c88541d016fb57b4d5bf">RegisterAllocApp::loadRangesFile</a></div><div class="ttdeci">bool loadRangesFile(const std::string &amp;path)</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00117">RegisterAllocApp.cpp:117</a></div></div>
 <div class="ttc" id="aclass_register_alloc_app_html_a621b4a55682ca28ff36921f90f783e5d"><div class="ttname"><a href="#a621b4a55682ca28ff36921f90f783e5d">RegisterAllocApp::buildGraphFromData</a></div><div class="ttdeci">void buildGraphFromData()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00164">RegisterAllocApp.cpp:164</a></div></div>
 <div class="ttc" id="aclass_register_alloc_app_html_aacf4e01cabb95258613e066184aff320"><div class="ttname"><a href="#aacf4e01cabb95258613e066184aff320">RegisterAllocApp::readInt</a></div><div class="ttdeci">int readInt(const std::string &amp;prompt) const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00084">RegisterAllocApp.cpp:84</a></div></div>
@@ -504,28 +504,28 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00607">607</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  608</span>{</div>
-<div class="line"><span class="lineno">  609</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;   This tool needs TWO input files:\n&quot;</span></div>
-<div class="line"><span class="lineno">  610</span>            &lt;&lt; <span class="stringliteral">&quot;     1) ranges file (live ranges per variable)\n&quot;</span></div>
-<div class="line"><span class="lineno">  611</span>            &lt;&lt; <span class="stringliteral">&quot;     2) config file (registers + algorithm)\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  612</span> </div>
-<div class="line"><span class="lineno">  613</span>  std::string rangesPath = <a class="code hl_function" href="#a96377595b90d45d115fc0ecb8bbae490">readLine</a>(<span class="stringliteral">&quot;Enter path to ranges file: &quot;</span>);</div>
-<div class="line"><span class="lineno">  614</span>  <span class="keywordflow">if</span> (rangesPath.empty())</div>
-<div class="line"><span class="lineno">  615</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  616</span> </div>
-<div class="line"><span class="lineno">  617</span>  std::string configPath = <a class="code hl_function" href="#a96377595b90d45d115fc0ecb8bbae490">readLine</a>(<span class="stringliteral">&quot;Enter path to config file: &quot;</span>);</div>
-<div class="line"><span class="lineno">  618</span>  <span class="keywordflow">if</span> (configPath.empty())</div>
-<div class="line"><span class="lineno">  619</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  620</span> </div>
-<div class="line"><span class="lineno">  621</span>  <span class="keywordtype">bool</span> okRanges = <a class="code hl_function" href="#a4717f4891543c88541d016fb57b4d5bf">loadRangesFile</a>(rangesPath);</div>
-<div class="line"><span class="lineno">  622</span>  <span class="keywordtype">bool</span> okConfig = <a class="code hl_function" href="#ac249ab95434a294fa80b36eb27be7030">loadConfigFile</a>(configPath);</div>
-<div class="line"><span class="lineno">  623</span>  <span class="keywordflow">if</span> (okRanges &amp;&amp; okConfig)</div>
-<div class="line"><span class="lineno">  624</span>  {</div>
-<div class="line"><span class="lineno">  625</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   Both files loaded successfully.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  626</span>    <a class="code hl_function" href="#a621b4a55682ca28ff36921f90f783e5d">buildGraphFromData</a>();</div>
-<div class="line"><span class="lineno">  627</span>  }</div>
-<div class="line"><span class="lineno">  628</span>}</div>
+<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00628">628</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  629</span>{</div>
+<div class="line"><span class="lineno">  630</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;   This tool needs TWO input files:\n&quot;</span></div>
+<div class="line"><span class="lineno">  631</span>            &lt;&lt; <span class="stringliteral">&quot;     1) ranges file (live ranges per variable)\n&quot;</span></div>
+<div class="line"><span class="lineno">  632</span>            &lt;&lt; <span class="stringliteral">&quot;     2) config file (registers + algorithm)\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  633</span> </div>
+<div class="line"><span class="lineno">  634</span>  std::string rangesPath = <a class="code hl_function" href="#a96377595b90d45d115fc0ecb8bbae490">readLine</a>(<span class="stringliteral">&quot;Enter path to ranges file: &quot;</span>);</div>
+<div class="line"><span class="lineno">  635</span>  <span class="keywordflow">if</span> (rangesPath.empty())</div>
+<div class="line"><span class="lineno">  636</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  637</span> </div>
+<div class="line"><span class="lineno">  638</span>  std::string configPath = <a class="code hl_function" href="#a96377595b90d45d115fc0ecb8bbae490">readLine</a>(<span class="stringliteral">&quot;Enter path to config file: &quot;</span>);</div>
+<div class="line"><span class="lineno">  639</span>  <span class="keywordflow">if</span> (configPath.empty())</div>
+<div class="line"><span class="lineno">  640</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  641</span> </div>
+<div class="line"><span class="lineno">  642</span>  <span class="keywordtype">bool</span> okRanges = <a class="code hl_function" href="#a4717f4891543c88541d016fb57b4d5bf">loadRangesFile</a>(rangesPath);</div>
+<div class="line"><span class="lineno">  643</span>  <span class="keywordtype">bool</span> okConfig = <a class="code hl_function" href="#ac249ab95434a294fa80b36eb27be7030">loadConfigFile</a>(configPath);</div>
+<div class="line"><span class="lineno">  644</span>  <span class="keywordflow">if</span> (okRanges &amp;&amp; okConfig)</div>
+<div class="line"><span class="lineno">  645</span>  {</div>
+<div class="line"><span class="lineno">  646</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   Both files loaded successfully.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  647</span>    <a class="code hl_function" href="#a621b4a55682ca28ff36921f90f783e5d">buildGraphFromData</a>();</div>
+<div class="line"><span class="lineno">  648</span>  }</div>
+<div class="line"><span class="lineno">  649</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -552,12 +552,12 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00630">630</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  631</span>{</div>
-<div class="line"><span class="lineno">  632</span>  std::string path = <a class="code hl_function" href="#a96377595b90d45d115fc0ecb8bbae490">readLine</a>(<span class="stringliteral">&quot;Enter path to ranges file: &quot;</span>);</div>
-<div class="line"><span class="lineno">  633</span>  <span class="keywordflow">if</span> (!path.empty())</div>
-<div class="line"><span class="lineno">  634</span>    <a class="code hl_function" href="#a4717f4891543c88541d016fb57b4d5bf">loadRangesFile</a>(path);</div>
-<div class="line"><span class="lineno">  635</span>}</div>
+<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00651">651</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  652</span>{</div>
+<div class="line"><span class="lineno">  653</span>  std::string path = <a class="code hl_function" href="#a96377595b90d45d115fc0ecb8bbae490">readLine</a>(<span class="stringliteral">&quot;Enter path to ranges file: &quot;</span>);</div>
+<div class="line"><span class="lineno">  654</span>  <span class="keywordflow">if</span> (!path.empty())</div>
+<div class="line"><span class="lineno">  655</span>    <a class="code hl_function" href="#a4717f4891543c88541d016fb57b4d5bf">loadRangesFile</a>(path);</div>
+<div class="line"><span class="lineno">  656</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -584,21 +584,21 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00703">703</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  704</span>{</div>
-<div class="line"><span class="lineno">  705</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a93d5c2f146a492a7f99e2c3d38ba5803">mDataLoaded</a>)</div>
-<div class="line"><span class="lineno">  706</span>  {</div>
-<div class="line"><span class="lineno">  707</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   No ranges loaded.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  708</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  709</span>  }</div>
-<div class="line"><span class="lineno">  710</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a9470a4bb54c590988cdef1013ce90f71">mConfigLoaded</a>)</div>
-<div class="line"><span class="lineno">  711</span>  {</div>
-<div class="line"><span class="lineno">  712</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   No config loaded.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  713</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  714</span>  }</div>
-<div class="line"><span class="lineno">  715</span>  <a class="code hl_function" href="#a6df05a723aaa61515521422133223a9e">runAllocation</a>();</div>
-<div class="line"><span class="lineno">  716</span>  <a class="code hl_function" href="class_allocation_logic.html#a3b8a4d8de74af598a385819e59c81e84">AllocationLogic::printResult</a>(<a class="code hl_variable" href="#a61d7eb2d25c35722797f0788ba1a0b66">mWebs</a>, <a class="code hl_variable" href="#a0310fe9942c9eee5d334d52e19642c93">mLastResult</a>);</div>
-<div class="line"><span class="lineno">  717</span>}</div>
+<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00724">724</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  725</span>{</div>
+<div class="line"><span class="lineno">  726</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a93d5c2f146a492a7f99e2c3d38ba5803">mDataLoaded</a>)</div>
+<div class="line"><span class="lineno">  727</span>  {</div>
+<div class="line"><span class="lineno">  728</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   No ranges loaded.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  729</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  730</span>  }</div>
+<div class="line"><span class="lineno">  731</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a9470a4bb54c590988cdef1013ce90f71">mConfigLoaded</a>)</div>
+<div class="line"><span class="lineno">  732</span>  {</div>
+<div class="line"><span class="lineno">  733</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   No config loaded.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  734</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  735</span>  }</div>
+<div class="line"><span class="lineno">  736</span>  <a class="code hl_function" href="#a6df05a723aaa61515521422133223a9e">runAllocation</a>();</div>
+<div class="line"><span class="lineno">  737</span>  <a class="code hl_function" href="class_allocation_logic.html#a3b8a4d8de74af598a385819e59c81e84">AllocationLogic::printResult</a>(<a class="code hl_variable" href="#a61d7eb2d25c35722797f0788ba1a0b66">mWebs</a>, <a class="code hl_variable" href="#a0310fe9942c9eee5d334d52e19642c93">mLastResult</a>);</div>
+<div class="line"><span class="lineno">  738</span>}</div>
 <div class="ttc" id="aclass_allocation_logic_html_a3b8a4d8de74af598a385819e59c81e84"><div class="ttname"><a href="class_allocation_logic.html#a3b8a4d8de74af598a385819e59c81e84">AllocationLogic::printResult</a></div><div class="ttdeci">static void printResult(const std::vector&lt; Web &gt; &amp;webs, const AllocationResult &amp;result)</div><div class="ttdoc">Prints a human-readable summary of the allocation result to stdout.</div><div class="ttdef"><b>Definition</b> <a href="_allocation_logic_8cpp_source.html#l00171">AllocationLogic.cpp:171</a></div></div>
 <div class="ttc" id="aclass_register_alloc_app_html_a6df05a723aaa61515521422133223a9e"><div class="ttname"><a href="#a6df05a723aaa61515521422133223a9e">RegisterAllocApp::runAllocation</a></div><div class="ttdeci">void runAllocation()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00181">RegisterAllocApp.cpp:181</a></div></div>
 </div><!-- fragment -->
@@ -627,10 +627,10 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00764">764</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  765</span>{</div>
-<div class="line"><span class="lineno">  766</span>  <a class="code hl_function" href="class_allocation_logic.html#a3b8a4d8de74af598a385819e59c81e84">AllocationLogic::printResult</a>(<a class="code hl_variable" href="#a61d7eb2d25c35722797f0788ba1a0b66">mWebs</a>, <a class="code hl_variable" href="#a0310fe9942c9eee5d334d52e19642c93">mLastResult</a>);</div>
-<div class="line"><span class="lineno">  767</span>}</div>
+<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00785">785</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  786</span>{</div>
+<div class="line"><span class="lineno">  787</span>  <a class="code hl_function" href="class_allocation_logic.html#a3b8a4d8de74af598a385819e59c81e84">AllocationLogic::printResult</a>(<a class="code hl_variable" href="#a61d7eb2d25c35722797f0788ba1a0b66">mWebs</a>, <a class="code hl_variable" href="#a0310fe9942c9eee5d334d52e19642c93">mLastResult</a>);</div>
+<div class="line"><span class="lineno">  788</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -657,15 +657,15 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00722">722</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  723</span>{</div>
-<div class="line"><span class="lineno">  724</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a1eeb9805ac2b1c9fd72365f419166e59">mGraphBuilt</a>)</div>
-<div class="line"><span class="lineno">  725</span>  {</div>
-<div class="line"><span class="lineno">  726</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   Graph not built.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  727</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  728</span>  }</div>
-<div class="line"><span class="lineno">  729</span>  <a class="code hl_function" href="class_interference_graph.html#a2db1e36875c2f5beaf731d4116186b6b">InterferenceGraph::printGraph</a>(<a class="code hl_variable" href="#a560e6fe2bdeead895e5d1a8fa983ffa9">mGraph</a>, <a class="code hl_variable" href="#a61d7eb2d25c35722797f0788ba1a0b66">mWebs</a>);</div>
-<div class="line"><span class="lineno">  730</span>}</div>
+<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00743">743</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  744</span>{</div>
+<div class="line"><span class="lineno">  745</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a1eeb9805ac2b1c9fd72365f419166e59">mGraphBuilt</a>)</div>
+<div class="line"><span class="lineno">  746</span>  {</div>
+<div class="line"><span class="lineno">  747</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   Graph not built.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  748</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  749</span>  }</div>
+<div class="line"><span class="lineno">  750</span>  <a class="code hl_function" href="class_interference_graph.html#a2db1e36875c2f5beaf731d4116186b6b">InterferenceGraph::printGraph</a>(<a class="code hl_variable" href="#a560e6fe2bdeead895e5d1a8fa983ffa9">mGraph</a>, <a class="code hl_variable" href="#a61d7eb2d25c35722797f0788ba1a0b66">mWebs</a>);</div>
+<div class="line"><span class="lineno">  751</span>}</div>
 <div class="ttc" id="aclass_interference_graph_html_a2db1e36875c2f5beaf731d4116186b6b"><div class="ttname"><a href="class_interference_graph.html#a2db1e36875c2f5beaf731d4116186b6b">InterferenceGraph::printGraph</a></div><div class="ttdeci">static void printGraph(const Graph&lt; int &gt; &amp;graph, const std::vector&lt; Web &gt; &amp;webs)</div><div class="ttdoc">Prints the interference graph to stdout for debugging.</div><div class="ttdef"><b>Definition</b> <a href="_interference_graph_8cpp_source.html#l00259">InterferenceGraph.cpp:259</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -693,28 +693,28 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00677">677</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  678</span>{</div>
-<div class="line"><span class="lineno">  679</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;   Current parameters:\n&quot;</span></div>
-<div class="line"><span class="lineno">  680</span>            &lt;&lt; <span class="stringliteral">&quot;     numRegisters   : &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.numRegisters &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
-<div class="line"><span class="lineno">  681</span>            &lt;&lt; <span class="stringliteral">&quot;     algorithm      : &quot;</span>;</div>
-<div class="line"><span class="lineno">  682</span>  <span class="keywordflow">switch</span> (<a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithm)</div>
-<div class="line"><span class="lineno">  683</span>  {</div>
-<div class="line"><span class="lineno">  684</span>  <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94">AlgorithmType::Basic</a>:</div>
-<div class="line"><span class="lineno">  685</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;basic\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  686</span>    <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  687</span>  <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a5c763dd81f02716fd953962fdba7b080">AlgorithmType::Spilling</a>:</div>
-<div class="line"><span class="lineno">  688</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;spilling (K=&quot;</span> &lt;&lt; <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithmParam &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  689</span>    <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  690</span>  <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a3577589a87a81dbb54067e164fefb78c">AlgorithmType::Splitting</a>:</div>
-<div class="line"><span class="lineno">  691</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;splitting (K=&quot;</span> &lt;&lt; <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithmParam &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  692</span>    <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  693</span>  <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594">AlgorithmType::Free</a>:</div>
-<div class="line"><span class="lineno">  694</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;free\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  695</span>    <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  696</span>  }</div>
-<div class="line"><span class="lineno">  697</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;     outputFile     : &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.outputFile &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  698</span>}</div>
+<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00698">698</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  699</span>{</div>
+<div class="line"><span class="lineno">  700</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;   Current parameters:\n&quot;</span></div>
+<div class="line"><span class="lineno">  701</span>            &lt;&lt; <span class="stringliteral">&quot;     numRegisters   : &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.numRegisters &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line"><span class="lineno">  702</span>            &lt;&lt; <span class="stringliteral">&quot;     algorithm      : &quot;</span>;</div>
+<div class="line"><span class="lineno">  703</span>  <span class="keywordflow">switch</span> (<a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithm)</div>
+<div class="line"><span class="lineno">  704</span>  {</div>
+<div class="line"><span class="lineno">  705</span>  <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94">AlgorithmType::Basic</a>:</div>
+<div class="line"><span class="lineno">  706</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;basic\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  707</span>    <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  708</span>  <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a5c763dd81f02716fd953962fdba7b080">AlgorithmType::Spilling</a>:</div>
+<div class="line"><span class="lineno">  709</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;spilling (K=&quot;</span> &lt;&lt; <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithmParam &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  710</span>    <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  711</span>  <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a3577589a87a81dbb54067e164fefb78c">AlgorithmType::Splitting</a>:</div>
+<div class="line"><span class="lineno">  712</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;splitting (K=&quot;</span> &lt;&lt; <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithmParam &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  713</span>    <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  714</span>  <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594">AlgorithmType::Free</a>:</div>
+<div class="line"><span class="lineno">  715</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;free\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  716</span>    <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  717</span>  }</div>
+<div class="line"><span class="lineno">  718</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;     outputFile     : &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.outputFile &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  719</span>}</div>
 <div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9a3577589a87a81dbb54067e164fefb78c"><div class="ttname"><a href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a3577589a87a81dbb54067e164fefb78c">AlgorithmType::Splitting</a></div><div class="ttdeci">@ Splitting</div><div class="ttdoc">Graph coloring with web splitting (split webs into sub-webs).</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00019">Parameters.h:19</a></div></div>
 <div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9a5c763dd81f02716fd953962fdba7b080"><div class="ttname"><a href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a5c763dd81f02716fd953962fdba7b080">AlgorithmType::Spilling</a></div><div class="ttdeci">@ Spilling</div><div class="ttdoc">Graph coloring with web spilling (commit webs to memory).</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00018">Parameters.h:18</a></div></div>
 <div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94"><div class="ttname"><a href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94">AlgorithmType::Basic</a></div><div class="ttdeci">@ Basic</div><div class="ttdoc">Basic greedy graph-coloring. No spilling or splitting.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00017">Parameters.h:17</a></div></div>
@@ -746,38 +746,38 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00644">644</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  645</span>{</div>
-<div class="line"><span class="lineno">  646</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a93d5c2f146a492a7f99e2c3d38ba5803">mDataLoaded</a>)</div>
-<div class="line"><span class="lineno">  647</span>  {</div>
-<div class="line"><span class="lineno">  648</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   No data loaded.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  649</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  650</span>  }</div>
-<div class="line"><span class="lineno">  651</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a1eeb9805ac2b1c9fd72365f419166e59">mGraphBuilt</a>)</div>
-<div class="line"><span class="lineno">  652</span>  {</div>
-<div class="line"><span class="lineno">  653</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   Graph not built yet. Run &#39;Build interference graph&#39; first.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  654</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  655</span>  }</div>
-<div class="line"><span class="lineno">  656</span> </div>
-<div class="line"><span class="lineno">  657</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;   Webs (&quot;</span> &lt;&lt; <a class="code hl_variable" href="#a61d7eb2d25c35722797f0788ba1a0b66">mWebs</a>.size() &lt;&lt; <span class="stringliteral">&quot;):\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  658</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;web : <a class="code hl_variable" href="#a61d7eb2d25c35722797f0788ba1a0b66">mWebs</a>)</div>
-<div class="line"><span class="lineno">  659</span>  {</div>
-<div class="line"><span class="lineno">  660</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   web&quot;</span> &lt;&lt; web.id &lt;&lt; <span class="stringliteral">&quot; [&quot;</span> &lt;&lt; web.variable &lt;&lt; <span class="stringliteral">&quot;]:\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  661</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;range : web.ranges)</div>
-<div class="line"><span class="lineno">  662</span>    {</div>
-<div class="line"><span class="lineno">  663</span>      std::cout &lt;&lt; <span class="stringliteral">&quot;     &quot;</span>;</div>
-<div class="line"><span class="lineno">  664</span>      <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; range.points.size(); ++i)</div>
-<div class="line"><span class="lineno">  665</span>      {</div>
-<div class="line"><span class="lineno">  666</span>        <span class="keywordflow">if</span> (i &gt; 0)</div>
-<div class="line"><span class="lineno">  667</span>          std::cout &lt;&lt; <span class="charliteral">&#39;,&#39;</span>;</div>
-<div class="line"><span class="lineno">  668</span>        std::cout &lt;&lt; range.points[i].line;</div>
-<div class="line"><span class="lineno">  669</span>        <span class="keywordflow">if</span> (range.points[i].marker != <span class="charliteral">&#39;\0&#39;</span>)</div>
-<div class="line"><span class="lineno">  670</span>          std::cout &lt;&lt; range.points[i].marker;</div>
-<div class="line"><span class="lineno">  671</span>      }</div>
-<div class="line"><span class="lineno">  672</span>      std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  673</span>    }</div>
-<div class="line"><span class="lineno">  674</span>  }</div>
-<div class="line"><span class="lineno">  675</span>}</div>
+<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00665">665</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  666</span>{</div>
+<div class="line"><span class="lineno">  667</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a93d5c2f146a492a7f99e2c3d38ba5803">mDataLoaded</a>)</div>
+<div class="line"><span class="lineno">  668</span>  {</div>
+<div class="line"><span class="lineno">  669</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   No data loaded.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  670</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  671</span>  }</div>
+<div class="line"><span class="lineno">  672</span>  <span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a1eeb9805ac2b1c9fd72365f419166e59">mGraphBuilt</a>)</div>
+<div class="line"><span class="lineno">  673</span>  {</div>
+<div class="line"><span class="lineno">  674</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   Graph not built yet. Run &#39;Build interference graph&#39; first.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  675</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  676</span>  }</div>
+<div class="line"><span class="lineno">  677</span> </div>
+<div class="line"><span class="lineno">  678</span>  std::cout &lt;&lt; <span class="stringliteral">&quot;   Webs (&quot;</span> &lt;&lt; <a class="code hl_variable" href="#a61d7eb2d25c35722797f0788ba1a0b66">mWebs</a>.size() &lt;&lt; <span class="stringliteral">&quot;):\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  679</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;web : <a class="code hl_variable" href="#a61d7eb2d25c35722797f0788ba1a0b66">mWebs</a>)</div>
+<div class="line"><span class="lineno">  680</span>  {</div>
+<div class="line"><span class="lineno">  681</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   web&quot;</span> &lt;&lt; web.id &lt;&lt; <span class="stringliteral">&quot; [&quot;</span> &lt;&lt; web.variable &lt;&lt; <span class="stringliteral">&quot;]:\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  682</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;range : web.ranges)</div>
+<div class="line"><span class="lineno">  683</span>    {</div>
+<div class="line"><span class="lineno">  684</span>      std::cout &lt;&lt; <span class="stringliteral">&quot;     &quot;</span>;</div>
+<div class="line"><span class="lineno">  685</span>      <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; range.points.size(); ++i)</div>
+<div class="line"><span class="lineno">  686</span>      {</div>
+<div class="line"><span class="lineno">  687</span>        <span class="keywordflow">if</span> (i &gt; 0)</div>
+<div class="line"><span class="lineno">  688</span>          std::cout &lt;&lt; <span class="charliteral">&#39;,&#39;</span>;</div>
+<div class="line"><span class="lineno">  689</span>        std::cout &lt;&lt; range.points[i].line;</div>
+<div class="line"><span class="lineno">  690</span>        <span class="keywordflow">if</span> (range.points[i].marker != <span class="charliteral">&#39;\0&#39;</span>)</div>
+<div class="line"><span class="lineno">  691</span>          std::cout &lt;&lt; range.points[i].marker;</div>
+<div class="line"><span class="lineno">  692</span>      }</div>
+<div class="line"><span class="lineno">  693</span>      std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  694</span>    }</div>
+<div class="line"><span class="lineno">  695</span>  }</div>
+<div class="line"><span class="lineno">  696</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -903,39 +903,39 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00461">461</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  462</span>{</div>
-<div class="line"><span class="lineno">  463</span>  <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div>
-<div class="line"><span class="lineno">  464</span>  {</div>
-<div class="line"><span class="lineno">  465</span>    <a class="code hl_function" href="#ad4973b38b41bb6614f43cae405e11845">printSep</a>(<span class="charliteral">&#39;=&#39;</span>, 57);</div>
-<div class="line"><span class="lineno">  466</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   [ Algorithms ]\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  467</span>    <a class="code hl_function" href="#ad4973b38b41bb6614f43cae405e11845">printSep</a>(<span class="charliteral">&#39;-&#39;</span>, 57);</div>
-<div class="line"><span class="lineno">  468</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   [1] Run register allocation\n&quot;</span></div>
-<div class="line"><span class="lineno">  469</span>              &lt;&lt; <span class="stringliteral">&quot;   [2] Show last result\n&quot;</span></div>
-<div class="line"><span class="lineno">  470</span>              &lt;&lt; <span class="stringliteral">&quot;   [0] Back\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  471</span>    <a class="code hl_function" href="#ad4973b38b41bb6614f43cae405e11845">printSep</a>(<span class="charliteral">&#39;=&#39;</span>, 57);</div>
-<div class="line"><span class="lineno">  472</span>    <span class="keywordtype">int</span> choice = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Option: &quot;</span>);</div>
-<div class="line"><span class="lineno">  473</span>    <span class="keywordflow">switch</span> (choice)</div>
-<div class="line"><span class="lineno">  474</span>    {</div>
-<div class="line"><span class="lineno">  475</span>    <span class="keywordflow">case</span> 1:</div>
-<div class="line"><span class="lineno">  476</span>      <a class="code hl_function" href="#a49013b4ff2ebcce58dff3c399d090265">doRunAllocation</a>();</div>
-<div class="line"><span class="lineno">  477</span>      <a class="code hl_function" href="#a75d79f69701158e8a1de778e780aa074">waitEnter</a>();</div>
-<div class="line"><span class="lineno">  478</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  479</span>    <span class="keywordflow">case</span> 2:</div>
-<div class="line"><span class="lineno">  480</span>      <a class="code hl_function" href="#a7986fccb33334f63a7782a2856cd4a7b">doShowAllocationResult</a>();</div>
-<div class="line"><span class="lineno">  481</span>      <a class="code hl_function" href="#a75d79f69701158e8a1de778e780aa074">waitEnter</a>();</div>
-<div class="line"><span class="lineno">  482</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  483</span>    <span class="keywordflow">case</span> 0:</div>
-<div class="line"><span class="lineno">  484</span>      <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  485</span>    <span class="keywordflow">default</span>:</div>
-<div class="line"><span class="lineno">  486</span>      std::cout &lt;&lt; <span class="stringliteral">&quot;   Unknown option.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  487</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  488</span>    }</div>
-<div class="line"><span class="lineno">  489</span>  }</div>
-<div class="line"><span class="lineno">  490</span>}</div>
-<div class="ttc" id="aclass_register_alloc_app_html_a49013b4ff2ebcce58dff3c399d090265"><div class="ttname"><a href="#a49013b4ff2ebcce58dff3c399d090265">RegisterAllocApp::doRunAllocation</a></div><div class="ttdeci">void doRunAllocation()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00703">RegisterAllocApp.cpp:703</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00482">482</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  483</span>{</div>
+<div class="line"><span class="lineno">  484</span>  <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div>
+<div class="line"><span class="lineno">  485</span>  {</div>
+<div class="line"><span class="lineno">  486</span>    <a class="code hl_function" href="#ad4973b38b41bb6614f43cae405e11845">printSep</a>(<span class="charliteral">&#39;=&#39;</span>, 57);</div>
+<div class="line"><span class="lineno">  487</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   [ Algorithms ]\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  488</span>    <a class="code hl_function" href="#ad4973b38b41bb6614f43cae405e11845">printSep</a>(<span class="charliteral">&#39;-&#39;</span>, 57);</div>
+<div class="line"><span class="lineno">  489</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   [1] Run register allocation\n&quot;</span></div>
+<div class="line"><span class="lineno">  490</span>              &lt;&lt; <span class="stringliteral">&quot;   [2] Show last result\n&quot;</span></div>
+<div class="line"><span class="lineno">  491</span>              &lt;&lt; <span class="stringliteral">&quot;   [0] Back\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  492</span>    <a class="code hl_function" href="#ad4973b38b41bb6614f43cae405e11845">printSep</a>(<span class="charliteral">&#39;=&#39;</span>, 57);</div>
+<div class="line"><span class="lineno">  493</span>    <span class="keywordtype">int</span> choice = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Option: &quot;</span>);</div>
+<div class="line"><span class="lineno">  494</span>    <span class="keywordflow">switch</span> (choice)</div>
+<div class="line"><span class="lineno">  495</span>    {</div>
+<div class="line"><span class="lineno">  496</span>    <span class="keywordflow">case</span> 1:</div>
+<div class="line"><span class="lineno">  497</span>      <a class="code hl_function" href="#a49013b4ff2ebcce58dff3c399d090265">doRunAllocation</a>();</div>
+<div class="line"><span class="lineno">  498</span>      <a class="code hl_function" href="#a75d79f69701158e8a1de778e780aa074">waitEnter</a>();</div>
+<div class="line"><span class="lineno">  499</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  500</span>    <span class="keywordflow">case</span> 2:</div>
+<div class="line"><span class="lineno">  501</span>      <a class="code hl_function" href="#a7986fccb33334f63a7782a2856cd4a7b">doShowAllocationResult</a>();</div>
+<div class="line"><span class="lineno">  502</span>      <a class="code hl_function" href="#a75d79f69701158e8a1de778e780aa074">waitEnter</a>();</div>
+<div class="line"><span class="lineno">  503</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  504</span>    <span class="keywordflow">case</span> 0:</div>
+<div class="line"><span class="lineno">  505</span>      <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  506</span>    <span class="keywordflow">default</span>:</div>
+<div class="line"><span class="lineno">  507</span>      std::cout &lt;&lt; <span class="stringliteral">&quot;   Unknown option.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  508</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  509</span>    }</div>
+<div class="line"><span class="lineno">  510</span>  }</div>
+<div class="line"><span class="lineno">  511</span>}</div>
+<div class="ttc" id="aclass_register_alloc_app_html_a49013b4ff2ebcce58dff3c399d090265"><div class="ttname"><a href="#a49013b4ff2ebcce58dff3c399d090265">RegisterAllocApp::doRunAllocation</a></div><div class="ttdeci">void doRunAllocation()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00724">RegisterAllocApp.cpp:724</a></div></div>
 <div class="ttc" id="aclass_register_alloc_app_html_a75d79f69701158e8a1de778e780aa074"><div class="ttname"><a href="#a75d79f69701158e8a1de778e780aa074">RegisterAllocApp::waitEnter</a></div><div class="ttdeci">void waitEnter() const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00077">RegisterAllocApp.cpp:77</a></div></div>
-<div class="ttc" id="aclass_register_alloc_app_html_a7986fccb33334f63a7782a2856cd4a7b"><div class="ttname"><a href="#a7986fccb33334f63a7782a2856cd4a7b">RegisterAllocApp::doShowAllocationResult</a></div><div class="ttdeci">void doShowAllocationResult() const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00764">RegisterAllocApp.cpp:764</a></div></div>
+<div class="ttc" id="aclass_register_alloc_app_html_a7986fccb33334f63a7782a2856cd4a7b"><div class="ttname"><a href="#a7986fccb33334f63a7782a2856cd4a7b">RegisterAllocApp::doShowAllocationResult</a></div><div class="ttdeci">void doShowAllocationResult() const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00785">RegisterAllocApp.cpp:785</a></div></div>
 <div class="ttc" id="aclass_register_alloc_app_html_ad4973b38b41bb6614f43cae405e11845"><div class="ttname"><a href="#ad4973b38b41bb6614f43cae405e11845">RegisterAllocApp::printSep</a></div><div class="ttdeci">void printSep(char c=&#39;-&#39;, int n=57) const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00072">RegisterAllocApp.cpp:72</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -994,49 +994,70 @@ Private Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  411</span>    <span class="keywordflow">switch</span> (choice)</div>
 <div class="line"><span class="lineno">  412</span>    {</div>
 <div class="line"><span class="lineno">  413</span>    <span class="keywordflow">case</span> 1:</div>
-<div class="line"><span class="lineno">  414</span>      <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.numRegisters = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Number of registers: &quot;</span>);</div>
-<div class="line"><span class="lineno">  415</span>      <a class="code hl_variable" href="#a9470a4bb54c590988cdef1013ce90f71">mConfigLoaded</a> = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  416</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  417</span>    <span class="keywordflow">case</span> 2:</div>
-<div class="line"><span class="lineno">  418</span>    {</div>
-<div class="line"><span class="lineno">  419</span>      std::cout &lt;&lt; <span class="stringliteral">&quot;   Algorithms: [1] basic  [2] spilling  [3] splitting  [4] free\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  420</span>      <span class="keywordtype">int</span> a = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Select: &quot;</span>);</div>
-<div class="line"><span class="lineno">  421</span>      <span class="keywordflow">if</span> (a == 1)</div>
-<div class="line"><span class="lineno">  422</span>      {</div>
-<div class="line"><span class="lineno">  423</span>        <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithm = <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94">AlgorithmType::Basic</a>;</div>
-<div class="line"><span class="lineno">  424</span>      }</div>
-<div class="line"><span class="lineno">  425</span>      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (a == 2)</div>
-<div class="line"><span class="lineno">  426</span>      {</div>
-<div class="line"><span class="lineno">  427</span>        <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithm = <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a5c763dd81f02716fd953962fdba7b080">AlgorithmType::Spilling</a>;</div>
-<div class="line"><span class="lineno">  428</span>        <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithmParam = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Max spills (K): &quot;</span>);</div>
-<div class="line"><span class="lineno">  429</span>      }</div>
-<div class="line"><span class="lineno">  430</span>      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (a == 3)</div>
-<div class="line"><span class="lineno">  431</span>      {</div>
-<div class="line"><span class="lineno">  432</span>        <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithm = <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a3577589a87a81dbb54067e164fefb78c">AlgorithmType::Splitting</a>;</div>
-<div class="line"><span class="lineno">  433</span>        <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithmParam = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Max splits (K): &quot;</span>);</div>
-<div class="line"><span class="lineno">  434</span>      }</div>
-<div class="line"><span class="lineno">  435</span>      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (a == 4)</div>
-<div class="line"><span class="lineno">  436</span>      {</div>
-<div class="line"><span class="lineno">  437</span>        <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithm = <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594">AlgorithmType::Free</a>;</div>
-<div class="line"><span class="lineno">  438</span>      }</div>
-<div class="line"><span class="lineno">  439</span>      <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  440</span>      {</div>
-<div class="line"><span class="lineno">  441</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;   Invalid.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  442</span>      }</div>
-<div class="line"><span class="lineno">  443</span>      <a class="code hl_variable" href="#a9470a4bb54c590988cdef1013ce90f71">mConfigLoaded</a> = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  444</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  445</span>    }</div>
-<div class="line"><span class="lineno">  446</span>    <span class="keywordflow">case</span> 3:</div>
-<div class="line"><span class="lineno">  447</span>      <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.outputFile = <a class="code hl_function" href="#a96377595b90d45d115fc0ecb8bbae490">readLine</a>(<span class="stringliteral">&quot;Output file path: &quot;</span>);</div>
-<div class="line"><span class="lineno">  448</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  449</span>    <span class="keywordflow">case</span> 0:</div>
-<div class="line"><span class="lineno">  450</span>      <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  451</span>    <span class="keywordflow">default</span>:</div>
-<div class="line"><span class="lineno">  452</span>      std::cout &lt;&lt; <span class="stringliteral">&quot;   Unknown option.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  453</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  454</span>    }</div>
-<div class="line"><span class="lineno">  455</span>  }</div>
-<div class="line"><span class="lineno">  456</span>}</div>
+<div class="line"><span class="lineno">  414</span>    {</div>
+<div class="line"><span class="lineno">  415</span>      <span class="keywordtype">int</span> value = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Number of registers: &quot;</span>);</div>
+<div class="line"><span class="lineno">  416</span>      <span class="keywordflow">if</span> (value &lt; 0)</div>
+<div class="line"><span class="lineno">  417</span>      {</div>
+<div class="line"><span class="lineno">  418</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;   Invalid value. The number of registers must be non-negative.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  419</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  420</span>      }</div>
+<div class="line"><span class="lineno">  421</span>      <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.numRegisters = value;</div>
+<div class="line"><span class="lineno">  422</span>      <a class="code hl_variable" href="#a9470a4bb54c590988cdef1013ce90f71">mConfigLoaded</a> = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  423</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  424</span>    }</div>
+<div class="line"><span class="lineno">  425</span>    <span class="keywordflow">case</span> 2:</div>
+<div class="line"><span class="lineno">  426</span>    {</div>
+<div class="line"><span class="lineno">  427</span>      std::cout &lt;&lt; <span class="stringliteral">&quot;   Algorithms: [1] basic  [2] spilling  [3] splitting  [4] free\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  428</span>      <span class="keywordtype">int</span> a = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Select: &quot;</span>);</div>
+<div class="line"><span class="lineno">  429</span>      <span class="keywordflow">if</span> (a == 1)</div>
+<div class="line"><span class="lineno">  430</span>      {</div>
+<div class="line"><span class="lineno">  431</span>        <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithm = <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94">AlgorithmType::Basic</a>;</div>
+<div class="line"><span class="lineno">  432</span>      }</div>
+<div class="line"><span class="lineno">  433</span>      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (a == 2)</div>
+<div class="line"><span class="lineno">  434</span>      {</div>
+<div class="line"><span class="lineno">  435</span>        <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithm = <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a5c763dd81f02716fd953962fdba7b080">AlgorithmType::Spilling</a>;</div>
+<div class="line"><span class="lineno">  436</span>        <span class="keywordtype">int</span> value = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Max spills (K): &quot;</span>);</div>
+<div class="line"><span class="lineno">  437</span>        <span class="keywordflow">if</span> (value &lt; 0)</div>
+<div class="line"><span class="lineno">  438</span>        {</div>
+<div class="line"><span class="lineno">  439</span>          std::cout &lt;&lt; <span class="stringliteral">&quot;   Invalid value. Max spills must be non-negative.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  440</span>          <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  441</span>        }</div>
+<div class="line"><span class="lineno">  442</span>        <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithmParam = value;</div>
+<div class="line"><span class="lineno">  443</span>      }</div>
+<div class="line"><span class="lineno">  444</span>      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (a == 3)</div>
+<div class="line"><span class="lineno">  445</span>      {</div>
+<div class="line"><span class="lineno">  446</span>        <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithm = <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a3577589a87a81dbb54067e164fefb78c">AlgorithmType::Splitting</a>;</div>
+<div class="line"><span class="lineno">  447</span>        <span class="keywordtype">int</span> value = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Max splits (K): &quot;</span>);</div>
+<div class="line"><span class="lineno">  448</span>        <span class="keywordflow">if</span> (value &lt; 0)</div>
+<div class="line"><span class="lineno">  449</span>        {</div>
+<div class="line"><span class="lineno">  450</span>          std::cout &lt;&lt; <span class="stringliteral">&quot;   Invalid value. Max splits must be non-negative.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  451</span>          <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  452</span>        }</div>
+<div class="line"><span class="lineno">  453</span>        <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithmParam = value;</div>
+<div class="line"><span class="lineno">  454</span>      }</div>
+<div class="line"><span class="lineno">  455</span>      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (a == 4)</div>
+<div class="line"><span class="lineno">  456</span>      {</div>
+<div class="line"><span class="lineno">  457</span>        <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.algorithm = <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594">AlgorithmType::Free</a>;</div>
+<div class="line"><span class="lineno">  458</span>      }</div>
+<div class="line"><span class="lineno">  459</span>      <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  460</span>      {</div>
+<div class="line"><span class="lineno">  461</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;   Invalid.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  462</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  463</span>      }</div>
+<div class="line"><span class="lineno">  464</span>      <a class="code hl_variable" href="#a9470a4bb54c590988cdef1013ce90f71">mConfigLoaded</a> = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  465</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  466</span>    }</div>
+<div class="line"><span class="lineno">  467</span>    <span class="keywordflow">case</span> 3:</div>
+<div class="line"><span class="lineno">  468</span>      <a class="code hl_variable" href="#ae95f15b18d60766d42374a40e92f9902">mParams</a>.outputFile = <a class="code hl_function" href="#a96377595b90d45d115fc0ecb8bbae490">readLine</a>(<span class="stringliteral">&quot;Output file path: &quot;</span>);</div>
+<div class="line"><span class="lineno">  469</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  470</span>    <span class="keywordflow">case</span> 0:</div>
+<div class="line"><span class="lineno">  471</span>      <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  472</span>    <span class="keywordflow">default</span>:</div>
+<div class="line"><span class="lineno">  473</span>      std::cout &lt;&lt; <span class="stringliteral">&quot;   Unknown option.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  474</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  475</span>    }</div>
+<div class="line"><span class="lineno">  476</span>  }</div>
+<div class="line"><span class="lineno">  477</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1114,12 +1135,12 @@ Private Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  376</span>    }</div>
 <div class="line"><span class="lineno">  377</span>  }</div>
 <div class="line"><span class="lineno">  378</span>}</div>
-<div class="ttc" id="aclass_register_alloc_app_html_a5672a70f00ae33c73292e06a109abcde"><div class="ttname"><a href="#a5672a70f00ae33c73292e06a109abcde">RegisterAllocApp::doLoadConfigFile</a></div><div class="ttdeci">void doLoadConfigFile()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00637">RegisterAllocApp.cpp:637</a></div></div>
-<div class="ttc" id="aclass_register_alloc_app_html_a8d6d4568f12b3cf1e76ec431fd39f77c"><div class="ttname"><a href="#a8d6d4568f12b3cf1e76ec431fd39f77c">RegisterAllocApp::doLoadRangesFile</a></div><div class="ttdeci">void doLoadRangesFile()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00630">RegisterAllocApp.cpp:630</a></div></div>
-<div class="ttc" id="aclass_register_alloc_app_html_aa7bbae11794ea018fa10928b0b19dd1c"><div class="ttname"><a href="#aa7bbae11794ea018fa10928b0b19dd1c">RegisterAllocApp::doLoadInputPairManual</a></div><div class="ttdeci">void doLoadInputPairManual()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00607">RegisterAllocApp.cpp:607</a></div></div>
-<div class="ttc" id="aclass_register_alloc_app_html_ae4f8db27803c4ca853cbb5f753b57be5"><div class="ttname"><a href="#ae4f8db27803c4ca853cbb5f753b57be5">RegisterAllocApp::doLoadInputPairFromFolder</a></div><div class="ttdeci">void doLoadInputPairFromFolder()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00534">RegisterAllocApp.cpp:534</a></div></div>
-<div class="ttc" id="aclass_register_alloc_app_html_afcac265f24d35dd148f47edc44574cda"><div class="ttname"><a href="#afcac265f24d35dd148f47edc44574cda">RegisterAllocApp::doViewParameters</a></div><div class="ttdeci">void doViewParameters() const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00677">RegisterAllocApp.cpp:677</a></div></div>
-<div class="ttc" id="aclass_register_alloc_app_html_aff0424db8d1581c2776168e9a3461962"><div class="ttname"><a href="#aff0424db8d1581c2776168e9a3461962">RegisterAllocApp::doViewWebs</a></div><div class="ttdeci">void doViewWebs() const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00644">RegisterAllocApp.cpp:644</a></div></div>
+<div class="ttc" id="aclass_register_alloc_app_html_a5672a70f00ae33c73292e06a109abcde"><div class="ttname"><a href="#a5672a70f00ae33c73292e06a109abcde">RegisterAllocApp::doLoadConfigFile</a></div><div class="ttdeci">void doLoadConfigFile()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00658">RegisterAllocApp.cpp:658</a></div></div>
+<div class="ttc" id="aclass_register_alloc_app_html_a8d6d4568f12b3cf1e76ec431fd39f77c"><div class="ttname"><a href="#a8d6d4568f12b3cf1e76ec431fd39f77c">RegisterAllocApp::doLoadRangesFile</a></div><div class="ttdeci">void doLoadRangesFile()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00651">RegisterAllocApp.cpp:651</a></div></div>
+<div class="ttc" id="aclass_register_alloc_app_html_aa7bbae11794ea018fa10928b0b19dd1c"><div class="ttname"><a href="#aa7bbae11794ea018fa10928b0b19dd1c">RegisterAllocApp::doLoadInputPairManual</a></div><div class="ttdeci">void doLoadInputPairManual()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00628">RegisterAllocApp.cpp:628</a></div></div>
+<div class="ttc" id="aclass_register_alloc_app_html_ae4f8db27803c4ca853cbb5f753b57be5"><div class="ttname"><a href="#ae4f8db27803c4ca853cbb5f753b57be5">RegisterAllocApp::doLoadInputPairFromFolder</a></div><div class="ttdeci">void doLoadInputPairFromFolder()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00555">RegisterAllocApp.cpp:555</a></div></div>
+<div class="ttc" id="aclass_register_alloc_app_html_afcac265f24d35dd148f47edc44574cda"><div class="ttname"><a href="#afcac265f24d35dd148f47edc44574cda">RegisterAllocApp::doViewParameters</a></div><div class="ttdeci">void doViewParameters() const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00698">RegisterAllocApp.cpp:698</a></div></div>
+<div class="ttc" id="aclass_register_alloc_app_html_aff0424db8d1581c2776168e9a3461962"><div class="ttname"><a href="#aff0424db8d1581c2776168e9a3461962">RegisterAllocApp::doViewWebs</a></div><div class="ttdeci">void doViewWebs() const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00665">RegisterAllocApp.cpp:665</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1146,44 +1167,44 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00495">495</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  496</span>{</div>
-<div class="line"><span class="lineno">  497</span>  <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div>
-<div class="line"><span class="lineno">  498</span>  {</div>
-<div class="line"><span class="lineno">  499</span>    <a class="code hl_function" href="#ad4973b38b41bb6614f43cae405e11845">printSep</a>(<span class="charliteral">&#39;=&#39;</span>, 57);</div>
-<div class="line"><span class="lineno">  500</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   [ Visualization ]\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  501</span>    <a class="code hl_function" href="#ad4973b38b41bb6614f43cae405e11845">printSep</a>(<span class="charliteral">&#39;-&#39;</span>, 57);</div>
-<div class="line"><span class="lineno">  502</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   [1] Print interference graph (terminal)\n&quot;</span></div>
-<div class="line"><span class="lineno">  503</span>              &lt;&lt; <span class="stringliteral">&quot;   [2] Export interference graph (DOT)\n&quot;</span></div>
-<div class="line"><span class="lineno">  504</span>              &lt;&lt; <span class="stringliteral">&quot;   [3] Export colored allocation graph (DOT)\n&quot;</span></div>
-<div class="line"><span class="lineno">  505</span>              &lt;&lt; <span class="stringliteral">&quot;   [0] Back\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  506</span>    <a class="code hl_function" href="#ad4973b38b41bb6614f43cae405e11845">printSep</a>(<span class="charliteral">&#39;=&#39;</span>, 57);</div>
-<div class="line"><span class="lineno">  507</span>    <span class="keywordtype">int</span> choice = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Option: &quot;</span>);</div>
-<div class="line"><span class="lineno">  508</span>    <span class="keywordflow">switch</span> (choice)</div>
-<div class="line"><span class="lineno">  509</span>    {</div>
-<div class="line"><span class="lineno">  510</span>    <span class="keywordflow">case</span> 1:</div>
-<div class="line"><span class="lineno">  511</span>      <a class="code hl_function" href="#abed708a7f7deab1d5428d1f6e6997941">doViewGraphTerminal</a>();</div>
-<div class="line"><span class="lineno">  512</span>      <a class="code hl_function" href="#a75d79f69701158e8a1de778e780aa074">waitEnter</a>();</div>
-<div class="line"><span class="lineno">  513</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  514</span>    <span class="keywordflow">case</span> 2:</div>
-<div class="line"><span class="lineno">  515</span>      <a class="code hl_function" href="#a5bee7db7fc65aa322e22d9d6ea7bd316">doExportGraphDOT</a>();</div>
-<div class="line"><span class="lineno">  516</span>      <a class="code hl_function" href="#a75d79f69701158e8a1de778e780aa074">waitEnter</a>();</div>
-<div class="line"><span class="lineno">  517</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  518</span>    <span class="keywordflow">case</span> 3:</div>
-<div class="line"><span class="lineno">  519</span>      <a class="code hl_function" href="#a2221581f1ee0ec83151edfd17a6b0297">doExportAllocationDOT</a>();</div>
-<div class="line"><span class="lineno">  520</span>      <a class="code hl_function" href="#a75d79f69701158e8a1de778e780aa074">waitEnter</a>();</div>
-<div class="line"><span class="lineno">  521</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  522</span>    <span class="keywordflow">case</span> 0:</div>
-<div class="line"><span class="lineno">  523</span>      <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  524</span>    <span class="keywordflow">default</span>:</div>
-<div class="line"><span class="lineno">  525</span>      std::cout &lt;&lt; <span class="stringliteral">&quot;   Unknown option.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  526</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  527</span>    }</div>
-<div class="line"><span class="lineno">  528</span>  }</div>
-<div class="line"><span class="lineno">  529</span>}</div>
-<div class="ttc" id="aclass_register_alloc_app_html_a2221581f1ee0ec83151edfd17a6b0297"><div class="ttname"><a href="#a2221581f1ee0ec83151edfd17a6b0297">RegisterAllocApp::doExportAllocationDOT</a></div><div class="ttdeci">void doExportAllocationDOT() const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00745">RegisterAllocApp.cpp:745</a></div></div>
-<div class="ttc" id="aclass_register_alloc_app_html_a5bee7db7fc65aa322e22d9d6ea7bd316"><div class="ttname"><a href="#a5bee7db7fc65aa322e22d9d6ea7bd316">RegisterAllocApp::doExportGraphDOT</a></div><div class="ttdeci">void doExportGraphDOT() const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00732">RegisterAllocApp.cpp:732</a></div></div>
-<div class="ttc" id="aclass_register_alloc_app_html_abed708a7f7deab1d5428d1f6e6997941"><div class="ttname"><a href="#abed708a7f7deab1d5428d1f6e6997941">RegisterAllocApp::doViewGraphTerminal</a></div><div class="ttdeci">void doViewGraphTerminal() const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00722">RegisterAllocApp.cpp:722</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_register_alloc_app_8cpp_source.html#l00516">516</a> of file <a class="el" href="_register_alloc_app_8cpp_source.html">RegisterAllocApp.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  517</span>{</div>
+<div class="line"><span class="lineno">  518</span>  <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div>
+<div class="line"><span class="lineno">  519</span>  {</div>
+<div class="line"><span class="lineno">  520</span>    <a class="code hl_function" href="#ad4973b38b41bb6614f43cae405e11845">printSep</a>(<span class="charliteral">&#39;=&#39;</span>, 57);</div>
+<div class="line"><span class="lineno">  521</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   [ Visualization ]\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  522</span>    <a class="code hl_function" href="#ad4973b38b41bb6614f43cae405e11845">printSep</a>(<span class="charliteral">&#39;-&#39;</span>, 57);</div>
+<div class="line"><span class="lineno">  523</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;   [1] Print interference graph (terminal)\n&quot;</span></div>
+<div class="line"><span class="lineno">  524</span>              &lt;&lt; <span class="stringliteral">&quot;   [2] Export interference graph (DOT)\n&quot;</span></div>
+<div class="line"><span class="lineno">  525</span>              &lt;&lt; <span class="stringliteral">&quot;   [3] Export colored allocation graph (DOT)\n&quot;</span></div>
+<div class="line"><span class="lineno">  526</span>              &lt;&lt; <span class="stringliteral">&quot;   [0] Back\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  527</span>    <a class="code hl_function" href="#ad4973b38b41bb6614f43cae405e11845">printSep</a>(<span class="charliteral">&#39;=&#39;</span>, 57);</div>
+<div class="line"><span class="lineno">  528</span>    <span class="keywordtype">int</span> choice = <a class="code hl_function" href="#aacf4e01cabb95258613e066184aff320">readInt</a>(<span class="stringliteral">&quot;Option: &quot;</span>);</div>
+<div class="line"><span class="lineno">  529</span>    <span class="keywordflow">switch</span> (choice)</div>
+<div class="line"><span class="lineno">  530</span>    {</div>
+<div class="line"><span class="lineno">  531</span>    <span class="keywordflow">case</span> 1:</div>
+<div class="line"><span class="lineno">  532</span>      <a class="code hl_function" href="#abed708a7f7deab1d5428d1f6e6997941">doViewGraphTerminal</a>();</div>
+<div class="line"><span class="lineno">  533</span>      <a class="code hl_function" href="#a75d79f69701158e8a1de778e780aa074">waitEnter</a>();</div>
+<div class="line"><span class="lineno">  534</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  535</span>    <span class="keywordflow">case</span> 2:</div>
+<div class="line"><span class="lineno">  536</span>      <a class="code hl_function" href="#a5bee7db7fc65aa322e22d9d6ea7bd316">doExportGraphDOT</a>();</div>
+<div class="line"><span class="lineno">  537</span>      <a class="code hl_function" href="#a75d79f69701158e8a1de778e780aa074">waitEnter</a>();</div>
+<div class="line"><span class="lineno">  538</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  539</span>    <span class="keywordflow">case</span> 3:</div>
+<div class="line"><span class="lineno">  540</span>      <a class="code hl_function" href="#a2221581f1ee0ec83151edfd17a6b0297">doExportAllocationDOT</a>();</div>
+<div class="line"><span class="lineno">  541</span>      <a class="code hl_function" href="#a75d79f69701158e8a1de778e780aa074">waitEnter</a>();</div>
+<div class="line"><span class="lineno">  542</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  543</span>    <span class="keywordflow">case</span> 0:</div>
+<div class="line"><span class="lineno">  544</span>      <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  545</span>    <span class="keywordflow">default</span>:</div>
+<div class="line"><span class="lineno">  546</span>      std::cout &lt;&lt; <span class="stringliteral">&quot;   Unknown option.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  547</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  548</span>    }</div>
+<div class="line"><span class="lineno">  549</span>  }</div>
+<div class="line"><span class="lineno">  550</span>}</div>
+<div class="ttc" id="aclass_register_alloc_app_html_a2221581f1ee0ec83151edfd17a6b0297"><div class="ttname"><a href="#a2221581f1ee0ec83151edfd17a6b0297">RegisterAllocApp::doExportAllocationDOT</a></div><div class="ttdeci">void doExportAllocationDOT() const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00766">RegisterAllocApp.cpp:766</a></div></div>
+<div class="ttc" id="aclass_register_alloc_app_html_a5bee7db7fc65aa322e22d9d6ea7bd316"><div class="ttname"><a href="#a5bee7db7fc65aa322e22d9d6ea7bd316">RegisterAllocApp::doExportGraphDOT</a></div><div class="ttdeci">void doExportGraphDOT() const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00753">RegisterAllocApp.cpp:753</a></div></div>
+<div class="ttc" id="aclass_register_alloc_app_html_abed708a7f7deab1d5428d1f6e6997941"><div class="ttname"><a href="#abed708a7f7deab1d5428d1f6e6997941">RegisterAllocApp::doViewGraphTerminal</a></div><div class="ttdeci">void doViewGraphTerminal() const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00743">RegisterAllocApp.cpp:743</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1603,11 +1624,11 @@ Private Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  321</span>    }</div>
 <div class="line"><span class="lineno">  322</span>  }</div>
 <div class="line"><span class="lineno">  323</span>}</div>
-<div class="ttc" id="aclass_register_alloc_app_html_a2e9a37d4d5c01df50c3f7e95cb99ea23"><div class="ttname"><a href="#a2e9a37d4d5c01df50c3f7e95cb99ea23">RegisterAllocApp::menuAlgorithms</a></div><div class="ttdeci">void menuAlgorithms()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00461">RegisterAllocApp.cpp:461</a></div></div>
+<div class="ttc" id="aclass_register_alloc_app_html_a2e9a37d4d5c01df50c3f7e95cb99ea23"><div class="ttname"><a href="#a2e9a37d4d5c01df50c3f7e95cb99ea23">RegisterAllocApp::menuAlgorithms</a></div><div class="ttdeci">void menuAlgorithms()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00482">RegisterAllocApp.cpp:482</a></div></div>
 <div class="ttc" id="aclass_register_alloc_app_html_a48e43a968c5672eabac0315a5bf97876"><div class="ttname"><a href="#a48e43a968c5672eabac0315a5bf97876">RegisterAllocApp::printMainMenu</a></div><div class="ttdeci">void printMainMenu() const</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00243">RegisterAllocApp.cpp:243</a></div></div>
 <div class="ttc" id="aclass_register_alloc_app_html_a5172af58a4cbe0b87bbcf31e8ac371c1"><div class="ttname"><a href="#a5172af58a4cbe0b87bbcf31e8ac371c1">RegisterAllocApp::menuConfiguration</a></div><div class="ttdeci">void menuConfiguration()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00383">RegisterAllocApp.cpp:383</a></div></div>
 <div class="ttc" id="aclass_register_alloc_app_html_a6b12774f1c37e20f540047a5117bb619"><div class="ttname"><a href="#a6b12774f1c37e20f540047a5117bb619">RegisterAllocApp::menuDataManagement</a></div><div class="ttdeci">void menuDataManagement()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00328">RegisterAllocApp.cpp:328</a></div></div>
-<div class="ttc" id="aclass_register_alloc_app_html_ac52e6db6227c379a0161f693eb39a8ee"><div class="ttname"><a href="#ac52e6db6227c379a0161f693eb39a8ee">RegisterAllocApp::menuVisualization</a></div><div class="ttdeci">void menuVisualization()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00495">RegisterAllocApp.cpp:495</a></div></div>
+<div class="ttc" id="aclass_register_alloc_app_html_ac52e6db6227c379a0161f693eb39a8ee"><div class="ttname"><a href="#ac52e6db6227c379a0161f693eb39a8ee">RegisterAllocApp::menuVisualization</a></div><div class="ttdeci">void menuVisualization()</div><div class="ttdef"><b>Definition</b> <a href="_register_alloc_app_8cpp_source.html#l00516">RegisterAllocApp.cpp:516</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

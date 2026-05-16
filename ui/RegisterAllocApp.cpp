@@ -411,9 +411,17 @@ void RegisterAllocApp::menuConfiguration()
     switch (choice)
     {
     case 1:
-      mParams.numRegisters = readInt("Number of registers: ");
+    {
+      int value = readInt("Number of registers: ");
+      if (value < 0)
+      {
+        std::cout << "   Invalid value. The number of registers must be non-negative.\n";
+        break;
+      }
+      mParams.numRegisters = value;
       mConfigLoaded = true;
       break;
+    }
     case 2:
     {
       std::cout << "   Algorithms: [1] basic  [2] spilling  [3] splitting  [4] free\n";
@@ -425,12 +433,24 @@ void RegisterAllocApp::menuConfiguration()
       else if (a == 2)
       {
         mParams.algorithm = AlgorithmType::Spilling;
-        mParams.algorithmParam = readInt("Max spills (K): ");
+        int value = readInt("Max spills (K): ");
+        if (value < 0)
+        {
+          std::cout << "   Invalid value. Max spills must be non-negative.\n";
+          break;
+        }
+        mParams.algorithmParam = value;
       }
       else if (a == 3)
       {
         mParams.algorithm = AlgorithmType::Splitting;
-        mParams.algorithmParam = readInt("Max splits (K): ");
+        int value = readInt("Max splits (K): ");
+        if (value < 0)
+        {
+          std::cout << "   Invalid value. Max splits must be non-negative.\n";
+          break;
+        }
+        mParams.algorithmParam = value;
       }
       else if (a == 4)
       {
@@ -439,6 +459,7 @@ void RegisterAllocApp::menuConfiguration()
       else
       {
         std::cout << "   Invalid.\n";
+        break;
       }
       mConfigLoaded = true;
       break;

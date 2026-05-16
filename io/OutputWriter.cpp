@@ -90,11 +90,6 @@ bool OutputWriter::write(const std::string &filename,
   }
 
   bool allSpilled = usedRegs.empty();
-  if (allSpilled)
-  {
-    std::cerr << "Warning: register allocation was not feasible – all webs spilled to memory.\n";
-  }
-
   out << "# Total number of registers used, followed by assignment to webs\n";
   out << "registers: " << (allSpilled ? 0 : (int)usedRegs.size()) << "\n";
 
