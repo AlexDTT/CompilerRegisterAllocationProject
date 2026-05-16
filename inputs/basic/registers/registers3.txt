@@ -1,4 +1,4 @@
 # comment line
 registers: 3
-# algorithm variants: basic, splitting and spilling each with a numeric parameter
+# algorithm variants: basic, spilling,K, splitting,K, free, free_split
 algorithm: basic

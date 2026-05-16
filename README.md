@@ -23,6 +23,7 @@ The tool includes four allocation modes:
 | `spilling, K` | Coloring with bounded spilling | Removes up to `K` webs from the graph and assigns them to memory. |
 | `splitting, K` | Coloring with bounded splitting | Splits up to `K` webs into derived webs, rebuilds the graph, and retries coloring. |
 | `free` | Custom allocator | Uses graph-class fast paths, DSatur ordering, and bounded branch-and-bound to reduce spills. |
+| `free_split` | Custom allocator with recovery splitting | Runs `free` first, then tries up to two recovery splits only if spills remain. |
 
 ## Group T9G2 Members
 This project was developed by Group T9G2:
@@ -98,6 +99,7 @@ The output contains:
 - the mapping `rX: webY` or `M: webY`.
 - for alternative algorithms, a processing-friendly metadata section such as
   `spills: 1` / `spill: web0` or `splits: 1` / `split: web0 -> web0,web3`.
+  `free_split` may emit both when a recovery split is accepted.
 
 Batch mode also writes a colored DOT visualization next to the allocation file
 by replacing the output extension with `.dot`. For example, `allocation.txt`
@@ -143,7 +145,7 @@ The application pipeline follows the live-range to web to interference-graph wor
 ### Free heuristic example
 <div class="interactive_dotgraph">
 
-\dotfile dox/example_free.dot "Custom allocator with selective spill fallback"
+\dotfile dox/example_free.dot "Custom allocator with exact spill minimization"
 
 </div>
 
@@ -173,6 +175,7 @@ The application pipeline follows the live-range to web to interference-graph wor
 | Spilling allocator | `O((S + 1) * W * (W^2 + E))` |
 | Splitting allocator | `O(S * Q * (W^2 * P + E * W + W * (W^2 + E)))` |
 | Free allocator | `O(W^2 + E log W)` heuristic; guarded exact pass `O((K + 1)^W * (W + E))` |
+| Free-split allocator | no-split free pass plus up to `O(S * Q * (W^2 * P + F))` recovery screening/verification |
 
 Where:
 - `L` is the number of input lines,
@@ -189,9 +192,17 @@ where `findVertex` is `O(W)`. Replacing the vertex store with an indexed map wou
 several lookup-driven factors, but the project intentionally keeps the provided graph as
 the primary representation.
 
-The `free` allocator only runs the exponential branch-and-bound refinement below a
-fixed small/medium graph-size threshold. Larger inputs keep the polynomial DSatur
-result, which is more appropriate for an interactive demo tool.
+The `free` allocator only runs the exponential branch-and-bound refinement below
+a fixed small/medium graph-size threshold. Larger inputs keep the polynomial
+DSatur result, which is more appropriate for an interactive demo tool.
+
+The `free_split` allocator first solves the original graph with `free`. If that
+result still spills, it tries up to two opportunistic recovery splits on spilled
+and nearby high-pressure webs. Each candidate rebuilds the graph and is screened
+with the fast no-exact free pass; the best candidate is then verified with the
+no-split free allocator, using exact refinement only below the recovery verifier's
+small-graph cutoff. A split is kept only when it reduces spills or, with equal
+spills, uses fewer registers.
 
 ## Project Requirements Coverage
 
@@ -203,7 +214,7 @@ result, which is more appropriate for an interactive demo tool.
 | T2.1 basic allocation | Implemented. |
 | T2.2 bounded spilling | Implemented. |
 | T2.3 bounded splitting | Implemented. |
-| T2.4 custom allocation | Implemented with graph-class fast paths, DSatur ordering, and bounded exact spill minimization. |
+| T2.4 custom allocation | Implemented as `free` with graph-class fast paths, DSatur ordering, and bounded exact spill minimization. `free_split` adds post-allocation recovery splitting. |
 | T3.1 demo support | Interactive menu plus `Presentation.pdf`, graph assets, and editable `Presentation.typ` source. |
 | Testing | Unit and integration tests are available through `make test`. |
 
@@ -211,9 +222,9 @@ result, which is more appropriate for an interactive demo tool.
 The repository includes:
 
 - six baseline datasets mirrored under `inputs/basic/`;
-- advanced demo inputs under `inputs/advanced/`, including a dense custom/free
+- advanced demo inputs under `inputs/advanced/`, including a dense custom/free-split
   case, a bounded-spilling case, and a focused splitting showcase;
-- white-box unit tests for parsing, graph construction, spilling, marker-preserving splitting, free-mode coloring, and output generation;
+- white-box unit tests for parsing, graph construction, spilling, marker-preserving splitting, free/free-split coloring, and output generation;
 - deterministic integration tests that compare batch-mode outputs against expected files.
 
 Run everything with:

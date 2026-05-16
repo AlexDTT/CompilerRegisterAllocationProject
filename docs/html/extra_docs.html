@@ -154,8 +154,8 @@ Aggregated web output</h2>
 <p>This preserves the intended fused-web representation: each final web has one stable id and one sorted program-point list.</p>
 <p>For the alternative algorithms, the writer appends a small processing-friendly metadata section after the assignment section. The base format remains unchanged, and tools can parse the extra records line-by-line:</p>
 <ul>
-<li>spilling/free records: <span class="tt">spills: N</span>, followed by <span class="tt">spill: webX</span>;</li>
-<li>splitting records: <span class="tt">splits: N</span>, followed by <span class="tt">split: webX -&gt; webY,webZ</span>.</li>
+<li>spilling/free/free_split records: <span class="tt">spills: N</span>, followed by <span class="tt">spill: webX</span>;</li>
+<li>splitting records: <span class="tt">splits: N</span>, followed by <span class="tt">split: webX -&gt; webY,webZ</span>. Free-split mode can emit both kinds of records when a recovery split is accepted.</li>
 </ul>
 <p>The split record names the source web selected by the heuristic and the two derived web ids present in the final web list. The implementation reuses the source id for the left derived web and allocates a new id to the right derived web, making the mapping deterministic and easy to inspect.</p>
 <p>In addition to the text output, the application can export a colored DOT graph for the final allocation. Register-assigned webs are filled with register colors, memory-assigned webs are gray boxes, and split-derived webs have a highlighted border. Batch mode writes this graph automatically next to the allocation file using the same base name and a <span class="tt">.dot</span> extension.</p>
@@ -279,7 +279,7 @@ Complexity</h2>
 T2.4 - Custom Allocation Strategy</h1>
 <h2 class="doxsection"><a class="anchor" id="ext_t5_free_approach"></a>
 Approach</h2>
-<p>The custom mode is a hybrid allocator:</p>
+<p>The custom <span class="tt">free</span> mode is a hybrid allocator:</p>
 <ul>
 <li>edgeless graphs are assigned one register, because no webs interfere;</li>
 <li>complete graphs color at most <span class="tt">K</span> webs and spill the unavoidable remainder;</li>
@@ -287,7 +287,16 @@ Approach</h2>
 <li>all other graphs use DSatur ordering: choose the uncolored web with the largest number of distinct neighbor colors, breaking ties by degree;</li>
 <li>for small/medium graphs, a branch-and-bound refinement searches for a coloring with fewer spills than the DSatur result.</li>
 </ul>
-<p>This keeps the technique recognizable from standard graph coloring material: BFS for bipartite graphs, direct handling for cliques, DSatur for practical greedy coloring, and branch-and-bound for bounded exact improvement. The invariant remains simple: no two interfering colored webs may share a register; memory is used only for webs left uncolored by the selected strategy.</p>
+<p>The <span class="tt">free_split</span> mode is the same allocator plus one optional recovery step. It first runs <span class="tt">free</span> on the original graph. If there are no spills, it stops. If there are spills, it tries a small number of split candidates:</p>
+<ul>
+<li>try spilled webs first;</li>
+<li>then try high-degree neighbors of spilled webs;</li>
+<li>rebuild the graph for each candidate split;</li>
+<li>recolor with the free allocator;</li>
+<li>keep a split only when the verified result improves the allocation.</li>
+</ul>
+<p>The key idea is simple: <span class="tt">free</span> never changes the graph, while <span class="tt">free_split</span> may change the graph after <span class="tt">free</span> has already failed to avoid all spills. The final output shows the derived webs and records each accepted split.</p>
+<p>This keeps the technique recognizable from standard graph coloring material: BFS for bipartite graphs, direct handling for cliques, DSatur for practical greedy coloring, and branch-and-bound for bounded exact improvement. Free-split adds splitting as an opt-in recovery optimization. The invariant remains simple: no two interfering colored webs may share a register; memory is used only for webs left uncolored by the selected strategy.</p>
 <h2 class="doxsection"><a class="anchor" id="ext_t5_free_complexity"></a>
 Complexity</h2>
 <table class="markdownTable">
@@ -299,8 +308,10 @@ Complexity</h2>
 <td class="markdownTableBodyNone">DSatur fallback  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 + E log W)</span>  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Guarded branch-and-bound refinement  </td><td class="markdownTableBodyNone"><span class="tt">O((K + 1)^W * (W + E))</span> worst case  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Free-split recovery  </td><td class="markdownTableBodyNone"><span class="tt">O(S * Q * (W^2 * P + F))</span>, where <span class="tt">F</span> is one no-splitting free run  </td></tr>
 </table>
-<p>The exact refinement is guarded by a fixed graph-size threshold. Larger graphs return the polynomial DSatur result so the application remains responsive during the demo.</p>
+<p>The exact refinement is guarded by a fixed graph-size threshold. Larger graphs return the polynomial DSatur result so the application remains responsive during the demo. The recovery split limit is fixed to two for free-split mode so the demo output remains readable.</p>
 <h1 class="doxsection"><a class="anchor" id="ext_t5_examples"></a>
 Additional Graph Examples</h1>
 <h2 class="doxsection"><a class="anchor" id="ext_t5_noninterference"></a>

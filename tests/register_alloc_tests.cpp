@@ -4,7 +4,7 @@
  *
  * The suite intentionally focuses on specification-critical behaviour:
  * parsing rules, deterministic web construction, interference handling,
- * output formatting, and the four allocation modes.
+ * output formatting, and the allocation modes.
  */
 
 #include <cassert>
@@ -155,6 +155,19 @@ static void test_parseConfig_variants()
     EXPECT_TRUE(FileParser::parseConfig(path.string(), params));
     EXPECT_EQ(params.algorithm, AlgorithmType::Spilling);
     EXPECT_EQ(params.algorithmParam, 1);
+    std::remove(path.c_str());
+  }
+
+  {
+    const fs::path path = tempPath("ra_cfg_free_split.txt");
+    std::ofstream out(path);
+    out << "registers: 2\nalgorithm: free_split\n";
+    out.close();
+
+    Parameters params;
+    EXPECT_TRUE(FileParser::parseConfig(path.string(), params));
+    EXPECT_EQ(params.algorithm, AlgorithmType::FreeSplit);
+    EXPECT_EQ(params.algorithmParam, 0);
     std::remove(path.c_str());
   }
 
@@ -350,6 +363,48 @@ static void test_freeColoring_recognizes_bipartite_graph()
   EXPECT_TRUE(colorsRespectInterference(graph, result.webToRegister));
 }
 
+static void test_allocationLogic_free_does_not_split()
+{
+  Web a{0, "a", {makeLR("a", {{1, '+'}, {2, '\0'}, {5, '\0'}, {6, '-'}})}};
+  Web b{1, "b", {makeLR("b", {{1, '+'}, {2, '\0'}, {3, '\0'}, {4, '-'}})}};
+  Web c{2, "c", {makeLR("c", {{3, '+'}, {4, '\0'}, {5, '\0'}, {6, '-'}})}};
+  std::vector<Web> webs = {a, b, c};
+  Graph<int> graph = InterferenceGraph::buildGraph(webs);
+
+  Parameters params;
+  params.numRegisters = 2;
+  params.algorithm = AlgorithmType::Free;
+  params.outputFile.clear();
+
+  AllocationResult result = AllocationLogic::runAllocation(webs, graph, params);
+  EXPECT_TRUE(result.feasible);
+  EXPECT_EQ(result.spilledWebs, 1);
+  EXPECT_EQ((int)webs.size(), 3);
+  EXPECT_TRUE(result.splitRecords.empty());
+  EXPECT_TRUE(colorsRespectInterference(graph, result.webToRegister));
+}
+
+static void test_allocationLogic_freeSplit_uses_recovery_split()
+{
+  Web a{0, "a", {makeLR("a", {{1, '+'}, {2, '\0'}, {5, '\0'}, {6, '-'}})}};
+  Web b{1, "b", {makeLR("b", {{1, '+'}, {2, '\0'}, {3, '\0'}, {4, '-'}})}};
+  Web c{2, "c", {makeLR("c", {{3, '+'}, {4, '\0'}, {5, '\0'}, {6, '-'}})}};
+  std::vector<Web> webs = {a, b, c};
+  Graph<int> graph = InterferenceGraph::buildGraph(webs);
+
+  Parameters params;
+  params.numRegisters = 2;
+  params.algorithm = AlgorithmType::FreeSplit;
+  params.outputFile.clear();
+
+  AllocationResult result = AllocationLogic::runAllocation(webs, graph, params);
+  EXPECT_TRUE(result.feasible);
+  EXPECT_EQ(result.spilledWebs, 0);
+  EXPECT_EQ((int)webs.size(), 4);
+  EXPECT_EQ((int)result.splitRecords.size(), 1);
+  EXPECT_TRUE(colorsRespectInterference(graph, result.webToRegister));
+}
+
 static void test_allocationLogic_basic_infeasible_forces_all_memory()
 {
   Web a{0, "a", {makeLR("a", {{1, '+'}, {2, '\0'}, {3, '-'}})}};
@@ -426,6 +481,8 @@ int main()
   test_splittingColoring_succeeds_after_one_split();
   test_freeColoring_returns_valid_allocation_with_spill();
   test_freeColoring_recognizes_bipartite_graph();
+  test_allocationLogic_free_does_not_split();
+  test_allocationLogic_freeSplit_uses_recovery_split();
   test_allocationLogic_basic_infeasible_forces_all_memory();
   test_allocationLogic_spilling_preserves_partial_memory_assignment();
   test_allocationLogic_exports_colored_dot();

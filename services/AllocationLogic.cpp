@@ -16,20 +16,24 @@
 
 namespace
 {
+  constexpr int MAX_FREE_RECOVERY_SPLITS = 2;
+
   std::vector<std::string> buildMetadataLines(const AllocationResult &result,
                                               const Parameters &params)
   {
     std::vector<std::string> lines;
 
     if (params.algorithm == AlgorithmType::Spilling ||
-        params.algorithm == AlgorithmType::Free)
+        params.algorithm == AlgorithmType::Free ||
+        params.algorithm == AlgorithmType::FreeSplit)
     {
       lines.push_back("spills: " + std::to_string(result.selectedSpills.size()));
       for (int webId : result.selectedSpills)
         lines.push_back("spill: web" + std::to_string(webId));
     }
 
-    if (params.algorithm == AlgorithmType::Splitting)
+    if (params.algorithm == AlgorithmType::Splitting ||
+        (params.algorithm == AlgorithmType::FreeSplit && !result.splitRecords.empty()))
     {
       lines.push_back("splits: " + std::to_string(result.splitRecords.size()));
       for (const auto &record : result.splitRecords)
@@ -127,7 +131,13 @@ AllocationResult AllocationLogic::runAllocation(std::vector<Web> &webs,
       break;
 
     case AlgorithmType::Free:
-      result = GraphColoring::freeColoring(graph, webs, params.numRegisters);
+      result = GraphColoring::freeColoringNoSplitting(
+          graph, webs, params.numRegisters);
+      break;
+
+    case AlgorithmType::FreeSplit:
+      result = GraphColoring::freeColoringWithSplitting(
+          graph, webs, params.numRegisters, MAX_FREE_RECOVERY_SPLITS);
       break;
     }
   }

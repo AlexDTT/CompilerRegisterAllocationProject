@@ -1,3 +1,3 @@
-# Advanced demo configuration: pressure-aware custom allocator.
+# Advanced demo configuration: pressure-aware custom allocator without recovery splitting.
 registers: 4
 algorithm: free

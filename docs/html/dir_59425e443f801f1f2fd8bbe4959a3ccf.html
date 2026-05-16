@@ -143,13 +143,13 @@ Test Datasets</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">tests/input/splitting_bridge_*</span>  </td><td class="markdownTableBodyNone">Clique reduced to a 2-colorable path after one marker-preserving split.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">tests/input/free_triangle_*</span>  </td><td class="markdownTableBodyNone">Custom allocator using selective spilling on a 3-clique.  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">tests/input/free_triangle_*</span>  </td><td class="markdownTableBodyNone">Custom <span class="tt">free</span> allocator using selective spilling on a 3-clique.  </td></tr>
 </table>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
 Test Strategy</h1>
 <p>The project uses two complementary layers:</p>
 <ul>
-<li><span class="tt"><a class="el" href="register__alloc__tests_8cpp.html" title="Unit tests for the compiler register allocation project.">tests/register_alloc_tests.cpp</a></span>: white-box unit tests for parsing, web construction, interference detection, marker-preserving splitting, output serialization, and all allocation variants.</li>
+<li><span class="tt"><a class="el" href="register__alloc__tests_8cpp.html" title="Unit tests for the compiler register allocation project.">tests/register_alloc_tests.cpp</a></span>: white-box unit tests for parsing, web construction, interference detection, marker-preserving splitting, free/free-split behavior, output serialization, and all allocation variants.</li>
 <li><span class="tt">tests/run_integration_tests.sh</span>: batch-mode end-to-end tests that compare generated allocations with deterministic expected outputs in <span class="tt">tests/output/expected</span>. </li>
 </ul>
 </div><!-- contents -->

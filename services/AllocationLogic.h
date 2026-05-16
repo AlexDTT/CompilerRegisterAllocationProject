@@ -27,6 +27,9 @@ public:
    *
    * Dispatches to the appropriate GraphColoring method based on
    * params.algorithm, then writes the result to params.outputFile via OutputWriter.
+   * Free mode runs the no-splitting allocator. Free-split mode runs the same
+   * allocator first and may then accept up to two recovery splits if the original
+   * graph still spills.
    *
    * @param webs         Webs produced by InterferenceGraph::buildWebs().
    * @param graph        Interference graph produced by InterferenceGraph::buildGraph().
@@ -60,7 +63,7 @@ public:
    * Nodes are colored by assigned register. Memory-assigned webs use a neutral
    * gray fill, and split-derived webs receive a highlighted border. The graph is
    * written after the selected allocation algorithm has completed, so splitting
-   * mode exports the rebuilt graph with the final derived webs.
+   * mode and free-split mode export the rebuilt graph with the final derived webs.
    *
    * @param graph    Final interference graph.
    * @param webs     Final web list.

@@ -128,14 +128,14 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a4c0fc9d2c938b1b93ec376f3ab5481f1" id="r_a4c0fc9d2c938b1b93ec376f3ab5481f1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c0fc9d2c938b1b93ec376f3ab5481f1">spilledWebs</a> = 0</td></tr>
 <tr class="memdesc:a4c0fc9d2c938b1b93ec376f3ab5481f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of webs assigned to memory.  <br /></td></tr>
 <tr class="memitem:ae169a334412450e66797350b2831059d" id="r_ae169a334412450e66797350b2831059d"><td class="memItemLeft" align="right" valign="top">std::set&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae169a334412450e66797350b2831059d">selectedSpills</a></td></tr>
-<tr class="memdesc:ae169a334412450e66797350b2831059d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="struct_web.html" title="A live web is the union of one or more live ranges of the same variable whose program-point sets over...">Web</a> ids deliberately selected for memory by spilling-capable algorithms.  <br /></td></tr>
+<tr class="memdesc:ae169a334412450e66797350b2831059d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="struct_web.html" title="A live web is the union of one or more live ranges of the same variable whose program-point sets over...">Web</a> ids deliberately selected for memory by spill-tolerant algorithms.  <br /></td></tr>
 <tr class="memitem:a0a01856caf7e0298e5852bf8b87c80e6" id="r_a0a01856caf7e0298e5852bf8b87c80e6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_split_record.html">SplitRecord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0a01856caf7e0298e5852bf8b87c80e6">splitRecords</a></td></tr>
 <tr class="memdesc:a0a01856caf7e0298e5852bf8b87c80e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Records of web splits performed by splitting-capable algorithms.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The outcome of a register allocation run. </p>
 
-<p class="definition">Definition at line <a class="el" href="_graph_coloring_8h_source.html#l00043">43</a> of file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_graph_coloring_8h_source.html#l00045">45</a> of file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>
 </div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
 <a id="a15e2d2c98221ee91b5b55197423e522a" name="a15e2d2c98221ee91b5b55197423e522a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a15e2d2c98221ee91b5b55197423e522a">&#9670;&#160;</a></span>feasible</h2>
@@ -148,9 +148,9 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>True when the selected algorithm produced a valid allocation result. For the basic algorithm this requires all webs to be colored. For spilling/free algorithms, selected memory assignments are allowed. </p>
+<p>True when the selected algorithm produced a valid allocation result. For the basic algorithm this requires all webs to be colored. For spilling/free/free_split algorithms, selected memory assignments are allowed. </p>
 
-<p class="definition">Definition at line <a class="el" href="_graph_coloring_8h_source.html#l00051">51</a> of file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_graph_coloring_8h_source.html#l00053">53</a> of file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>
 
 </div>
 </div>
@@ -168,7 +168,7 @@ Public Attributes</h2></td></tr>
 
 <p>Number of physical registers actually used. </p>
 
-<p class="definition">Definition at line <a class="el" href="_graph_coloring_8h_source.html#l00054">54</a> of file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_graph_coloring_8h_source.html#l00056">56</a> of file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>
 
 </div>
 </div>
@@ -184,9 +184,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="struct_web.html" title="A live web is the union of one or more live ranges of the same variable whose program-point sets over...">Web</a> ids deliberately selected for memory by spilling-capable algorithms. </p>
+<p><a class="el" href="struct_web.html" title="A live web is the union of one or more live ranges of the same variable whose program-point sets over...">Web</a> ids deliberately selected for memory by spill-tolerant algorithms. </p>
 
-<p class="definition">Definition at line <a class="el" href="_graph_coloring_8h_source.html#l00060">60</a> of file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_graph_coloring_8h_source.html#l00062">62</a> of file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>
 
 </div>
 </div>
@@ -204,7 +204,7 @@ Public Attributes</h2></td></tr>
 
 <p>Number of webs assigned to memory. </p>
 
-<p class="definition">Definition at line <a class="el" href="_graph_coloring_8h_source.html#l00057">57</a> of file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_graph_coloring_8h_source.html#l00059">59</a> of file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>
 
 </div>
 </div>
@@ -222,7 +222,7 @@ Public Attributes</h2></td></tr>
 
 <p>Records of web splits performed by splitting-capable algorithms. </p>
 
-<p class="definition">Definition at line <a class="el" href="_graph_coloring_8h_source.html#l00063">63</a> of file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_graph_coloring_8h_source.html#l00065">65</a> of file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>
 
 </div>
 </div>
@@ -240,7 +240,7 @@ Public Attributes</h2></td></tr>
 
 <p>Maps web ID → physical register index (0-based), or -1 if the web was spilled. </p>
 
-<p class="definition">Definition at line <a class="el" href="_graph_coloring_8h_source.html#l00046">46</a> of file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_graph_coloring_8h_source.html#l00048">48</a> of file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>
 
 </div>
 </div>

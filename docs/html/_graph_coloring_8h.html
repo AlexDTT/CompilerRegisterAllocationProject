@@ -145,11 +145,12 @@ Classes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Graph-coloring-based register allocation algorithms. </p>
-<p>Four algorithm variants are provided:</p><ul>
+<p>Five algorithm variants are provided:</p><ul>
 <li><b>Basic</b>: simplify/select greedy graph coloring. When the graph cannot be colored with the configured number of registers without recovery actions, the allocation is reported as infeasible.</li>
 <li><b>Spilling</b>: Greedy coloring with selective web spilling (committing webs to memory) to reduce the graph's chromatic number.</li>
 <li><b>Splitting</b>: selective web splitting that preserves the original live-range markers and tries the split points that most reduce interference.</li>
-<li><b>Free</b>: custom hybrid coloring with graph-class fast paths, DSatur ordering, and a bounded exact branch-and-bound pass for small/medium graphs. </li>
+<li><b>Free</b>: custom hybrid coloring with graph-class fast paths, DSatur ordering, and a bounded exact branch-and-bound pass for small/medium graphs.</li>
+<li><b>FreeSplit</b>: Free followed by bounded recovery splitting only after the original graph still spills. </li>
 </ul>
 
 <p class="definition">Definition in file <a class="el" href="_graph_coloring_8h_source.html">GraphColoring.h</a>.</p>

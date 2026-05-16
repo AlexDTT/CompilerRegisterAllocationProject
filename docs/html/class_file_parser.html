@@ -216,6 +216,7 @@ Static Private Member Functions</h2></td></tr>
 <div class="line"><span class="preprocessor"># or: algorithm: spilling, 2</span></div>
 <div class="line"><span class="preprocessor"># or: algorithm: splitting, 2</span></div>
 <div class="line"><span class="preprocessor"># or: algorithm: free</span></div>
+<div class="line"><span class="preprocessor"># or: algorithm: free_split</span></div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">filename</td><td>Path to the config text file. </td></tr>
@@ -277,7 +278,7 @@ Static Private Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  259</span>    }</div>
 <div class="line"><span class="lineno">  260</span>    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (key == <span class="stringliteral">&quot;algorithm&quot;</span>)</div>
 <div class="line"><span class="lineno">  261</span>    {</div>
-<div class="line"><span class="lineno">  262</span>      <span class="comment">// value may be &quot;basic&quot;, &quot;spilling, 2&quot;, &quot;splitting, 2&quot;, &quot;free&quot;</span></div>
+<div class="line"><span class="lineno">  262</span>      <span class="comment">// value may be &quot;basic&quot;, &quot;spilling, 2&quot;, &quot;splitting, 2&quot;, &quot;free&quot;, &quot;free_split&quot;</span></div>
 <div class="line"><span class="lineno">  263</span>      <span class="keyword">auto</span> parts = splitByComma(value);</div>
 <div class="line"><span class="lineno">  264</span>      <span class="keywordflow">if</span> (parts.empty())</div>
 <div class="line"><span class="lineno">  265</span>      {</div>
@@ -354,39 +355,50 @@ Static Private Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  336</span>        params.<a class="code hl_variable" href="struct_parameters.html#abd67d278c272e083b814266ec6d318f1">algorithm</a> = <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594">AlgorithmType::Free</a>;</div>
 <div class="line"><span class="lineno">  337</span>        params.<a class="code hl_variable" href="struct_parameters.html#a227a10402acf80499a1e3d1d2cebd433">algorithmParam</a> = 0;</div>
 <div class="line"><span class="lineno">  338</span>      }</div>
-<div class="line"><span class="lineno">  339</span>      <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  339</span>      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (algoName == <span class="stringliteral">&quot;free_split&quot;</span>)</div>
 <div class="line"><span class="lineno">  340</span>      {</div>
-<div class="line"><span class="lineno">  341</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: line &quot;</span> &lt;&lt; lineNum &lt;&lt; <span class="stringliteral">&quot;: unknown algorithm &#39;&quot;</span> &lt;&lt; algoName</div>
-<div class="line"><span class="lineno">  342</span>                  &lt;&lt; <span class="stringliteral">&quot;&#39;. Expected: basic, spilling, splitting, free.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  343</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  344</span>      }</div>
-<div class="line"><span class="lineno">  345</span>      foundAlgorithm = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  346</span>    }</div>
-<div class="line"><span class="lineno">  347</span>    <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  348</span>    {</div>
-<div class="line"><span class="lineno">  349</span>      std::cerr &lt;&lt; <span class="stringliteral">&quot;Warning: line &quot;</span> &lt;&lt; lineNum &lt;&lt; <span class="stringliteral">&quot;: unknown key &#39;&quot;</span> &lt;&lt; key &lt;&lt; <span class="stringliteral">&quot;&#39;, skipping.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  350</span>    }</div>
-<div class="line"><span class="lineno">  351</span>  }</div>
-<div class="line"><span class="lineno">  352</span> </div>
-<div class="line"><span class="lineno">  353</span>  <span class="keywordflow">if</span> (!foundRegisters)</div>
-<div class="line"><span class="lineno">  354</span>  {</div>
-<div class="line"><span class="lineno">  355</span>    std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: &#39;registers&#39; field not found in config file.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  356</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  357</span>  }</div>
-<div class="line"><span class="lineno">  358</span>  <span class="keywordflow">if</span> (!foundAlgorithm)</div>
-<div class="line"><span class="lineno">  359</span>  {</div>
-<div class="line"><span class="lineno">  360</span>    std::cerr &lt;&lt; <span class="stringliteral">&quot;Warning: &#39;algorithm&#39; field not found; defaulting to &#39;basic&#39;.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  341</span>        <span class="keywordflow">if</span> (parts.size() != 1)</div>
+<div class="line"><span class="lineno">  342</span>        {</div>
+<div class="line"><span class="lineno">  343</span>          std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: &#39;free_split&#39; must not have an extra numeric parameter.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  344</span>          <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  345</span>        }</div>
+<div class="line"><span class="lineno">  346</span>        params.<a class="code hl_variable" href="struct_parameters.html#abd67d278c272e083b814266ec6d318f1">algorithm</a> = <a class="code hl_enumvalue" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a42ff5988744f40363672175932e081a3">AlgorithmType::FreeSplit</a>;</div>
+<div class="line"><span class="lineno">  347</span>        params.<a class="code hl_variable" href="struct_parameters.html#a227a10402acf80499a1e3d1d2cebd433">algorithmParam</a> = 0;</div>
+<div class="line"><span class="lineno">  348</span>      }</div>
+<div class="line"><span class="lineno">  349</span>      <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  350</span>      {</div>
+<div class="line"><span class="lineno">  351</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: line &quot;</span> &lt;&lt; lineNum &lt;&lt; <span class="stringliteral">&quot;: unknown algorithm &#39;&quot;</span> &lt;&lt; algoName</div>
+<div class="line"><span class="lineno">  352</span>                  &lt;&lt; <span class="stringliteral">&quot;&#39;. Expected: basic, spilling, splitting, free, free_split.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  353</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  354</span>      }</div>
+<div class="line"><span class="lineno">  355</span>      foundAlgorithm = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  356</span>    }</div>
+<div class="line"><span class="lineno">  357</span>    <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  358</span>    {</div>
+<div class="line"><span class="lineno">  359</span>      std::cerr &lt;&lt; <span class="stringliteral">&quot;Warning: line &quot;</span> &lt;&lt; lineNum &lt;&lt; <span class="stringliteral">&quot;: unknown key &#39;&quot;</span> &lt;&lt; key &lt;&lt; <span class="stringliteral">&quot;&#39;, skipping.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  360</span>    }</div>
 <div class="line"><span class="lineno">  361</span>  }</div>
-<div class="line"><span class="lineno">  362</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  363</span>}</div>
+<div class="line"><span class="lineno">  362</span> </div>
+<div class="line"><span class="lineno">  363</span>  <span class="keywordflow">if</span> (!foundRegisters)</div>
+<div class="line"><span class="lineno">  364</span>  {</div>
+<div class="line"><span class="lineno">  365</span>    std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: &#39;registers&#39; field not found in config file.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  366</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  367</span>  }</div>
+<div class="line"><span class="lineno">  368</span>  <span class="keywordflow">if</span> (!foundAlgorithm)</div>
+<div class="line"><span class="lineno">  369</span>  {</div>
+<div class="line"><span class="lineno">  370</span>    std::cerr &lt;&lt; <span class="stringliteral">&quot;Warning: &#39;algorithm&#39; field not found; defaulting to &#39;basic&#39;.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  371</span>  }</div>
+<div class="line"><span class="lineno">  372</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  373</span>}</div>
 <div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9a3577589a87a81dbb54067e164fefb78c"><div class="ttname"><a href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a3577589a87a81dbb54067e164fefb78c">AlgorithmType::Splitting</a></div><div class="ttdeci">@ Splitting</div><div class="ttdoc">Graph coloring with web splitting (split webs into sub-webs).</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00019">Parameters.h:19</a></div></div>
+<div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9a42ff5988744f40363672175932e081a3"><div class="ttname"><a href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a42ff5988744f40363672175932e081a3">AlgorithmType::FreeSplit</a></div><div class="ttdeci">@ FreeSplit</div><div class="ttdoc">Custom allocation algorithm with bounded recovery splitting.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00021">Parameters.h:21</a></div></div>
 <div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9a5c763dd81f02716fd953962fdba7b080"><div class="ttname"><a href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a5c763dd81f02716fd953962fdba7b080">AlgorithmType::Spilling</a></div><div class="ttdeci">@ Spilling</div><div class="ttdoc">Graph coloring with web spilling (commit webs to memory).</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00018">Parameters.h:18</a></div></div>
 <div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94"><div class="ttname"><a href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94">AlgorithmType::Basic</a></div><div class="ttdeci">@ Basic</div><div class="ttdoc">Basic greedy graph-coloring. No spilling or splitting.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00017">Parameters.h:17</a></div></div>
-<div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594"><div class="ttname"><a href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594">AlgorithmType::Free</a></div><div class="ttdeci">@ Free</div><div class="ttdoc">Custom allocation algorithm.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00020">Parameters.h:20</a></div></div>
+<div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594"><div class="ttname"><a href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594">AlgorithmType::Free</a></div><div class="ttdeci">@ Free</div><div class="ttdoc">Custom allocation algorithm without recovery splitting.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00020">Parameters.h:20</a></div></div>
 <div class="ttc" id="aclass_file_parser_html_a731b9837afdf524593e67cde997c1f68"><div class="ttname"><a href="#a731b9837afdf524593e67cde997c1f68">FileParser::cleanLine</a></div><div class="ttdeci">static std::string cleanLine(const std::string &amp;s)</div><div class="ttdoc">Strips leading/trailing whitespace and removes everything after &#39;#&#39;.</div><div class="ttdef"><b>Definition</b> <a href="_file_parser_8cpp_source.html#l00052">FileParser.cpp:52</a></div></div>
-<div class="ttc" id="astruct_parameters_html_a227a10402acf80499a1e3d1d2cebd433"><div class="ttname"><a href="struct_parameters.html#a227a10402acf80499a1e3d1d2cebd433">Parameters::algorithmParam</a></div><div class="ttdeci">int algorithmParam</div><div class="ttdoc">K parameter for spilling/splitting algorithms.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00041">Parameters.h:41</a></div></div>
-<div class="ttc" id="astruct_parameters_html_a5de38c3e65224753edbdee569c5c5675"><div class="ttname"><a href="struct_parameters.html#a5de38c3e65224753edbdee569c5c5675">Parameters::numRegisters</a></div><div class="ttdeci">int numRegisters</div><div class="ttdoc">Maximum number of available physical registers.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00039">Parameters.h:39</a></div></div>
-<div class="ttc" id="astruct_parameters_html_abd67d278c272e083b814266ec6d318f1"><div class="ttname"><a href="struct_parameters.html#abd67d278c272e083b814266ec6d318f1">Parameters::algorithm</a></div><div class="ttdeci">AlgorithmType algorithm</div><div class="ttdoc">Algorithm variant to use.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00040">Parameters.h:40</a></div></div>
+<div class="ttc" id="astruct_parameters_html_a227a10402acf80499a1e3d1d2cebd433"><div class="ttname"><a href="struct_parameters.html#a227a10402acf80499a1e3d1d2cebd433">Parameters::algorithmParam</a></div><div class="ttdeci">int algorithmParam</div><div class="ttdoc">K parameter for spilling/splitting algorithms; unused by free modes.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00043">Parameters.h:43</a></div></div>
+<div class="ttc" id="astruct_parameters_html_a5de38c3e65224753edbdee569c5c5675"><div class="ttname"><a href="struct_parameters.html#a5de38c3e65224753edbdee569c5c5675">Parameters::numRegisters</a></div><div class="ttdeci">int numRegisters</div><div class="ttdoc">Maximum number of available physical registers.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00041">Parameters.h:41</a></div></div>
+<div class="ttc" id="astruct_parameters_html_abd67d278c272e083b814266ec6d318f1"><div class="ttname"><a href="struct_parameters.html#abd67d278c272e083b814266ec6d318f1">Parameters::algorithm</a></div><div class="ttdeci">AlgorithmType algorithm</div><div class="ttdoc">Algorithm variant to use.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00042">Parameters.h:42</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

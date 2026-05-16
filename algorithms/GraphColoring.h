@@ -2,7 +2,7 @@
  * @file GraphColoring.h
  * @brief Graph-coloring-based register allocation algorithms.
  *
- * Four algorithm variants are provided:
+ * Five algorithm variants are provided:
  *  - **Basic**: simplify/select greedy graph coloring. When the graph cannot be
  *    colored with the configured number of registers without recovery actions, the
  *    allocation is reported as infeasible.
@@ -12,6 +12,8 @@
  *    markers and tries the split points that most reduce interference.
  *  - **Free**: custom hybrid coloring with graph-class fast paths, DSatur ordering,
  *    and a bounded exact branch-and-bound pass for small/medium graphs.
+ *  - **FreeSplit**: Free followed by bounded recovery splitting only after the
+ *    original graph still spills.
  */
 
 #ifndef GRAPH_COLORING_H
@@ -47,7 +49,7 @@ struct AllocationResult
 
   /// True when the selected algorithm produced a valid allocation result.
   /// For the basic algorithm this requires all webs to be colored.
-  /// For spilling/free algorithms, selected memory assignments are allowed.
+  /// For spilling/free/free_split algorithms, selected memory assignments are allowed.
   bool feasible = false;
 
   /// Number of physical registers actually used.
@@ -56,7 +58,7 @@ struct AllocationResult
   /// Number of webs assigned to memory.
   int spilledWebs = 0;
 
-  /// Web ids deliberately selected for memory by spilling-capable algorithms.
+  /// Web ids deliberately selected for memory by spill-tolerant algorithms.
   std::set<int> selectedSpills;
 
   /// Records of web splits performed by splitting-capable algorithms.
@@ -163,9 +165,9 @@ public:
   // ------------------------------------------------------------------
 
   /**
-   * @brief Custom register allocation algorithm.
+   * @brief Custom register allocation algorithm without recovery splitting.
    *
-   * This allocator first recognizes simple graph classes that can be colored
+   * This allocator recognizes simple graph classes that can be colored
    * optimally by direct algorithms:
    *  - edgeless graphs use one register;
    *  - complete graphs color up to K webs and spill the unavoidable remainder;
@@ -187,6 +189,40 @@ public:
    *             O((K + 1)^W * (W + E)), but it is guarded by a fixed vertex
    *             threshold.
    *
+   */
+  static AllocationResult freeColoringNoSplitting(const Graph<int> &graph,
+                                                  const std::vector<Web> &webs,
+                                                  int numRegisters);
+
+  /**
+   * @brief Custom register allocation algorithm with bounded recovery splitting.
+   *
+   * Runs freeColoringNoSplitting() on the original graph first. If that produces
+   * zero spills, it returns immediately and leaves the web list unchanged. If the
+   * original graph still spills, it tries up to @p maxSplits opportunistic splits
+   * on spilled and nearby high-pressure webs. Candidate splits are screened with
+   * the fast no-exact free pass; the best candidate is then verified with the
+   * no-splitting free allocator (including exact refinement only under the
+   * recovery verifier's small-graph cutoff) and accepted only when it reduces the
+   * number of spills or, with equal spills, uses fewer registers. The returned
+   * result and mutated @p webs describe the final derived web list.
+   *
+   * @param graph        The interference graph (rebuilt after accepted splits).
+   * @param webs         Ordered list of webs (may be extended with derived webs).
+   * @param numRegisters Number of available physical registers (K).
+   * @param maxSplits    Maximum number of opportunistic recovery splits.
+   * @return AllocationResult for the final web list.
+   * @complexity O((maxSplits + 1) * F + maxSplits * Q * (W^2 * P + F)), where F
+   *             is the no-splitting free allocator cost and Q is the number of
+   *             legal candidate split positions inspected in one recovery round.
+   */
+  static AllocationResult freeColoringWithSplitting(Graph<int> &graph,
+                                                    std::vector<Web> &webs,
+                                                    int numRegisters,
+                                                    int maxSplits);
+
+  /**
+   * @brief Backward-compatible alias for freeColoringNoSplitting().
    */
   static AllocationResult freeColoring(const Graph<int> &graph,
                                        const std::vector<Web> &webs,

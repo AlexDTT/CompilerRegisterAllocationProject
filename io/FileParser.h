@@ -60,6 +60,7 @@ public:
    *   # or: algorithm: spilling, 2
    *   # or: algorithm: splitting, 2
    *   # or: algorithm: free
+   *   # or: algorithm: free_split
    * @endcode
    *
    * @param filename Path to the config text file.

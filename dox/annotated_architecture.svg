@@ -39,8 +39,8 @@
   <text class="label" x="490" y="498">AllocationLogic</text>
 
   <!-- modes -->
-  <rect class="node" x="315" y="570" width="350" height="56" fill="#252628" stroke="#7661b3"/>
-  <text class="label" x="490" y="598">basic | spilling | splitting | free</text>
+  <rect class="node" x="285" y="570" width="410" height="56" fill="#252628" stroke="#7661b3"/>
+  <text class="label" x="490" y="598">basic | spilling | splitting | free | free_split</text>
 
   <!-- writer/output -->
   <rect class="node" x="340" y="645" width="300" height="56" fill="#252628" stroke="#46aaa5"/>

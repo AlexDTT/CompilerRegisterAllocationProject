@@ -156,6 +156,9 @@ bool RegisterAllocApp::loadConfigFile(const std::string &path)
   case AlgorithmType::Free:
     std::cout << "free";
     break;
+  case AlgorithmType::FreeSplit:
+    std::cout << "free_split";
+    break;
   }
   std::cout << ".\n";
   return true;
@@ -267,6 +270,9 @@ void RegisterAllocApp::printMainMenu() const
       break;
     case AlgorithmType::Free:
       std::cout << "free";
+      break;
+    case AlgorithmType::FreeSplit:
+      std::cout << "free_split";
       break;
     }
     std::cout << ".\n";
@@ -403,6 +409,9 @@ void RegisterAllocApp::menuConfiguration()
     case AlgorithmType::Free:
       std::cout << "free\n";
       break;
+    case AlgorithmType::FreeSplit:
+      std::cout << "free_split\n";
+      break;
     }
     std::cout << "   [3] Set output file          : " << mParams.outputFile << "\n"
               << "   [0] Back\n";
@@ -424,7 +433,7 @@ void RegisterAllocApp::menuConfiguration()
     }
     case 2:
     {
-      std::cout << "   Algorithms: [1] basic  [2] spilling  [3] splitting  [4] free\n";
+      std::cout << "   Algorithms: [1] basic  [2] spilling  [3] splitting  [4] free  [5] free_split\n";
       int a = readInt("Select: ");
       if (a == 1)
       {
@@ -455,6 +464,10 @@ void RegisterAllocApp::menuConfiguration()
       else if (a == 4)
       {
         mParams.algorithm = AlgorithmType::Free;
+      }
+      else if (a == 5)
+      {
+        mParams.algorithm = AlgorithmType::FreeSplit;
       }
       else
       {
@@ -713,6 +726,9 @@ void RegisterAllocApp::doViewParameters() const
     break;
   case AlgorithmType::Free:
     std::cout << "free\n";
+    break;
+  case AlgorithmType::FreeSplit:
+    std::cout << "free_split\n";
     break;
   }
   std::cout << "     outputFile     : " << mParams.outputFile << "\n";

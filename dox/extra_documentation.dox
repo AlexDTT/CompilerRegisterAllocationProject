@@ -65,8 +65,9 @@ For the alternative algorithms, the writer appends a small processing-friendly
 metadata section after the assignment section. The base format remains
 unchanged, and tools can parse the extra records line-by-line:
 
-- spilling/free records: `spills: N`, followed by `spill: webX`;
+- spilling/free/free_split records: `spills: N`, followed by `spill: webX`;
 - splitting records: `splits: N`, followed by `split: webX -> webY,webZ`.
+  Free-split mode can emit both kinds of records when a recovery split is accepted.
 
 The split record names the source web selected by the heuristic and the two
 derived web ids present in the final web list. The implementation reuses the
@@ -234,7 +235,7 @@ Here `Q` is the number of legal split positions currently available.
 
 @subsection ext_t5_free_approach Approach
 
-The custom mode is a hybrid allocator:
+The custom `free` mode is a hybrid allocator:
 
 - edgeless graphs are assigned one register, because no webs interfere;
 - complete graphs color at most `K` webs and spill the unavoidable remainder;
@@ -244,11 +245,26 @@ The custom mode is a hybrid allocator:
 - for small/medium graphs, a branch-and-bound refinement searches for a coloring
   with fewer spills than the DSatur result.
 
+The `free_split` mode is the same allocator plus one optional recovery step. It
+first runs `free` on the original graph. If there are no spills, it stops. If
+there are spills, it tries a small number of split candidates:
+
+- try spilled webs first;
+- then try high-degree neighbors of spilled webs;
+- rebuild the graph for each candidate split;
+- recolor with the free allocator;
+- keep a split only when the verified result improves the allocation.
+
+The key idea is simple: `free` never changes the graph, while `free_split` may
+change the graph after `free` has already failed to avoid all spills. The final
+output shows the derived webs and records each accepted split.
+
 This keeps the technique recognizable from standard graph coloring material:
 BFS for bipartite graphs, direct handling for cliques, DSatur for practical
-greedy coloring, and branch-and-bound for bounded exact improvement. The
-invariant remains simple: no two interfering colored webs may share a register;
-memory is used only for webs left uncolored by the selected strategy.
+greedy coloring, and branch-and-bound for bounded exact improvement. Free-split
+adds splitting as an opt-in recovery optimization. The invariant remains simple:
+no two interfering colored webs may share a register; memory is used only for
+webs left uncolored by the selected strategy.
 
 @subsection ext_t5_free_complexity Complexity
 
@@ -257,10 +273,12 @@ memory is used only for webs left uncolored by the selected strategy.
 | Graph-class checks and adjacency extraction | `O(W^2 + E log W)` |
 | DSatur fallback | `O(W^2 + E log W)` |
 | Guarded branch-and-bound refinement | `O((K + 1)^W * (W + E))` worst case |
+| Free-split recovery | `O(S * Q * (W^2 * P + F))`, where `F` is one no-splitting free run |
 
 The exact refinement is guarded by a fixed graph-size threshold. Larger graphs
 return the polynomial DSatur result so the application remains responsive during
-the demo.
+the demo. The recovery split limit is fixed to two for free-split mode so the
+demo output remains readable.
 
 @section ext_t5_examples Additional Graph Examples
 

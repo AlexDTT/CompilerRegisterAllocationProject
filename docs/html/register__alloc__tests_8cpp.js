@@ -11,6 +11,8 @@ var register__alloc__tests_8cpp =
     [ "tempPath", "register__alloc__tests_8cpp.html#a0d204f57105f0df2e1c640f408decab0", null ],
     [ "test_allocationLogic_basic_infeasible_forces_all_memory", "register__alloc__tests_8cpp.html#a7b240f49cf03f97614d3ed2558890116", null ],
     [ "test_allocationLogic_exports_colored_dot", "register__alloc__tests_8cpp.html#a96f18740fdbe2aca2996eac2bbc15712", null ],
+    [ "test_allocationLogic_free_does_not_split", "register__alloc__tests_8cpp.html#a377a547066ce34145234c1c910502ac9", null ],
+    [ "test_allocationLogic_freeSplit_uses_recovery_split", "register__alloc__tests_8cpp.html#ab89b21bc8455f84a5e398d12bb2b7421", null ],
     [ "test_allocationLogic_spilling_preserves_partial_memory_assignment", "register__alloc__tests_8cpp.html#a55e73f015fd4ed4b23e1cfc14ebbe23c", null ],
     [ "test_basicColoring_detects_infeasible_triangle", "register__alloc__tests_8cpp.html#aa823c527fbd6ca700d0c584c7e901eae", null ],
     [ "test_buildWebs_is_deterministic_and_merges_transitively", "register__alloc__tests_8cpp.html#a5adb66d895f930e592f9c8ba5d3f655b", null ],

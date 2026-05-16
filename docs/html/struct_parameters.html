@@ -125,7 +125,7 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:abd67d278c272e083b814266ec6d318f1" id="r_abd67d278c272e083b814266ec6d318f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9">AlgorithmType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abd67d278c272e083b814266ec6d318f1">algorithm</a> = <a class="el" href="_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94">AlgorithmType::Basic</a></td></tr>
 <tr class="memdesc:abd67d278c272e083b814266ec6d318f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm variant to use.  <br /></td></tr>
 <tr class="memitem:a227a10402acf80499a1e3d1d2cebd433" id="r_a227a10402acf80499a1e3d1d2cebd433"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a227a10402acf80499a1e3d1d2cebd433">algorithmParam</a> = 0</td></tr>
-<tr class="memdesc:a227a10402acf80499a1e3d1d2cebd433"><td class="mdescLeft">&#160;</td><td class="mdescRight">K parameter for spilling/splitting algorithms.  <br /></td></tr>
+<tr class="memdesc:a227a10402acf80499a1e3d1d2cebd433"><td class="mdescLeft">&#160;</td><td class="mdescRight">K parameter for spilling/splitting algorithms; unused by free modes.  <br /></td></tr>
 <tr class="memitem:af545a547dd30a9fc89e4fd49cbdf9966" id="r_af545a547dd30a9fc89e4fd49cbdf9966"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af545a547dd30a9fc89e4fd49cbdf9966">outputFile</a> = &quot;allocation.txt&quot;</td></tr>
 <tr class="memdesc:af545a547dd30a9fc89e4fd49cbdf9966"><td class="mdescLeft">&#160;</td><td class="mdescRight">Path to the output allocation file.  <br /></td></tr>
 </table>
@@ -137,9 +137,10 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="preprocessor"># or: algorithm: spilling, 2</span></div>
 <div class="line"><span class="preprocessor"># or: algorithm: splitting, 2</span></div>
 <div class="line"><span class="preprocessor"># or: algorithm: free</span></div>
-<div class="ttc" id="astruct_parameters_html_abd67d278c272e083b814266ec6d318f1"><div class="ttname"><a href="#abd67d278c272e083b814266ec6d318f1">Parameters::algorithm</a></div><div class="ttdeci">AlgorithmType algorithm</div><div class="ttdoc">Algorithm variant to use.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00040">Parameters.h:40</a></div></div>
+<div class="line"><span class="preprocessor"># or: algorithm: free_split</span></div>
+<div class="ttc" id="astruct_parameters_html_abd67d278c272e083b814266ec6d318f1"><div class="ttname"><a href="#abd67d278c272e083b814266ec6d318f1">Parameters::algorithm</a></div><div class="ttdeci">AlgorithmType algorithm</div><div class="ttdoc">Algorithm variant to use.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00042">Parameters.h:42</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="_parameters_8h_source.html#l00037">37</a> of file <a class="el" href="_parameters_8h_source.html">Parameters.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_parameters_8h_source.html#l00039">39</a> of file <a class="el" href="_parameters_8h_source.html">Parameters.h</a>.</p>
 </div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
 <a id="abd67d278c272e083b814266ec6d318f1" name="abd67d278c272e083b814266ec6d318f1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abd67d278c272e083b814266ec6d318f1">&#9670;&#160;</a></span>algorithm</h2>
@@ -155,7 +156,7 @@ Public Attributes</h2></td></tr>
 
 <p>Algorithm variant to use. </p>
 
-<p class="definition">Definition at line <a class="el" href="_parameters_8h_source.html#l00040">40</a> of file <a class="el" href="_parameters_8h_source.html">Parameters.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_parameters_8h_source.html#l00042">42</a> of file <a class="el" href="_parameters_8h_source.html">Parameters.h</a>.</p>
 
 </div>
 </div>
@@ -171,9 +172,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>K parameter for spilling/splitting algorithms. </p>
+<p>K parameter for spilling/splitting algorithms; unused by free modes. </p>
 
-<p class="definition">Definition at line <a class="el" href="_parameters_8h_source.html#l00041">41</a> of file <a class="el" href="_parameters_8h_source.html">Parameters.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_parameters_8h_source.html#l00043">43</a> of file <a class="el" href="_parameters_8h_source.html">Parameters.h</a>.</p>
 
 </div>
 </div>
@@ -191,7 +192,7 @@ Public Attributes</h2></td></tr>
 
 <p>Maximum number of available physical registers. </p>
 
-<p class="definition">Definition at line <a class="el" href="_parameters_8h_source.html#l00039">39</a> of file <a class="el" href="_parameters_8h_source.html">Parameters.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_parameters_8h_source.html#l00041">41</a> of file <a class="el" href="_parameters_8h_source.html">Parameters.h</a>.</p>
 
 </div>
 </div>
@@ -209,7 +210,7 @@ Public Attributes</h2></td></tr>
 
 <p>Path to the output allocation file. </p>
 
-<p class="definition">Definition at line <a class="el" href="_parameters_8h_source.html#l00042">42</a> of file <a class="el" href="_parameters_8h_source.html">Parameters.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_parameters_8h_source.html#l00044">44</a> of file <a class="el" href="_parameters_8h_source.html">Parameters.h</a>.</p>
 
 </div>
 </div>

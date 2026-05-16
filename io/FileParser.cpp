@@ -259,7 +259,7 @@ bool FileParser::parseConfig(const std::string &filename, Parameters &params)
     }
     else if (key == "algorithm")
     {
-      // value may be "basic", "spilling, 2", "splitting, 2", "free"
+      // value may be "basic", "spilling, 2", "splitting, 2", "free", "free_split"
       auto parts = splitByComma(value);
       if (parts.empty())
       {
@@ -336,10 +336,20 @@ bool FileParser::parseConfig(const std::string &filename, Parameters &params)
         params.algorithm = AlgorithmType::Free;
         params.algorithmParam = 0;
       }
+      else if (algoName == "free_split")
+      {
+        if (parts.size() != 1)
+        {
+          std::cerr << "Error: 'free_split' must not have an extra numeric parameter.\n";
+          return false;
+        }
+        params.algorithm = AlgorithmType::FreeSplit;
+        params.algorithmParam = 0;
+      }
       else
       {
         std::cerr << "Error: line " << lineNum << ": unknown algorithm '" << algoName
-                  << "'. Expected: basic, spilling, splitting, free.\n";
+                  << "'. Expected: basic, spilling, splitting, free, free_split.\n";
         return false;
       }
       foundAlgorithm = true;

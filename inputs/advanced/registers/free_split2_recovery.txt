@@ -1,0 +1,3 @@
+# Advanced demo configuration: free_split allocator with recovery splitting and remaining spill.
+registers: 2
+algorithm: free_split

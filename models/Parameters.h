@@ -17,7 +17,8 @@ enum class AlgorithmType
   Basic,     ///< Basic greedy graph-coloring. No spilling or splitting.
   Spilling,  ///< Graph coloring with web spilling (commit webs to memory).
   Splitting, ///< Graph coloring with web splitting (split webs into sub-webs).
-  Free       ///< Custom allocation algorithm.
+  Free,      ///< Custom allocation algorithm without recovery splitting.
+  FreeSplit  ///< Custom allocation algorithm with bounded recovery splitting.
 };
 
 /**
@@ -32,13 +33,14 @@ enum class AlgorithmType
  *   # or: algorithm: spilling, 2
  *   # or: algorithm: splitting, 2
  *   # or: algorithm: free
+ *   # or: algorithm: free_split
  * @endcode
  */
 struct Parameters
 {
   int numRegisters = 0;                           ///< Maximum number of available physical registers.
   AlgorithmType algorithm = AlgorithmType::Basic; ///< Algorithm variant to use.
-  int algorithmParam = 0;                         ///< K parameter for spilling/splitting algorithms.
+  int algorithmParam = 0;                         ///< K parameter for spilling/splitting algorithms; unused by free modes.
   std::string outputFile = "allocation.txt";      ///< Path to the output allocation file.
 };
 

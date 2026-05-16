@@ -102,7 +102,7 @@
       ]
       #v(0.08cm)
       - registers: number of physical regs
-      - algorithm: basic | spilling,N | splitting,N | free
+      - algorithm: basic | spilling,N | splitting,N | free | free_split
       - missing algorithm defaults to basic
     ]
   ]
@@ -183,13 +183,13 @@
     ]
   ]
   #rect(fill: code, radius: 4pt, inset: 6pt, stroke: 0.4pt + rgb("#38393b"))[
-    #text(size: 7.8pt, fill: muted)[Splitting preserves original markers. 1+,2,5,6- splits into 1+,2 and 5,6- — no fabricated 2- or 5+. Metadata: spills: N / splits: N.]
+    #text(size: 7.8pt, fill: muted)[Splitting preserves original markers. 1+,2,5,6- splits into 1+,2 and 5,6- - no fabricated 2- or 5+. Metadata: spills: N / splits: N.]
   ]
 ])
 
 // --- Slide 6: Free Algorithm ---
 #pagebreak()
-#slide("Custom Free Algorithm", [
+#slide("Custom Free Algorithms", [
   #grid(columns: (1fr, 1fr), gutter: 0.45cm)[
     #panelbox[
       #text(weight: "bold", fill: orange-light, size: 9.5pt)[Hybrid strategy]
@@ -199,13 +199,14 @@
       - Bipartite graphs: BFS 2-coloring
       - General: DSatur greedy coloring
       - Small/medium: branch-and-bound refines spills
+      - free_split: split only after spills remain
     ]
   ][
     #align(center)[#image("presentation_assets/free_triangle.svg", height: 4.5cm)]
   ]
   #v(0.10cm)
   #rect(fill: code, radius: 4pt, inset: 6pt, stroke: 0.4pt + rgb("#38393b"))[
-    #text(size: 7.8pt, fill: muted)[Invariant: interfering colored webs never share a register. Memory only for uncolored webs.]
+    #text(size: 7.8pt, fill: muted)[free never changes the graph. free_split first runs free, then rebuilds/recolors candidate splits and keeps only verified improvements.]
   ]
 ])
 
@@ -216,7 +217,7 @@
     #panelbox[
       #text(weight: "bold", fill: orange-light, size: 9.5pt)[Inputs for the demo]
       #v(0.08cm)
-      - complex_allocation.txt + free4.txt: dense allocator stress test
+      - complex_allocation.txt + free4.txt: normal free with spills
       - splitting_showcase.txt + splitting2.txt: split reduces K from 3 to 2
       - spilling5.txt: bounded spilling in a dense graph
     ]
@@ -232,7 +233,7 @@
   ]
   #v(0.08cm)
   #rect(fill: code, radius: 4pt, inset: 6pt, stroke: 0.4pt + rgb("#38393b"))[
-    #text(size: 7.8pt, fill: muted)[make test — 76 unit + 9 integration (passes clean). DOT graphs written alongside allocation output.]
+    #text(size: 7.8pt, fill: muted)[make test - 85 unit assertions + 9 integration cases. DOT graphs written alongside allocation output.]
   ]
 ])
 
@@ -264,7 +265,8 @@
       #complexity-row("Basic:", $O(W (W^2 + E))$)
       #complexity-row("Spilling:", $O((S+1) W (W^2 + E))$)
       #complexity-row("Splitting:", $O(S Q (W^2 P + E W + W(W^2+E)))$)
-      #complexity-row("Free:", [$O(W^2 + E log W)$ (heuristic)])
+      #complexity-row("Free:", [$O(W^2 + E log W)$ + guarded exact])
+      #complexity-row("Free split:", [$F + S Q (W^2 P + F)$])
     ]
   ]
   

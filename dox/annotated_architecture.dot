@@ -25,7 +25,7 @@ digraph compiler_register_allocation_pipeline {
     alloc [label="AllocationLogic", color="#d67c3b"];
 
     alloc -> modes;
-    modes [label="basic | spilling | splitting | free", color="#7661b3"];
+    modes [label="basic | spilling | splitting | free | free_split", color="#7661b3"];
 
     modes -> writer;
     writer [label="OutputWriter", color="#46aaa5"];

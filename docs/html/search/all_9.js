@@ -12,6 +12,9 @@ var searchData=
   ['free_9',['Free',['../_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594',1,'Parameters.h']]],
   ['free_20heuristic_20example_10',['Free heuristic example',['../index.html#autotoc_md17',1,'']]],
   ['freecoloring_11',['freeColoring',['../class_graph_coloring.html#ad97fc256957b5e215426e4f567e38fc1',1,'GraphColoring']]],
-  ['fusion_12',['Transitive web fusion',['../extra_docs.html#ext_t5_fusion',1,'']]],
-  ['fusion_20example_13',['Web fusion example',['../index.html#autotoc_md19',1,'']]]
+  ['freecoloringnosplitting_12',['freeColoringNoSplitting',['../class_graph_coloring.html#a1cd7de0c3833ddb23f9521128b05bb35',1,'GraphColoring']]],
+  ['freecoloringwithsplitting_13',['freeColoringWithSplitting',['../class_graph_coloring.html#a47899d2b1f818786b263aeae0449b913',1,'GraphColoring']]],
+  ['freesplit_14',['FreeSplit',['../_parameters_8h.html#a9243adfb7445f1adcf51b73329e774c9a42ff5988744f40363672175932e081a3',1,'Parameters.h']]],
+  ['fusion_15',['Transitive web fusion',['../extra_docs.html#ext_t5_fusion',1,'']]],
+  ['fusion_20example_16',['Web fusion example',['../index.html#autotoc_md19',1,'']]]
 ];

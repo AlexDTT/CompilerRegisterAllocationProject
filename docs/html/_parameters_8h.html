@@ -136,10 +136,14 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a9243adfb7445f1adcf51b73329e774c9" id="r_a9243adfb7445f1adcf51b73329e774c9"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9243adfb7445f1adcf51b73329e774c9">AlgorithmType</a> { <a class="el" href="#a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94">Basic</a>
+<tr class="memitem:a9243adfb7445f1adcf51b73329e774c9" id="r_a9243adfb7445f1adcf51b73329e774c9"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9243adfb7445f1adcf51b73329e774c9">AlgorithmType</a> { <br />
+&#160;&#160;<a class="el" href="#a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94">Basic</a>
 , <a class="el" href="#a9243adfb7445f1adcf51b73329e774c9a5c763dd81f02716fd953962fdba7b080">Spilling</a>
 , <a class="el" href="#a9243adfb7445f1adcf51b73329e774c9a3577589a87a81dbb54067e164fefb78c">Splitting</a>
 , <a class="el" href="#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594">Free</a>
+, <br />
+&#160;&#160;<a class="el" href="#a9243adfb7445f1adcf51b73329e774c9a42ff5988744f40363672175932e081a3">FreeSplit</a>
+<br />
  }</td></tr>
 <tr class="memdesc:a9243adfb7445f1adcf51b73329e774c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects which register allocation algorithm variant to run.  <a href="#a9243adfb7445f1adcf51b73329e774c9">More...</a><br /></td></tr>
 </table>
@@ -176,7 +180,9 @@ Enumerations</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="a9243adfb7445f1adcf51b73329e774c9a3577589a87a81dbb54067e164fefb78c" name="a9243adfb7445f1adcf51b73329e774c9a3577589a87a81dbb54067e164fefb78c"></a>Splitting&#160;</td><td class="fielddoc"><p><a class="el" href="class_graph.html" title="Represents a general graph using an adjacency list.">Graph</a> coloring with web splitting (split webs into sub-webs). </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594" name="a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594"></a>Free&#160;</td><td class="fielddoc"><p>Custom allocation algorithm. </p>
+<tr><td class="fieldname"><a id="a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594" name="a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594"></a>Free&#160;</td><td class="fielddoc"><p>Custom allocation algorithm without recovery splitting. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a9243adfb7445f1adcf51b73329e774c9a42ff5988744f40363672175932e081a3" name="a9243adfb7445f1adcf51b73329e774c9a42ff5988744f40363672175932e081a3"></a>FreeSplit&#160;</td><td class="fielddoc"><p>Custom allocation algorithm with bounded recovery splitting. </p>
 </td></tr>
 </table>
 
@@ -185,12 +191,14 @@ Enumerations</h2></td></tr>
 <div class="line"><span class="lineno">   17</span>  <a class="code hl_enumvalue" href="#a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94">Basic</a>,     </div>
 <div class="line"><span class="lineno">   18</span>  <a class="code hl_enumvalue" href="#a9243adfb7445f1adcf51b73329e774c9a5c763dd81f02716fd953962fdba7b080">Spilling</a>,  </div>
 <div class="line"><span class="lineno">   19</span>  <a class="code hl_enumvalue" href="#a9243adfb7445f1adcf51b73329e774c9a3577589a87a81dbb54067e164fefb78c">Splitting</a>, </div>
-<div class="line"><span class="lineno">   20</span>  <a class="code hl_enumvalue" href="#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594">Free</a>       </div>
-<div class="line"><span class="lineno">   21</span>};</div>
+<div class="line"><span class="lineno">   20</span>  <a class="code hl_enumvalue" href="#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594">Free</a>,      </div>
+<div class="line"><span class="lineno">   21</span>  <a class="code hl_enumvalue" href="#a9243adfb7445f1adcf51b73329e774c9a42ff5988744f40363672175932e081a3">FreeSplit</a>  </div>
+<div class="line"><span class="lineno">   22</span>};</div>
 <div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9a3577589a87a81dbb54067e164fefb78c"><div class="ttname"><a href="#a9243adfb7445f1adcf51b73329e774c9a3577589a87a81dbb54067e164fefb78c">AlgorithmType::Splitting</a></div><div class="ttdeci">@ Splitting</div><div class="ttdoc">Graph coloring with web splitting (split webs into sub-webs).</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00019">Parameters.h:19</a></div></div>
+<div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9a42ff5988744f40363672175932e081a3"><div class="ttname"><a href="#a9243adfb7445f1adcf51b73329e774c9a42ff5988744f40363672175932e081a3">AlgorithmType::FreeSplit</a></div><div class="ttdeci">@ FreeSplit</div><div class="ttdoc">Custom allocation algorithm with bounded recovery splitting.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00021">Parameters.h:21</a></div></div>
 <div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9a5c763dd81f02716fd953962fdba7b080"><div class="ttname"><a href="#a9243adfb7445f1adcf51b73329e774c9a5c763dd81f02716fd953962fdba7b080">AlgorithmType::Spilling</a></div><div class="ttdeci">@ Spilling</div><div class="ttdoc">Graph coloring with web spilling (commit webs to memory).</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00018">Parameters.h:18</a></div></div>
 <div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94"><div class="ttname"><a href="#a9243adfb7445f1adcf51b73329e774c9a972e73b7a882d0802a4e3a16946a2f94">AlgorithmType::Basic</a></div><div class="ttdeci">@ Basic</div><div class="ttdoc">Basic greedy graph-coloring. No spilling or splitting.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00017">Parameters.h:17</a></div></div>
-<div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594"><div class="ttname"><a href="#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594">AlgorithmType::Free</a></div><div class="ttdeci">@ Free</div><div class="ttdoc">Custom allocation algorithm.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00020">Parameters.h:20</a></div></div>
+<div class="ttc" id="a_parameters_8h_html_a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594"><div class="ttname"><a href="#a9243adfb7445f1adcf51b73329e774c9ab24ce0cd392a5b0b8dedc66c25213594">AlgorithmType::Free</a></div><div class="ttdeci">@ Free</div><div class="ttdoc">Custom allocation algorithm without recovery splitting.</div><div class="ttdef"><b>Definition</b> <a href="_parameters_8h_source.html#l00020">Parameters.h:20</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

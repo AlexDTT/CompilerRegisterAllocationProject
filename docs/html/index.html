@@ -136,6 +136,8 @@ About the Project</h1>
 <td class="markdownTableBodyNone"><span class="tt">splitting, K</span>  </td><td class="markdownTableBodyNone">Coloring with bounded splitting  </td><td class="markdownTableBodyNone">Splits up to <span class="tt">K</span> webs into derived webs, rebuilds the graph, and retries coloring.  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">free</span>  </td><td class="markdownTableBodyNone">Custom allocator  </td><td class="markdownTableBodyNone">Uses graph-class fast paths, DSatur ordering, and bounded branch-and-bound to reduce spills.  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">free_split</span>  </td><td class="markdownTableBodyNone">Custom allocator with recovery splitting  </td><td class="markdownTableBodyNone">Runs <span class="tt">free</span> first, then tries up to two recovery splits only if spills remain.  </td></tr>
 </table>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
 Group T9G2 Members</h1>
@@ -188,7 +190,7 @@ Allocation output</h2>
 <li>one line per web with its aggregated program points sorted in ascending order;</li>
 <li>the number of registers actually used;</li>
 <li>the mapping <span class="tt">rX: webY</span> or <span class="tt">M: webY</span>.</li>
-<li>for alternative algorithms, a processing-friendly metadata section such as <span class="tt">spills: 1</span> / <span class="tt">spill: web0</span> or <span class="tt">splits: 1</span> / <span class="tt">split: web0 -&gt; web0,web3</span>.</li>
+<li>for alternative algorithms, a processing-friendly metadata section such as <span class="tt">spills: 1</span> / <span class="tt">spill: web0</span> or <span class="tt">splits: 1</span> / <span class="tt">split: web0 -&gt; web0,web3</span>. <span class="tt">free_split</span> may emit both when a recovery split is accepted.</li>
 </ul>
 <p>Batch mode also writes a colored DOT visualization next to the allocation file by replacing the output extension with <span class="tt">.dot</span>. For example, <span class="tt">allocation.txt</span> produces <span class="tt">allocation.dot</span>. Nodes are colored by register, memory-assigned webs are gray boxes, and split-derived webs receive highlighted borders.</p>
 <p>Splitting preserves the original live-range markers exactly. If a range such as <span class="tt">1+,2,3,4-</span> is split into <span class="tt">1+,2</span> and <span class="tt">3,4-</span>, the second derived web is not forced to become <span class="tt">3+,4-</span>; the split boundary is not a new definition or last use.</p>
@@ -196,7 +198,7 @@ Allocation output</h2>
 System Architecture</h1>
 <p>The application pipeline follows the live-range to web to interference-graph workflow:</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_annotated_architecture.svg" width="287" height="478"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_annotated_architecture.svg" width="318" height="478"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Compiler Register Allocation Project Pipeline</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
@@ -223,7 +225,7 @@ Splitting a web to reduce the chromatic requirement</div>
 Free heuristic example</h2>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
 <iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_free.svg" width="624" height="534"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
-Custom allocator with selective spill fallback</div>
+Custom allocator with exact spill minimization</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
 Non-interference adjacency example</h2>
@@ -258,6 +260,8 @@ Complexity Summary</h1>
 <td class="markdownTableBodyNone">Splitting allocator  </td><td class="markdownTableBodyNone"><span class="tt">O(S * Q * (W^2 * P + E * W + W * (W^2 + E)))</span>  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Free allocator  </td><td class="markdownTableBodyNone"><span class="tt">O(W^2 + E log W)</span> heuristic; guarded exact pass <span class="tt">O((K + 1)^W * (W + E))</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Free-split allocator  </td><td class="markdownTableBodyNone">no-split free pass plus up to <span class="tt">O(S * Q * (W^2 * P + F))</span> recovery screening/verification  </td></tr>
 </table>
 <p>Where:</p><ul>
 <li><span class="tt">L</span> is the number of input lines,</li>
@@ -271,6 +275,7 @@ Complexity Summary</h1>
 </ul>
 <p>The coloring bounds include the current vector-backed course <span class="tt"><a class="el" href="class_graph.html" title="Represents a general graph using an adjacency list.">Graph</a>&lt;int&gt;</span> implementation, where <span class="tt">findVertex</span> is <span class="tt">O(W)</span>. Replacing the vertex store with an indexed map would reduce several lookup-driven factors, but the project intentionally keeps the provided graph as the primary representation.</p>
 <p>The <span class="tt">free</span> allocator only runs the exponential branch-and-bound refinement below a fixed small/medium graph-size threshold. Larger inputs keep the polynomial DSatur result, which is more appropriate for an interactive demo tool.</p>
+<p>The <span class="tt">free_split</span> allocator first solves the original graph with <span class="tt">free</span>. If that result still spills, it tries up to two opportunistic recovery splits on spilled and nearby high-pressure webs. Each candidate rebuilds the graph and is screened with the fast no-exact free pass; the best candidate is then verified with the no-split free allocator, using exact refinement only below the recovery verifier's small-graph cutoff. A split is kept only when it reduces spills or, with equal spills, uses fewer registers.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
 Project Requirements Coverage</h1>
 <table class="markdownTable">
@@ -289,7 +294,7 @@ Project Requirements Coverage</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">T2.3 bounded splitting  </td><td class="markdownTableBodyNone">Implemented.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">T2.4 custom allocation  </td><td class="markdownTableBodyNone">Implemented with graph-class fast paths, DSatur ordering, and bounded exact spill minimization.  </td></tr>
+<td class="markdownTableBodyNone">T2.4 custom allocation  </td><td class="markdownTableBodyNone">Implemented as <span class="tt">free</span> with graph-class fast paths, DSatur ordering, and bounded exact spill minimization. <span class="tt">free_split</span> adds post-allocation recovery splitting.  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">T3.1 demo support  </td><td class="markdownTableBodyNone">Interactive menu plus <span class="tt">Presentation.pdf</span>, graph assets, and editable <span class="tt">Presentation.typ</span> source.  </td></tr>
 <tr class="markdownTableRowOdd">
@@ -300,8 +305,8 @@ Test Coverage</h1>
 <p>The repository includes:</p>
 <ul>
 <li>six baseline datasets mirrored under <span class="tt">inputs/basic/</span>;</li>
-<li>advanced demo inputs under <span class="tt">inputs/advanced/</span>, including a dense custom/free case, a bounded-spilling case, and a focused splitting showcase;</li>
-<li>white-box unit tests for parsing, graph construction, spilling, marker-preserving splitting, free-mode coloring, and output generation;</li>
+<li>advanced demo inputs under <span class="tt">inputs/advanced/</span>, including a dense custom/free-split case, a bounded-spilling case, and a focused splitting showcase;</li>
+<li>white-box unit tests for parsing, graph construction, spilling, marker-preserving splitting, free/free-split coloring, and output generation;</li>
 <li>deterministic integration tests that compare batch-mode outputs against expected files.</li>
 </ul>
 <p>Run everything with:</p>

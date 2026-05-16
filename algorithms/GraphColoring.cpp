@@ -17,12 +17,13 @@
 
 namespace
 {
-  // When the number of webs is <= this limit, freeColoring runs an exact
+  // When the number of webs is <= this limit, freeColoringNoSplitting runs an exact
   // backtracking search (exactMinSpillColoring) to minimize spills, after
   // the faster DSATUR heuristic gives it a starting solution. Above this
   // cutoff the exact search is skipped; it is exponential and quickly
   // becomes impractical.
   constexpr size_t EXACT_FREE_SEARCH_LIMIT = 25;
+  constexpr size_t EXACT_FREE_SPLIT_VERIFY_LIMIT = 18;
 
   std::set<int> collectWebIds(const std::vector<Web> &webs)
   {
@@ -488,6 +489,8 @@ namespace
     Web right;
     SplitRecord record;
     bool colorable = false;
+    AllocationResult result;
+    bool sourceStillSpilled = true;
     int edges = std::numeric_limits<int>::max();
     int maximumDegree = std::numeric_limits<int>::max();
   };
@@ -620,6 +623,187 @@ namespace
     }
 
     return best.sourceIndex >= 0;
+  }
+
+  bool splitImprovesFreeResult(const AllocationResult &candidate,
+                               const AllocationResult &current)
+  {
+    if (candidate.spilledWebs != current.spilledWebs)
+      return candidate.spilledWebs < current.spilledWebs;
+    if (candidate.registersUsed != current.registersUsed)
+      return candidate.registersUsed < current.registersUsed;
+    return false;
+  }
+
+  bool splitIsWorthVerifying(const AllocationResult &candidate,
+                             const AllocationResult &current)
+  {
+    if (candidate.spilledWebs != current.spilledWebs)
+      return candidate.spilledWebs < current.spilledWebs;
+    return candidate.registersUsed <= current.registersUsed;
+  }
+
+  bool freeSplitChoiceIsBetter(const SplitChoice &candidate,
+                               const SplitChoice &best)
+  {
+    if (best.sourceIndex < 0)
+      return true;
+    if (candidate.result.spilledWebs != best.result.spilledWebs)
+      return candidate.result.spilledWebs < best.result.spilledWebs;
+    if (candidate.result.registersUsed != best.result.registersUsed)
+      return candidate.result.registersUsed < best.result.registersUsed;
+    if (candidate.sourceStillSpilled != best.sourceStillSpilled)
+      return !candidate.sourceStillSpilled;
+    if (candidate.edges != best.edges)
+      return candidate.edges < best.edges;
+    if (candidate.maximumDegree != best.maximumDegree)
+      return candidate.maximumDegree < best.maximumDegree;
+    return candidate.record.sourceWebId < best.record.sourceWebId;
+  }
+
+  std::vector<size_t> freeSplitSourceIndices(const std::vector<Web> &webs,
+                                             const Graph<int> &graph,
+                                             const AllocationResult &current)
+  {
+    constexpr size_t SOURCE_LIMIT = 8;
+    const auto adj = buildAdjacency(graph, webs);
+
+    std::map<int, size_t> indexById;
+    for (size_t i = 0; i < webs.size(); ++i)
+      indexById[webs[i].id] = i;
+
+    std::vector<int> sourceIds;
+    std::set<int> seen;
+    auto addId = [&](int id)
+    {
+      if (indexById.count(id) && seen.insert(id).second)
+        sourceIds.push_back(id);
+    };
+
+    for (int id : current.selectedSpills)
+      addId(id);
+
+    std::vector<int> neighbors;
+    for (int id : current.selectedSpills)
+    {
+      auto it = adj.find(id);
+      if (it == adj.end())
+        continue;
+      for (int neighbor : it->second)
+        neighbors.push_back(neighbor);
+    }
+    std::sort(neighbors.begin(), neighbors.end(),
+              [&](int a, int b)
+              {
+                const int da = adj.count(a) ? static_cast<int>(adj.at(a).size()) : 0;
+                const int db = adj.count(b) ? static_cast<int>(adj.at(b).size()) : 0;
+                if (da != db)
+                  return da > db;
+                return a < b;
+              });
+    for (int id : neighbors)
+      addId(id);
+
+    if (sourceIds.empty())
+    {
+      std::vector<int> byDegree;
+      for (const auto &[id, neighborsForId] : adj)
+      {
+        (void)neighborsForId;
+        byDegree.push_back(id);
+      }
+      std::sort(byDegree.begin(), byDegree.end(),
+                [&](int a, int b)
+                {
+                  const int da = adj.count(a) ? static_cast<int>(adj.at(a).size()) : 0;
+                  const int db = adj.count(b) ? static_cast<int>(adj.at(b).size()) : 0;
+                  if (da != db)
+                    return da > db;
+                  return a < b;
+                });
+      for (int id : byDegree)
+        addId(id);
+    }
+
+    if (sourceIds.size() > SOURCE_LIMIT)
+      sourceIds.resize(SOURCE_LIMIT);
+
+    std::vector<size_t> indices;
+    indices.reserve(sourceIds.size());
+    for (int id : sourceIds)
+      indices.push_back(indexById.at(id));
+    return indices;
+  }
+
+  AllocationResult freeColoringNoSplittingImpl(const Graph<int> &graph,
+                                               const std::vector<Web> &webs,
+                                               int numRegisters,
+                                               bool runExactSearch);
+
+  bool chooseBestFreeSplit(const Graph<int> &graph,
+                           const std::vector<Web> &webs,
+                           int numRegisters,
+                           const AllocationResult &current,
+                           SplitChoice &best)
+  {
+    const int rightWebId = maxWebId(webs) + 1;
+    const std::vector<size_t> sourceIndices = freeSplitSourceIndices(webs, graph, current);
+
+    for (size_t index : sourceIndices)
+    {
+      const Web &source = webs[index];
+      auto candidates = enumerateSplitsForWeb(source, rightWebId);
+
+      for (auto &[left, right] : candidates)
+      {
+        if (InterferenceGraph::interferes(left, right))
+          continue;
+
+        std::vector<Web> trial = webs;
+        trial[index] = left;
+        trial.push_back(right);
+
+        Graph<int> trialGraph = InterferenceGraph::buildGraph(trial);
+        AllocationResult trialResult =
+            freeColoringNoSplittingImpl(trialGraph, trial, numRegisters, false);
+        if (!splitIsWorthVerifying(trialResult, current))
+          continue;
+
+        const auto adj = buildAdjacency(trialGraph, trial);
+
+        SplitChoice candidate;
+        candidate.sourceIndex = static_cast<int>(index);
+        candidate.left = left;
+        candidate.right = right;
+        candidate.record = {source.id, left.id, right.id};
+        candidate.result = std::move(trialResult);
+        candidate.sourceStillSpilled = candidate.result.webToRegister[source.id] < 0;
+        candidate.edges = edgeCount(adj);
+        candidate.maximumDegree = maxDegree(adj);
+
+        if (freeSplitChoiceIsBetter(candidate, best))
+          best = std::move(candidate);
+      }
+    }
+
+    if (best.sourceIndex < 0)
+      return false;
+
+    std::vector<Web> verified = webs;
+    verified[static_cast<size_t>(best.sourceIndex)] = best.left;
+    verified.push_back(best.right);
+    Graph<int> verifiedGraph = InterferenceGraph::buildGraph(verified);
+    const bool runExactVerifier = verified.size() <= EXACT_FREE_SPLIT_VERIFY_LIMIT;
+    AllocationResult verifiedResult =
+        freeColoringNoSplittingImpl(verifiedGraph, verified, numRegisters, runExactVerifier);
+    if (!splitImprovesFreeResult(verifiedResult, current))
+    {
+      best = SplitChoice{};
+      return false;
+    }
+
+    best.result = std::move(verifiedResult);
+    return true;
   }
 
 } // namespace
@@ -872,12 +1056,12 @@ AllocationResult GraphColoring::splittingColoring(Graph<int> &graph,
   return current;
 }
 
-// ---------------------------------------------------------------------------
-// T2.4  freeColoring
-// ---------------------------------------------------------------------------
-AllocationResult GraphColoring::freeColoring(const Graph<int> &graph,
-                                             const std::vector<Web> &webs,
-                                             int numRegisters)
+namespace
+{
+  AllocationResult freeColoringNoSplittingImpl(const Graph<int> &graph,
+                                               const std::vector<Web> &webs,
+                                               int numRegisters,
+                                               bool runExactSearch)
 {
   std::map<int, int> assignment;
   for (const auto &w : webs)
@@ -907,7 +1091,7 @@ AllocationResult GraphColoring::freeColoring(const Graph<int> &graph,
   else if (!tryBipartiteColoring(adj, numRegisters, assignment))
   {
     assignment = dsaturSpillHeuristic(adj, ids, numRegisters);
-    if (ids.size() <= EXACT_FREE_SEARCH_LIMIT)
+    if (runExactSearch && ids.size() <= EXACT_FREE_SEARCH_LIMIT)
       assignment = exactMinSpillColoring(adj, ids, numRegisters, assignment);
   }
 
@@ -919,7 +1103,7 @@ AllocationResult GraphColoring::freeColoring(const Graph<int> &graph,
   }
   if (!colorsRespectInterference(graph, res.webToRegister))
   {
-    std::cerr << "Internal warning: freeColoring produced conflicting colors; spilling all webs.\n";
+    std::cerr << "Internal warning: freeColoringNoSplitting produced conflicting colors; spilling all webs.\n";
     for (const auto &w : webs)
       assignment[w.id] = -1;
     res = finalizeResult(webs, assignment, true);
@@ -927,4 +1111,66 @@ AllocationResult GraphColoring::freeColoring(const Graph<int> &graph,
       res.selectedSpills.insert(w.id);
   }
   return res;
+}
+} // namespace
+
+// ---------------------------------------------------------------------------
+// T2.4  freeColoringNoSplitting
+// ---------------------------------------------------------------------------
+AllocationResult GraphColoring::freeColoringNoSplitting(const Graph<int> &graph,
+                                                        const std::vector<Web> &webs,
+                                                        int numRegisters)
+{
+  return freeColoringNoSplittingImpl(graph, webs, numRegisters, true);
+}
+
+// ---------------------------------------------------------------------------
+// T2.4  freeColoringWithSplitting
+// ---------------------------------------------------------------------------
+AllocationResult GraphColoring::freeColoringWithSplitting(Graph<int> &graph,
+                                                          std::vector<Web> &webs,
+                                                          int numRegisters,
+                                                          int maxSplits)
+{
+  maxSplits = std::max(0, maxSplits);
+
+  AllocationResult best = freeColoringNoSplitting(graph, webs, numRegisters);
+  if (best.spilledWebs == 0 || maxSplits == 0)
+    return best;
+
+  std::vector<SplitRecord> splitRecords;
+
+  for (int splitCount = 0; splitCount < maxSplits; ++splitCount)
+  {
+    SplitChoice choice;
+    if (!chooseBestFreeSplit(graph, webs, numRegisters, best, choice))
+      break;
+
+    webs[static_cast<size_t>(choice.sourceIndex)] = std::move(choice.left);
+    webs.push_back(std::move(choice.right));
+    splitRecords.push_back(choice.record);
+
+    graph = InterferenceGraph::buildGraph(webs);
+    best = std::move(choice.result);
+    best.splitRecords = splitRecords;
+
+    if (!colorsRespectInterference(graph, best.webToRegister))
+    {
+      best = freeColoringNoSplitting(graph, webs, numRegisters);
+      best.splitRecords = splitRecords;
+    }
+
+    if (best.spilledWebs == 0)
+      break;
+  }
+
+  best.splitRecords = splitRecords;
+  return best;
+}
+
+AllocationResult GraphColoring::freeColoring(const Graph<int> &graph,
+                                             const std::vector<Web> &webs,
+                                             int numRegisters)
+{
+  return freeColoringNoSplitting(graph, webs, numRegisters);
 }
