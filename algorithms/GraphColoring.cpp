@@ -17,7 +17,12 @@
 
 namespace
 {
-  constexpr size_t EXACT_FREE_SEARCH_LIMIT = 26;
+  // When the number of webs is <= this limit, freeColoring runs an exact
+  // backtracking search (exactMinSpillColoring) to minimize spills, after
+  // the faster DSATUR heuristic gives it a starting solution. Above this
+  // cutoff the exact search is skipped; it is exponential and quickly
+  // becomes impractical.
+  constexpr size_t EXACT_FREE_SEARCH_LIMIT = 25;
 
   std::set<int> collectWebIds(const std::vector<Web> &webs)
   {
