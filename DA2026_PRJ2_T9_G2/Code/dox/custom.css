@@ -1,0 +1,13 @@
+html {
+    /* Primary orange colors for light mode */
+    --primary-color: #ff8800;
+    --primary-dark-color: #cc6d00;
+    --primary-light-color: #ffa033;
+}
+
+html.dark-mode {
+    /* Primary orange colors for dark mode */
+    --primary-color: #ffa033;
+    --primary-dark-color: #cc6d00;
+    --primary-light-color: #ffb866;
+}

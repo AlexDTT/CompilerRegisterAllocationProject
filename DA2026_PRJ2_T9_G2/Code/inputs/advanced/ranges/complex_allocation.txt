@@ -1,0 +1,53 @@
+# Complex live-range example for demoing web fusion, interference, spilling,
+# splitting, and the custom pressure-aware allocator.
+#
+# Shape summary:
+# - acc, i, limit, flag, tmpA, tmpB, tmpC overlap through a loop-like region.
+# - i and flag each have overlapping ranges that fuse into one web.
+# - late value ranges add pressure after the loop exit.
+# - bridge/reload ranges create short webs that can reuse registers around
+#   last-use/definition boundaries.
+# - splitHub plus splitA/splitB/splitC/splitD form a reducible 5-clique:
+#   one recovery split lowers that component back to 4-colorable.
+# - recoverHub/recoverA/recoverB form a smaller bridge component that free_split
+#   can split while the rest of the dense graph still leaves spills.
+
+acc: 1+,2,3,4,5,6,7,8,9,10,11,12-
+acc: 12+,13,14,15,16,17-
+
+i: 2+,3,4,5,6,7-
+i: 7+,8,9,10,11-
+i: 11+,12,13,14-
+
+limit: 1+,2,3,4,5,6,7,8,9-
+flag: 3+,4,5,6,9
+flag: 9,10,11,12,13-
+
+tmpA: 4+,5,6,7,8-
+tmpB: 5+,6,7,8,9,10-
+tmpC: 6+,7,8,9,10,11-
+
+arrVal: 8+,9,10,11,12,13,14-
+callArg: 10+,11,12,13-
+callRet: 13+,14,15,16-
+
+lateA: 14+,15,16,17,18-
+lateB: 14+,15,16,17-
+lateC: 15+,16,17,18-
+
+bridge: 12+,13,18-
+reload: 18+,19,20-
+result: 17+,18,19,20-
+
+splitHub: 30+,31,37,38-
+splitA: 30+,31,32,33,34,35-
+splitB: 30+,31,32,33,34,35-
+splitC: 33+,34,35,36,37,38-
+splitD: 33+,34,35,36,37,38-
+
+recoverHub: 50+,51,54,55-
+recoverA: 50+,51,52,53-
+recoverB: 52+,53,54,55-
+
+coldA: 60+,61,62-
+coldB: 63+,64,65-

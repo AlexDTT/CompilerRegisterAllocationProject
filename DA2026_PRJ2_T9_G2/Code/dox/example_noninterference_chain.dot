@@ -1,0 +1,15 @@
+graph noninterference_chain {
+    layout=neato;
+    overlap=false;
+    bgcolor="transparent";
+    node [shape=circle, style=filled, fontname="DejaVu Sans", fontcolor="#f8f9fa", color="#859399", penwidth=1.6];
+    edge [color="#859399", penwidth=1.4];
+
+    web0 [label="web0\nt0\n3+,4,5-", fillcolor="#44b86f"];
+    web1 [label="web1\nsum\n5+,6-", fillcolor="#1982d2"];
+    web2 [label="web2\nt1\n4+,5-", fillcolor="#1982d2"];
+
+    web0 -- web2;
+    web0 -- web1 [color="#ff0000", style=dashed, penwidth=1.0];
+    web2 -- web1 [color="#ff0000", style=dashed, penwidth=1.0];
+}

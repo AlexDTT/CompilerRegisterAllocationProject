@@ -1,0 +1,35 @@
+digraph compiler_register_allocation_pipeline {
+    rankdir=TB;
+    ranksep=0.25;
+    nodesep=0.25;
+    bgcolor="transparent";
+    node [shape=box, style="rounded,filled", color="#859399", fillcolor="#252628", fontname="DejaVu Sans", fontcolor="#f8f9fa", fontsize=11, penwidth=1.4, height=0.35, width=0];
+    edge [color="#859399", fontname="DejaVu Sans", fontcolor="#859399", fontsize=9, penwidth=1.2, arrowsize=0.6];
+
+    { rank=same; ranges; config; }
+    ranges [label="Ranges File", color="#44b86f"];
+    config [label="Config File", color="#f3a600"];
+
+    ranges -> parser;
+    config -> parser;
+    parser [label="FileParser", color="#1982d2"];
+
+    parser -> webs;
+    webs [label="Web Builder (Union-Find)", color="#44b86f"];
+
+    webs -> igraph;
+    igraph [label="InterferenceGraph\n(course Graph(int))", color="#f3a600"];
+
+    igraph -> alloc;
+    parser -> alloc [label="  Parameters  "];
+    alloc [label="AllocationLogic", color="#d67c3b"];
+
+    alloc -> modes;
+    modes [label="basic | spilling | splitting | free | free_split", color="#7661b3"];
+
+    modes -> writer;
+    writer [label="OutputWriter", color="#46aaa5"];
+
+    writer -> output;
+    output [label="allocation.txt + allocation.dot", color="#cc99cd"];
+}

@@ -1,0 +1,40 @@
+graph splitting_example {
+    bgcolor="transparent";
+    node [shape=circle, style=filled, fontname="DejaVu Sans", fontcolor="#f8f9fa", color="#d2dbde", penwidth=1.6];
+    edge [color="#859399", penwidth=1.4];
+
+    subgraph cluster_before {
+        label="Before splitting  (3-clique, needs K=3)";
+        fontcolor="#f8f9fa";
+        fontsize=11;
+        color="#38393b";
+        fillcolor="#252628";
+        style=filled;
+
+        a0 [label="web0\na\n1+,2,5,6-", fillcolor="#1982d2"];
+        b0 [label="web1\nb\n1+,2,3,4-", fillcolor="#44b86f"];
+        c0 [label="web2\nc\n3+,4,5,6-", fillcolor="#f3a600"];
+
+        a0 -- b0;
+        b0 -- c0;
+        c0 -- a0;
+    }
+
+    subgraph cluster_after {
+        label="After splitting web0  (2-colorable path)";
+        fontcolor="#f8f9fa";
+        fontsize=11;
+        color="#38393b";
+        fillcolor="#252628";
+        style=filled;
+
+        a1 [label="web0\na (early)\n1+,2", fillcolor="#1982d2", color="#ff8800", penwidth=2.4];
+        b1 [label="web1\nb\n1+,2,3,4-", fillcolor="#44b86f"];
+        c1 [label="web2\nc\n3+,4,5,6-", fillcolor="#1982d2"];
+        a2 [label="web3\na (late)\n5,6-", fillcolor="#44b86f", color="#ff8800", penwidth=2.4];
+
+        a1 -- b1;
+        b1 -- c1;
+        c1 -- a2;
+    }
+}

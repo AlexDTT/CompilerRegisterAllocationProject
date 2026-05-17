@@ -1,0 +1,3 @@
+# Advanced demo configuration: bounded spilling.
+registers: 5
+algorithm: spilling, 4

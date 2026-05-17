@@ -1,0 +1,14 @@
+# Total number of webs followed by the listing of the program points of each one
+# program points in each web are sorted in ascending order
+webs: 3
+web0: 1+,2,3-
+web1: 1+,2,3-
+web2: 1+,2,3-
+# Total number of registers used, followed by assignment to webs
+registers: 2
+r0: web2
+r1: web1
+M: web0
+# Alternative algorithm metadata, one processing-friendly record per line
+spills: 1
+spill: web0

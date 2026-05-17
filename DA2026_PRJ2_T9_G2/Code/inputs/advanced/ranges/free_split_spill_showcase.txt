@@ -1,0 +1,17 @@
+# Free-mode recovery showcase.
+#
+# The early region forms a bridge-like 3-clique. Splitting `bridgeA` into
+# early and late pieces turns that component into a 2-colorable path.
+# The late region is an independent 3-clique with only two registers, so one
+# memory assignment remains even after the useful split.
+
+bridgeA: 1+,2,5,6-
+bridgeB: 1+,2,3,4-
+bridgeC: 3+,4,5,6-
+
+hotX: 20+,21,22-
+hotY: 20+,21,22-
+hotZ: 20+,21,22-
+
+reuse1: 7+,8,9-
+reuse2: 9+,10,11-

@@ -1,0 +1,333 @@
+/**
+@page extra_docs Extra Documentation and Design Notes
+
+@section ext_t1 Graph Representation and Parsing
+
+@subsection ext_t1_data Data model
+
+The implementation separates the problem into four layers:
+
+- @ref ProgramPoint "ProgramPoint": one program line plus an optional `+` / `-` marker.
+- @ref LiveRange "LiveRange": one input line from the ranges file.
+- @ref Web "Web": a merged set of live ranges for the same variable.
+- `Graph<int>`: the interference graph, where each vertex stores a web id.
+
+The provided graph structure from the course was preserved as the primary graph
+representation. The only conceptual adaptation is that vertex labels are `int`
+web identifiers instead of domain objects. This keeps the graph reusable and
+lets the allocation algorithms work with a compact vertex set.
+
+@subsection ext_t1_webs Web construction
+
+The input file may contain multiple live ranges for the same variable. Those
+ranges are merged into a web whenever they share at least one program point.
+The implementation uses a union-find structure over the live ranges of a single
+variable:
+
+- Build one union-find element per live range (we based our struct in the provided UFDS that was available in previous TP classes).
+- For every pair of ranges of the same variable, test whether they overlap.
+- Union overlapping pairs.
+- Emit one web per connected component.
+
+Two implementation details matter for correctness and testing:
+
+- The emitted webs are sorted deterministically by variable name and first live
+  line.
+- The final web ids are reassigned after sorting so output files are stable.
+
+@subsection ext_t1_interference Interference rule
+
+Two webs interfere if they are simultaneously live at some program point.
+The implementation handles the register-reuse exception for adjacent live
+ranges:
+
+- if one web ends on line `L` due to a last use (`-`) and another web starts on
+  the same line `L` due to a definition (`+`), they do **not** interfere.
+
+This rule is implemented explicitly in
+@ref InterferenceGraph::interferes "InterferenceGraph::interferes".
+
+@subsection ext_t1_output Aggregated web output
+
+The output format uses **one line per web**, not one line per constituent live
+range. Internally, this means:
+
+- collect all program points from all ranges of the web;
+- sort them by line number;
+- collapse duplicate line numbers;
+- if the same line contains both `+` and `-`, treat it as an internal merge
+  point and print it without a marker.
+
+This preserves the intended fused-web representation: each final web has one
+stable id and one sorted program-point list.
+
+For the alternative algorithms, the writer appends a small processing-friendly
+metadata section after the assignment section. The base format remains
+unchanged, and tools can parse the extra records line-by-line:
+
+- spilling/free/free_split records: `spills: N`, followed by `spill: webX`;
+- splitting records: `splits: N`, followed by `split: webX -> webY,webZ`.
+  Free-split mode can emit both kinds of records when a recovery split is accepted.
+
+The split record names the source web selected by the heuristic and the two
+derived web ids present in the final web list. The implementation reuses the
+source id for the left derived web and allocates a new id to the right derived
+web, making the mapping deterministic and easy to inspect.
+
+In addition to the text output, the application can export a colored DOT graph
+for the final allocation. Register-assigned webs are filled with register
+colors, memory-assigned webs are gray boxes, and split-derived webs have a
+highlighted border. Batch mode writes this graph automatically next to the
+allocation file using the same base name and a `.dot` extension.
+
+@subsection ext_t1_complexity Complexity
+
+| Step | Complexity |
+|------|-----------|
+| Parse ranges | `O(L * P)` |
+| Parse config | `O(L)` |
+| Build webs | `O(V * R^2 * P log P)` |
+| Build interference graph | `O(W^2 * P + E * W)` |
+
+The bounds above describe the current implementation. The extra `log P` in web
+construction comes from set-based overlap tests, and the `E * W` graph-building
+term comes from the vector-backed course graph, where endpoint lookup is linear
+in the number of webs.
+
+---
+
+@section ext_t2 T2.1 - Basic Register Allocation
+
+@subsection ext_t2_basic_approach Approach
+
+The basic allocator uses a simplify/select structure:
+
+- Maintain the set of active vertices.
+- Repeatedly remove every active vertex with degree `< K` and push it onto a
+  stack.
+- If no such vertex exists, pick a spill candidate heuristically and remove it.
+- Pop the stack and greedily assign the first available register.
+
+In the **basic** mode, any spill means the allocation is considered infeasible.
+The service layer then converts the result into the specification-compliant
+fallback output:
+
+- `registers: 0`
+- every web mapped to `M`
+
+@subsection ext_t2_basic_complexity Complexity
+
+| Step | Complexity |
+|------|-----------|
+| Simplification + select | `O(W * (W^2 + E))` |
+
+The `W^2` component comes from repeated `findVertex` calls on the provided
+vector-backed graph. With an indexed graph representation, this would reduce to
+the usual simplify/select adjacency-scan cost.
+
+---
+
+@section ext_t3 T2.2 - Register Allocation with Spilling
+
+@subsection ext_t3_spill_approach Approach
+
+For the spilling mode, spilling is no longer treated as a failure. The algorithm:
+
+- tries to color the graph with zero forced spills;
+- if that fails, forces one spill and retries;
+- continues until either a valid coloring is found or the configured bound `K`
+  is exhausted.
+
+The spill heuristic is deterministic and pressure-oriented:
+
+- prefer the currently highest-degree web;
+- break ties by lower web id to keep results deterministic.
+
+When a valid coloring is found, only the selected spilled webs are mapped to
+memory. Unlike the basic mode, the result remains feasible.
+
+The output metadata records the exact web ids selected by this heuristic, for
+example `spills: 1` followed by `spill: web0`.
+
+@subsection ext_t3_spill_example Example
+
+The triangle below needs 3 colors, but with `K = 2` registers it becomes
+allocatable after spilling one web:
+
+<div class="interactive_dotgraph">
+
+\dotfile dox/example_spilling.dot "Triangle graph: one web must be spilled for K = 2"
+
+</div>
+
+@subsection ext_t3_spill_complexity Complexity
+
+| Step | Complexity |
+|------|-----------|
+| Up to `K` recoloring attempts | `O((K + 1) * W * (W^2 + E))` |
+
+---
+
+@section ext_t4 T2.3 - Register Allocation with Splitting
+
+@subsection ext_t4_split_approach Approach
+
+Web splitting is used when the user explicitly selects `splitting, K`.
+The implementation keeps the problem local and deterministic:
+
+- first, try to color the current graph with no splitting;
+- if that fails, pick one of the currently uncolorable/high-degree webs;
+- split it into two derived webs;
+- rebuild the interference graph;
+- retry coloring;
+- stop after at most `K` successful split operations.
+
+Two split strategies are used:
+
+- if the original web already contains multiple ranges, split those ranges into
+  two ordered groups;
+- if it contains only one range, split the sequence of program points into two
+  contiguous derived ranges.
+
+The split operation deliberately preserves the original markers. A boundary
+created by the allocator is not a new definition and is not a new last use. For
+example, splitting `1+,2,3,4-` may produce `1+,2` and `3,4-`, never `1+,2-` and
+`3+,4-`.
+
+Candidates whose two derived webs would still interfere with each other are
+discarded, because such a split would not represent two non-overlapping live
+pieces of the value.
+
+Candidate selection is also more deliberate than "split the first failed web":
+for every legal split position, the allocator rebuilds the graph and tests
+K-colorability. It chooses a split that makes the graph colorable if one exists;
+otherwise it chooses the split that leaves the fewest interference edges, then
+the smallest maximum degree. This keeps the heuristic understandable while still
+targeting the pressure that actually blocks coloring.
+
+The output metadata records every performed split as
+`split: webSource -> webLeft,webRight`, which identifies the selected source
+web and the derived webs that define the save/restore boundaries.
+
+@subsection ext_t4_split_example Example
+
+The following case starts as a 3-clique. `web0` has an early region and a late
+region; after splitting it, the resulting graph becomes a 2-colorable path:
+
+<div class="interactive_dotgraph">
+
+\dotfile dox/example_splitting.dot "One split reduces the chromatic requirement without inventing markers"
+
+</div>
+
+@subsection ext_t4_split_complexity Complexity
+
+| Step | Complexity |
+|------|-----------|
+| Candidate evaluation in one split iteration | `O(Q * (W^2 * P + E * W + W * (W^2 + E)))` |
+| Full allocator with at most `K` splits | `O(K * Q * (W^2 * P + E * W + W * (W^2 + E)))` |
+
+Here `Q` is the number of legal split positions currently available.
+
+---
+
+@section ext_t5 T2.4 - Custom Allocation Strategy
+
+@subsection ext_t5_free_approach Approach
+
+The custom `free` mode is a hybrid allocator:
+
+- edgeless graphs are assigned one register, because no webs interfere;
+- complete graphs color at most `K` webs and spill the unavoidable remainder;
+- bipartite graphs are recognized and 2-colored by BFS when `K >= 2`;
+- all other graphs use DSatur ordering: choose the uncolored web with the largest
+  number of distinct neighbor colors, breaking ties by degree;
+- for small/medium graphs, a branch-and-bound refinement searches for a coloring
+  with fewer spills than the DSatur result.
+
+The `free_split` mode is the same allocator plus one optional recovery step. It
+first runs `free` on the original graph. If there are no spills, it stops. If
+there are spills, it tries a small number of split candidates:
+
+- try spilled webs first;
+- then try high-degree neighbors of spilled webs;
+- rebuild the graph for each candidate split;
+- recolor with the free allocator;
+- keep a split only when the verified result improves the allocation.
+
+The key idea is simple: `free` never changes the graph, while `free_split` may
+change the graph after `free` has already failed to avoid all spills. The final
+output shows the derived webs and records each accepted split.
+
+This keeps the technique recognizable from standard graph coloring material:
+BFS for bipartite graphs, direct handling for cliques, DSatur for practical
+greedy coloring, and branch-and-bound for bounded exact improvement. Free-split
+adds splitting as an opt-in recovery optimization. The invariant remains simple:
+no two interfering colored webs may share a register; memory is used only for
+webs left uncolored by the selected strategy.
+
+@subsection ext_t5_free_complexity Complexity
+
+| Step | Complexity |
+|------|-----------|
+| Graph-class checks and adjacency extraction | `O(W^2 + E log W)` |
+| DSatur fallback | `O(W^2 + E log W)` |
+| Guarded branch-and-bound refinement | `O((K + 1)^W * (W + E))` worst case |
+| Free-split recovery | `O(S * Q * (W^2 * P + F))`, where `F` is one no-splitting free run |
+
+The exact refinement is guarded by a fixed graph-size threshold. Larger graphs
+return the polynomial DSatur result so the application remains responsive during
+the demo. The recovery split limit is fixed to two for free-split mode so the
+demo output remains readable.
+
+@section ext_t5_examples Additional Graph Examples
+
+@subsection ext_t5_noninterference Last-use/definition adjacency
+
+This example documents the subtle interference exception:
+if one web ends at a line because of a last use and another starts at the same
+line because of a definition, the two webs can reuse the same register.
+
+<div class="interactive_dotgraph">
+
+\dotfile dox/example_noninterference_chain.dot "Definition at last-use line allows register reuse (red means no interference, the dashed edges are not actual interferences)"
+
+</div>
+
+@subsection ext_t5_fusion Transitive web fusion
+
+The following example mirrors the overlapping `x` ranges used in the web-fusion tests.
+Even if not every range overlaps every other range directly, the overlap graph
+is connected, so all ranges belong to one web.
+
+<div class="interactive_dotgraph">
+
+\dotfile dox/example_web_fusion.dot "Transitive fusion of overlapping live ranges"
+
+</div>
+
+---
+
+@section ext_t6 Error Handling, CLI, and Testing
+
+@subsection ext_t6_cli CLI
+
+The application supports:
+
+- an interactive menu (`./register_alloc`);
+- the batch interface:
+  `./register_alloc -b ranges.txt config.txt allocation.txt`
+
+Batch mode now returns a non-zero exit code when one of the input files cannot be
+parsed, which makes the test script dependable.
+
+@subsection ext_t6_tests Testing
+
+The test suite has three goals:
+
+- verify parsing and output formatting corner cases;
+- pin down the interference and web-fusion semantics;
+- validate the behaviour of all four allocation modes.
+
+The integration tests use the six baseline datasets plus dedicated spilling, splitting, and free scenarios.
+*/

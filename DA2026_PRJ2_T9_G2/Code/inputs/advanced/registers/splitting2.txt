@@ -1,0 +1,3 @@
+# Advanced demo configuration: bounded splitting showcase.
+registers: 2
+algorithm: splitting, 1

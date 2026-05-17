@@ -1,0 +1,50 @@
+# Doxyfile 1.9.0
+
+# Project related configuration
+PROJECT_NAME           = "AllocationProject"
+OUTPUT_DIRECTORY       = docs
+
+# Input files
+INPUT                  = main.cpp data_structures tests models io algorithms services ui README.md dox/extra_documentation.dox
+RECURSIVE              = YES
+FILE_PATTERNS          = *.c *.cpp *.h *.hpp *.md
+USE_MDFILE_AS_MAINPAGE = README.md
+
+# Extraction settings
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+
+# Output formats
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+GENERATE_RTF           = NO
+GENERATE_MAN           = NO
+GENERATE_XML           = NO
+
+# Doxygen Awesome CSS configuration
+GENERATE_TREEVIEW      = YES
+DISABLE_INDEX          = NO
+FULL_SIDEBAR           = NO
+HTML_EXTRA_STYLESHEET  = dox/doxygen-awesome.css dox/custom.css
+HTML_EXTRA_FILES       = dox/doxygen-awesome-darkmode-toggle.js \
+                         dox/doxygen-awesome-fragment-copy-button.js \
+                         dox/doxygen-awesome-paragraph-link.js \
+                         dox/doxygen-awesome-interactive-toc.js \
+                         dox/doxygen-awesome-tabs.js
+HTML_HEADER            = dox/header.html
+HTML_COPY_CLIPBOARD    = NO
+PAGE_OUTLINE_PANEL     = NO
+HAVE_DOT               = YES
+DOT_IMAGE_FORMAT       = svg
+DOTFILE_DIRS           = . dox
+IMAGE_PATH             = . ui
+HTML_COLORSTYLE        = LIGHT
+
+# Other options
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = YES
+WARNINGS               = YES
+
+# Custom aliases
+ALIASES += "complexity=\\par Complexity:\n"

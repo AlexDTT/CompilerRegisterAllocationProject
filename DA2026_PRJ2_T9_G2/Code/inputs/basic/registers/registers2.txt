@@ -1,0 +1,4 @@
+# comment line
+registers: 2
+# algorithm variants: basic, spilling,K, splitting,K, free, free_split
+algorithm: basic

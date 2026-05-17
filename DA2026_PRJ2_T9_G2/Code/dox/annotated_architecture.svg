@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="820" viewBox="0 0 980 820">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#859399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      text { font-family: "DejaVu Sans", sans-serif; }
+      .node { fill: #252628; stroke: #859399; stroke-width: 1.4; rx: 12; ry: 12; }
+      .edge { stroke: #859399; stroke-width: 1.2; fill: none; marker-end: url(#arrow); }
+      .label { fill: #f8f9fa; font-size: 19px; font-weight: 600; text-anchor: middle; dominant-baseline: middle; }
+      .small { fill: #f8f9fa; font-size: 16px; text-anchor: middle; dominant-baseline: middle; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="980" height="820" fill="transparent"/>
+
+  <!-- top inputs -->
+  <rect class="node" x="150" y="40" width="180" height="56" fill="#252628" stroke="#44b86f"/>
+  <text class="label" x="240" y="68">Ranges File</text>
+
+  <rect class="node" x="650" y="40" width="180" height="56" fill="#252628" stroke="#f3a600"/>
+  <text class="label" x="740" y="68">Config File</text>
+
+  <!-- parser -->
+  <rect class="node" x="400" y="140" width="180" height="56" fill="#252628" stroke="#1982d2"/>
+  <text class="label" x="490" y="168">FileParser</text>
+
+  <!-- webs -->
+  <rect class="node" x="340" y="250" width="300" height="56" fill="#252628" stroke="#44b86f"/>
+  <text class="label" x="490" y="278">Web Builder (Union-Find)</text>
+
+  <!-- igraph -->
+  <rect class="node" x="330" y="360" width="320" height="72" fill="#252628" stroke="#f3a600"/>
+  <text class="label" x="490" y="388">InterferenceGraph</text>
+  <text class="small" x="490" y="412">(course Graph(int))</text>
+
+  <!-- alloc -->
+  <rect class="node" x="400" y="470" width="180" height="56" fill="#252628" stroke="#d67c3b"/>
+  <text class="label" x="490" y="498">AllocationLogic</text>
+
+  <!-- modes -->
+  <rect class="node" x="285" y="570" width="410" height="56" fill="#252628" stroke="#7661b3"/>
+  <text class="label" x="490" y="598">basic | spilling | splitting | free | free_split</text>
+
+  <!-- writer/output -->
+  <rect class="node" x="340" y="645" width="300" height="56" fill="#252628" stroke="#46aaa5"/>
+  <text class="label" x="490" y="673">OutputWriter</text>
+
+  <rect class="node" x="285" y="735" width="410" height="56" fill="#252628" stroke="#cc99cd"/>
+  <text class="label" x="490" y="763">allocation.txt + allocation.dot</text>
+
+  <!-- edges -->
+  <path class="edge" d="M240 96 L240 118 L460 118 L460 140"/>
+  <path class="edge" d="M740 96 L740 118 L520 118 L520 140"/>
+  <path class="edge" d="M490 196 L490 250"/>
+  <path class="edge" d="M490 306 L490 360"/>
+  <path class="edge" d="M490 432 L490 470"/>
+  <path class="edge" d="M490 526 L490 570"/>
+  <path class="edge" d="M490 626 L490 645"/>
+  <path class="edge" d="M490 701 L490 735"/>
+  <path class="edge" d="M400 180 L300 180 L300 490 L400 490"/>
+  <!-- labels on incoming edges -->
+  <text x="345" y="186" fill="#859399" font-family="DejaVu Sans" font-size="14" text-anchor="middle"> </text>
+  <text x="560" y="186" fill="#859399" font-family="DejaVu Sans" font-size="14" text-anchor="middle"> </text>
+</svg>
