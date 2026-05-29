@@ -115,10 +115,10 @@ Graph Representation and Parsing</h1>
 Data model</h2>
 <p>The implementation separates the problem into four layers:</p>
 <ul>
-<li><a class="el" href="struct_program_point.html">ProgramPoint</a>: one program line plus an optional <span class="tt">+</span> / <span class="tt">-</span> marker.</li>
-<li><a class="el" href="struct_live_range.html">LiveRange</a>: one input line from the ranges file.</li>
-<li><a class="el" href="struct_web.html">Web</a>: a merged set of live ranges for the same variable.</li>
-<li><span class="tt"><a class="el" href="class_graph.html" title="Represents a general graph using an adjacency list.">Graph</a>&lt;int&gt;</span>: the interference graph, where each vertex stores a web id.</li>
+<li><a class="el" href="structProgramPoint.html">ProgramPoint</a>: one program line plus an optional <span class="tt">+</span> / <span class="tt">-</span> marker.</li>
+<li><a class="el" href="structLiveRange.html">LiveRange</a>: one input line from the ranges file.</li>
+<li><a class="el" href="structWeb.html">Web</a>: a merged set of live ranges for the same variable.</li>
+<li><span class="tt"><a class="el" href="classGraph.html" title="Represents a general graph using an adjacency list.">Graph</a>&lt;int&gt;</span>: the interference graph, where each vertex stores a web id.</li>
 </ul>
 <p>The provided graph structure from the course was preserved as the primary graph representation. The only conceptual adaptation is that vertex labels are <span class="tt">int</span> web identifiers instead of domain objects. This keeps the graph reusable and lets the allocation algorithms work with a compact vertex set.</p>
 <h2 class="doxsection"><a class="anchor" id="ext_t1_webs"></a>
@@ -141,7 +141,7 @@ Interference rule</h2>
 <ul>
 <li>if one web ends on line <span class="tt">L</span> due to a last use (<span class="tt">-</span>) and another web starts on the same line <span class="tt">L</span> due to a definition (<span class="tt">+</span>), they do <b>not</b> interfere.</li>
 </ul>
-<p>This rule is implemented explicitly in <a class="el" href="class_interference_graph.html#ac294a58e31074b769d415fbb8b7912b9">InterferenceGraph::interferes</a>.</p>
+<p>This rule is implemented explicitly in <a class="el" href="classInterferenceGraph.html#ac294a58e31074b769d415fbb8b7912b9">InterferenceGraph::interferes</a>.</p>
 <h2 class="doxsection"><a class="anchor" id="ext_t1_output"></a>
 Aggregated web output</h2>
 <p>The output format uses <b>one line per web</b>, not one line per constituent live range. Internally, this means:</p>
@@ -222,7 +222,7 @@ Approach</h2>
 Example</h2>
 <p>The triangle below needs 3 colors, but with <span class="tt">K = 2</span> registers it becomes allocatable after spilling one web:</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_spilling.svg" width="564" height="495"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_spilling.svg" width="619" height="543"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Triangle graph: one web must be spilled for K = 2</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="ext_t3_spill_complexity"></a>
@@ -238,7 +238,7 @@ Complexity</h2>
 T2.3 - Register Allocation with Splitting</h1>
 <h2 class="doxsection"><a class="anchor" id="ext_t4_split_approach"></a>
 Approach</h2>
-<p><a class="el" href="struct_web.html" title="A live web is the union of one or more live ranges of the same variable whose program-point sets over...">Web</a> splitting is used when the user explicitly selects <span class="tt">splitting, K</span>. The implementation keeps the problem local and deterministic:</p>
+<p><a class="el" href="structWeb.html" title="A live web is the union of one or more live ranges of the same variable whose program-point sets over...">Web</a> splitting is used when the user explicitly selects <span class="tt">splitting, K</span>. The implementation keeps the problem local and deterministic:</p>
 <ul>
 <li>first, try to color the current graph with no splitting;</li>
 <li>if that fails, pick one of the currently uncolorable/high-degree webs;</li>
@@ -260,7 +260,7 @@ Approach</h2>
 Example</h2>
 <p>The following case starts as a 3-clique. <span class="tt">web0</span> has an early region and a late region; after splitting it, the resulting graph becomes a 2-colorable path:</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_splitting.svg" width="547" height="732"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_splitting.svg" width="547" height="816"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 One split reduces the chromatic requirement without inventing markers</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="ext_t4_split_complexity"></a>
@@ -318,14 +318,14 @@ Additional Graph Examples</h1>
 Last-use/definition adjacency</h2>
 <p>This example documents the subtle interference exception: if one web ends at a line because of a last use and another starts at the same line because of a definition, the two webs can reuse the same register.</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_noninterference_chain.svg" width="650" height="574"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_noninterference_chain.svg" width="736" height="651"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Definition at last-use line allows register reuse (red means no interference, the dashed edges are not actual interferences)</div>
 </div>
 </div><div class="interactive_dotgraph"></div><h2 class="doxsection"><a class="anchor" id="ext_t5_fusion"></a>
 Transitive web fusion</h2>
 <p>The following example mirrors the overlapping <span class="tt">x</span> ranges used in the web-fusion tests. Even if not every range overlaps every other range directly, the overlap graph is connected, so all ranges belong to one web.</p>
 <div class="interactive_dotgraph"></div><div class="interactive_dotgraph"><div class="dotgraph">
-<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_web_fusion.svg" width="350" height="418"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
+<iframe scrolling="no" loading="lazy" frameborder="0" src="dot_example_web_fusion.svg" width="394" height="431"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe><div class="caption">
 Transitive fusion of overlapping live ranges</div>
 </div>
 </div><div class="interactive_dotgraph"></div><hr  />

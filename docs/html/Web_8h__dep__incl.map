@@ -1,0 +1,36 @@
+<map id="models/Web.h" name="models/Web.h">
+<area shape="rect" id="Node000001" title="Data model for a live web (merged live ranges of a variable)." alt="" coords="315,5,419,32"/>
+<area shape="rect" id="Node000002" href="$GraphColoring_8h.html" title="Graph&#45;coloring&#45;based register allocation algorithms." alt="" coords="169,88,348,115"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="339,44,277,90,274,85,336,39"/>
+<area shape="rect" id="Node000004" href="$AllocationLogic_8h.html" title="Orchestration layer: runs the selected algorithm and writes output." alt="" coords="37,179,211,205"/>
+<area shape="poly" id="edge19_Node000001_Node000004" title=" " alt="" coords="300,26,264,32,226,42,190,59,159,82,143,105,133,131,127,178,122,178,128,130,138,102,155,78,188,54,224,37,262,26,299,20"/>
+<area shape="rect" id="Node000006" href="$register__alloc__tests_8cpp.html" title="Unit tests for the compiler register allocation project." alt="" coords="58,261,190,304"/>
+<area shape="poly" id="edge20_Node000001_Node000006" title=" " alt="" coords="299,27,225,39,184,49,143,64,104,83,68,107,38,136,14,172,8,192,14,212,38,239,69,259,66,263,34,243,10,215,3,192,10,170,34,133,65,103,101,78,141,59,182,44,224,34,298,21"/>
+<area shape="rect" id="Node000007" href="$RegisterAllocApp_8h.html" title="Main application controller: CLI and batch&#45;mode entry points." alt="" coords="820,269,967,296"/>
+<area shape="poly" id="edge21_Node000001_Node000007" title=" " alt="" coords="435,28,549,49,683,80,746,99,803,120,849,143,879,169,893,194,899,222,898,269,893,269,893,222,888,196,875,172,846,148,801,125,745,104,681,85,548,54,434,33"/>
+<area shape="rect" id="Node000010" href="$InterferenceGraph_8h.html" title="Builds live webs and the interference graph from parsed live ranges." alt="" coords="375,80,559,123"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="396,40,443,77,439,82,393,44"/>
+<area shape="rect" id="Node000012" href="$OutputWriter_8h.html" title="Writes the register allocation result to a text file." alt="" coords="713,179,831,205"/>
+<area shape="poly" id="edge15_Node000001_Node000012" title=" " alt="" coords="435,33,502,52,572,78,676,129,754,176,751,180,674,134,570,82,500,58,434,38"/>
+<area shape="rect" id="Node000003" href="$GraphColoring_8cpp.html" title="Implementations of graph&#45;coloring register allocation algorithms." alt="" coords="235,179,429,205"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="281,125,324,176,320,180,277,129"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="228,126,145,180,142,176,225,121"/>
+<area shape="poly" id="edge9_Node000002_Node000006" title=" " alt="" coords="165,121,81,143,48,157,27,172,22,182,20,191,28,212,49,239,78,259,75,263,46,243,23,215,15,192,17,181,23,169,45,152,79,138,164,116"/>
+<area shape="rect" id="Node000005" href="$AllocationLogic_8cpp.html" title="Implementation of the AllocationLogic orchestration layer." alt="" coords="346,269,534,296"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="185,207,396,266,394,271,183,213"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="127,221,127,261,121,261,121,221"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="197,206,224,211,388,228,516,233,645,239,808,259,846,266,845,271,808,264,644,245,516,238,388,233,224,216,196,211"/>
+<area shape="rect" id="Node000008" href="$main_8cpp.html" title=" " alt="" coords="786,352,860,379"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="875,309,835,354,831,350,871,306"/>
+<area shape="rect" id="Node000009" href="$RegisterAllocApp_8cpp.html" title="Implementation of the interactive CLI and batch mode." alt="" coords="883,352,1045,379"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="916,306,955,350,951,354,912,309"/>
+<area shape="poly" id="edge11_Node000010_Node000003" title=" " alt="" coords="424,134,353,180,350,176,421,129"/>
+<area shape="poly" id="edge13_Node000010_Node000006" title=" " alt="" coords="471,139,464,178,456,198,443,215,425,228,400,239,334,257,260,270,190,278,190,273,259,264,333,251,398,234,423,223,440,211,451,195,459,177,465,138"/>
+<area shape="poly" id="edge14_Node000010_Node000007" title=" " alt="" coords="575,108,652,117,730,130,798,147,825,157,844,169,865,192,880,219,894,268,889,269,875,221,861,195,841,173,822,162,796,152,729,135,651,123,574,114"/>
+<area shape="rect" id="Node000011" href="$InterferenceGraph_8cpp.html" title="Implementation of web construction and interference graph building." alt="" coords="504,171,688,213"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="511,129,567,168,564,172,508,134"/>
+<area shape="poly" id="edge17_Node000012_Node000005" title=" " alt="" coords="713,212,701,216,490,271,488,266,699,211,712,207"/>
+<area shape="poly" id="edge18_Node000012_Node000006" title=" " alt="" coords="717,212,701,216,598,232,458,249,190,277,190,272,457,244,598,226,700,211,716,207"/>
+<area shape="rect" id="Node000013" href="$OutputWriter_8cpp.html" title="Implementation of OutputWriter." alt="" coords="663,269,796,296"/>
+<area shape="poly" id="edge16_Node000012_Node000013" title=" " alt="" coords="762,221,738,270,733,268,757,218"/>
+</map>

@@ -85,7 +85,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_allocation_logic_8cpp.html",
+"AllocationLogic_8cpp.html",
 "main_8cpp.html"
 ];
 

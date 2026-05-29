@@ -1,0 +1,9 @@
+<map id="io/OutputWriter.h" name="io/OutputWriter.h">
+<area shape="rect" id="Node000001" title="Writes the register allocation result to a text file." alt="" coords="196,5,315,32"/>
+<area shape="rect" id="Node000002" href="$OutputWriter_8cpp.html" title="Implementation of OutputWriter." alt="" coords="5,88,138,115"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,41,101,90,99,85,212,36"/>
+<area shape="rect" id="Node000003" href="$AllocationLogic_8cpp.html" title="Implementation of the AllocationLogic orchestration layer." alt="" coords="162,88,349,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="258,48,258,88,253,88,253,48"/>
+<area shape="rect" id="Node000004" href="$register__alloc__tests_8cpp.html" title="Unit tests for the compiler register allocation project." alt="" coords="374,80,505,123"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="299,36,393,77,391,82,297,41"/>
+</map>
